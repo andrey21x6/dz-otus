@@ -1,4 +1,3 @@
-NFS
 Работа с NFS
 
 Prerequisite
