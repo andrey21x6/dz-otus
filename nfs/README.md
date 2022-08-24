@@ -1,7 +1,7 @@
-# Работа с NFS
+# NFS
 
 # **Prerequisite**
-- Host OS: Windows 10.0.19043
+- Host OS: Ubuntu 20.04
 - Guest OS: CentOS 7.8.2003
 - VirtualBox: 6.1.34
 - Vagrant: 2.2.19
