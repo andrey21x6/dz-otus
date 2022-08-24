@@ -1,10 +1,10 @@
 # NFS
 
 # **Prerequisite**
-- Host OS: Ubuntu 20.04
-- Guest OS: CentOS 7.8.2003
-- VirtualBox: 6.1.34
-- Vagrant: 2.2.19
+- Host OS: Ubuntu Desktop 20.04.4
+- Guest OS: Cent OS 8.4
+- VirtualBox: 6.1.36
+- Vagrant: 2.3.0-1
 
 # **Содержание ДЗ**
 
@@ -13,6 +13,11 @@
 
 # **Выполнение**
 
+### Настройка репозитория
+...
+sudo sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
+sudo sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
+...
 ### Настройка сервера NFS
 
 Установка утилит для NFS
