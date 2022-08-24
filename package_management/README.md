@@ -65,6 +65,18 @@ yum install openssl-devel zlib-devel pcre2-devel -y
 rpmbuild -bb SPECS/nginx.spec
 ```
 
+Посмотрим, что получилось
+```
+find RPMS
+
+RPMS
+RPMS/x86_64
+RPMS/x86_64/nginx-1.22.0-1.el7.ngx.x86_64.rpm
+RPMS/x86_64/nginx-debuginfo-1.22.0-1.el7.ngx.x86_64.rpm
+```
+
+
+
 
 
 
