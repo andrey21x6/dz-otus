@@ -1,5 +1,4 @@
-# otus-linux-day06
-Работа с NFS
+# Работа с NFS
 
 # **Prerequisite**
 - Host OS: Windows 10.0.19043
