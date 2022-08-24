@@ -53,10 +53,15 @@ sudo systemctl restart nfs-server
 sudo vi /etc/nfs.conf
 ```
 vers3=y
+
 vers4=n
+
 vers4.0=n
+
 vers4.1=n
+
 vers4.2=n
+
 
 Перезапускаем nfs server
 ```
