@@ -2,7 +2,7 @@
 
 # **Prerequisite**
 - Host OS: Ubuntu Desktop 20.04.4
-- Guest OS: Cent OS 8.4
+- Guest OS: Cent OS 7.5.1804
 - VirtualBox: 6.1.36
 - Vagrant: 2.3.0-1
 
@@ -15,35 +15,22 @@
 
 # **Выполнение**
 
-Настройка репозитория
 
+Установка пакетов
 ```
-sudo sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
-sudo sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
-```
-
-Настройка кодировки
-
-```
-localectl set-locale LANG=en_US.UTF-8
-sudo dnf install langpacks-en glibc-all-langpacks -y
+yum install rpmdevtools rpm-build -y
+rpmdev-setuptree
 ```
 
-Установка утилит для NFS
+Устанавливаем wget
 ```
-yum install nfs-utils
-```
-
-Создаём папку
-```
-sudo mkdir /var/nfs_share
+yum install wget -y
 ```
 
-Прописываем в файле exports
+Скачиваем пакет с исходниками nginx
 ```
-sudo vi /etc/exports
+wget https://nginx.org/packages/centos/7/SRPMS/nginx-1.18.0-2.el7.ngx.src.rpm
 ```
-/var/nfs_share/ *(rw,all_squash)
 
 Перезапускаем nfs server
 ```
