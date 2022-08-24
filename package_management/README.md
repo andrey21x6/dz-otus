@@ -42,7 +42,7 @@ rpm -i nginx-1.22.0-1.el7.ngx.src.rpm
 cd /root/rpmbuild
 ```
 
-Выполняем командусобрать RPM
+Выполняем команду собрать RPM
 ```
 rpmbuild -bb SPECS/nginx.spec
 ```
@@ -60,7 +60,7 @@ error: Failed build dependencies:
 yum install openssl-devel zlib-devel pcre2-devel -y
 ```
 
-Выполняем командусобрать RPM
+Выполняем команду собрать RPM
 ```
 rpmbuild -bb SPECS/nginx.spec
 ```
