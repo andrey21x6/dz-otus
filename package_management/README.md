@@ -29,12 +29,12 @@ yum install wget -y
 
 Скачиваем пакет с исходниками nginx
 ```
-wget https://nginx.org/packages/centos/7/SRPMS/nginx-1.18.0-2.el7.ngx.src.rpm
+wget https://nginx.org/packages/centos/7/SRPMS/nginx-1.22.0-1.el7.ngx.src.rpm
 ```
 
 Распаковываем архив с исходниками
 ```
-rpm -i nginx-1.18.0-2.el7.ngx.src.rpm
+rpm -i nginx-1.22.0-1.el7.ngx.src.rpm
 ```
 
 Переходим в директорию rpmbuild
@@ -50,12 +50,20 @@ rpmbuild -bb SPECS/nginx.spec
 Вывод
 ```
 error: Failed build dependencies:
-        openssl-devel >= 1.0.2 is needed by nginx-1:1.18.0-2.el7.ngx.x86_64
-        zlib-devel is needed by nginx-1:1.18.0-2.el7.ngx.x86_64
-        pcre-devel is needed by nginx-1:1.18.0-2.el7.ngx.x86_64
+        openssl-devel >= 1.0.2 is needed by nginx-1.22.0-1.el7.ngx.src.rpm
+        zlib-devel is needed by nginx-1.22.0-1.el7.ngx.src.rpm
+        pcre2-devel is needed by nginx-1.22.0-1.el7.ngx.src.rpm
 ```
 
+Устанавливаем недостающее
+```
+yum install openssl-devel zlib-devel pcre2-devel -y
+```
 
+Выполняем командусобрать RPM
+```
+rpmbuild -bb SPECS/nginx.spec
+```
 
 
 
