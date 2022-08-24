@@ -24,6 +24,7 @@ sudo sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.
 
 ```
 localectl set-locale LANG=en_US.UTF-8
+
 sudo dnf install langpacks-en glibc-all-langpacks -y
 ```
 
