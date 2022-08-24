@@ -153,4 +153,4 @@ systemd-1 on /mnt type autofs (rw,relatime,fd=49,pgrp=1,timeout=0,minproto=5,max
 # **Результаты**
 
 Полученный в ходе работы `Vagrantfile` и внешние скрипты для shell provisioner помещены в публичный репозиторий:
-- **GitHub** - https://github.com/jimidini77/otus-linux-day06
+- **GitHub** - https://github.com/andrey21x6/dz-otus/tree/main/nfs
