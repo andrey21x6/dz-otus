@@ -28,7 +28,7 @@ config.vm.define "server" do |server|
   end
 
 
-# Cent OS 8.2
+# Cent OS 8.4
 # config used from this
 # https://github.com/eoli3n/vagrant-pxe/blob/master/client/Vagrantfile
   config.vm.define "client" do |client|
