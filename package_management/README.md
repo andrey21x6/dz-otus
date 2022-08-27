@@ -75,21 +75,38 @@ RPMS/x86_64/nginx-1.22.0-1.el7.ngx.x86_64.rpm
 RPMS/x86_64/nginx-debuginfo-1.22.0-1.el7.ngx.x86_64.rpm
 ```
 
+### Создаём репозиторий
 
+Установка
 
+```
+sudo yum install nginx createrepo -y
+```
 
+Создаём каталог
 
-
-
-
-### Настройка клиента NFS
+```
+sudo mkdir -p /repos/CentOS/7/
+```
 
 Настройка репозитория
 
 ```
-sudo sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
-sudo sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
+sudo createrepo /repos/CentOS/7/
+
+Spawning worker 0 with 1 pkgs
+Workers Finished
+Saving Primary metadata
+Saving file lists metadata
+Saving other metadata
+Generating sqlite DBs
+Sqlite DBs complete
 ```
+
+
+
+
+
 
 Настройка кодировки
 
