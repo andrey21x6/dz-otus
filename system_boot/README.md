@@ -122,6 +122,72 @@ mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
 
 ### Добавить модуль в initrd
 
+Создаём каталог
+```
+mkdir /usr/lib/dracut/modules.d/01test
+```
+
+Создаём файл и добавляем в него код
+
+```
+vi /usr/lib/dracut/modules.d/01test/module-setup.sh
+
+#!/bin/bash
+
+check() {
+    return 0
+}
+
+depends() {
+    return 0
+}
+
+install() {
+    inst_hook cleanup 00 "${moddir}/test.sh"
+}
+```
+
+Создаём файл и добавляем в него код
+
+```
+vi /usr/lib/dracut/modules.d/01test/test.sh
+
+#!/bin/bash
+
+exec 0<>/dev/console 1<>/dev/console 2<>/dev/console
+cat <<'msgend'
+Hello! You are in dracut module!
+ ___________________
+< I'm dracut module >
+ -------------------
+   \
+    \
+        .--.
+       |o_o |
+       |:_/ |
+      //   \ \
+     (|     | )
+    /'\_   _/`\
+    \___)=(___/
+msgend
+sleep 10
+echo " continuing...."
+```
+
+Делаем исполняемыми
+
+```
+chmod +x /usr/lib/dracut/modules.d/01test/module-setup.sh
+chmod +x /usr/lib/dracut/modules.d/01test/test.sh
+```
+
+Пересобирём образ initrd
+
+```
+mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
+```
+
+
 
 
 
