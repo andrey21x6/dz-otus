@@ -55,6 +55,11 @@ passwd root
 touch /.autorelabel
 ```
 
+Выполняем команду выхода из chroot
+```
+exit
+```
+
 Выполняем команду перемонтирования, чтобы sysroot сделать RO
 ```
 mount -o remount,ro /sysroot
