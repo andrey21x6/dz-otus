@@ -194,11 +194,16 @@ lsinitrd -m /boot/initramfs-$(uname -r).img | grep test
 test
 ```
 
-
-
+Перезагружаемся
+```
+reboot
+```
 
 # **Результаты**
 
 Полученный в ходе работы `Vagrantfile` помещен в публичный репозиторий:
 - **GitHub** - https://github.com/andrey21x6/dz-otus/tree/main/nfs
+
+
+Во время загрузки системы будет виден пингвин
 
