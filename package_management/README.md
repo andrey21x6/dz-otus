@@ -103,17 +103,82 @@ Generating sqlite DBs
 Sqlite DBs complete
 ```
 
-
-
-
-
-
-Настройка кодировки
+Проверяем, что получилось
 
 ```
-localectl set-locale LANG=en_US.UTF-8
-sudo dnf install langpacks-en glibc-all-langpacks -y
+ls -la /repos/CentOS/7/repodata/
+
+total 32
+drwxr-xr-x. 2 root root 4096 авг 27 10:43 .
+drwxr-xr-x. 3 root root   60 авг 27 10:43 ..
+-rw-r--r--. 1 root root  342 авг 27 10:43 1d8b3d9e51f42341b6dbe810f50726227040c205e3914130637a2ae6f6b9be8d-filelists.xml.gz
+-rw-r--r--. 1 root root 1705 авг 27 10:43 248766cc70446a2161667e22174ffeb223136d3cf27919d3e41ea76e38af634c-primary.sqlite.bz2
+-rw-r--r--. 1 root root 1173 авг 27 10:43 30415e7a2efba6ed2066c223eeecc49a3391bbe4e2abc9cf19e6363026923128-other.sqlite.bz2
+-rw-r--r--. 1 root root  832 авг 27 10:43 56b36c1dd198ae04334450d61e80b513471cac656fed7c5b4e8da0c291704828-filelists.sqlite.bz2
+-rw-r--r--. 1 root root  702 авг 27 10:43 a83ef2d4a25480a894d91d28cd3010a07b63a7d0946f25ea8d2146e9ba89e5d5-primary.xml.gz
+-rw-r--r--. 1 root root  575 авг 27 10:43 e51ea145536efed716864edbd5538ec2b71c7efa10e3ab382a3eed51863aeb05-other.xml.gz
+-rw-r--r--. 1 root root 2965 авг 27 10:43 repomd.xml
 ```
+
+Создаём файл и вписываем туда
+
+```
+sudo vi /etc/yum.repos.d/local.repo
+
+[local]
+name=Local
+baseurl=file:///repos/CentOS/7/
+enabled=1
+gpgcheck=0
+```
+
+Настройка репозитория
+
+```
+sudo yum repolist enabled
+
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: mirrors.datahouse.ru
+ * extras: mirrors.datahouse.ru
+ * updates: mirror.sale-dedic.com
+local                                                                                                                                             | 2.9 kB  00:00:00
+local/primary_db                                                                                                                                  | 1.7 kB  00:00:00
+repo id                                                                         repo name                                                                          status
+base/7/x86_64                                                                   CentOS-7 - Base                                                                    10 072
+extras/7/x86_64                                                                 CentOS-7 - Extras                                                                     512
+local                                                                           Local                                                                                   1
+updates/7/x86_64                                                                CentOS-7 - Updates                                                                  4 135
+repolist: 14 720
+```
+
+```
+sudo yum reinstall
+Loaded plugins: fastestmirror
+Error: Need to pass a list of pkgs to reinstall
+ Mini usage:
+
+reinstall PACKAGE...
+
+reinstall a package
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Установка утилит для NFS
 ```
