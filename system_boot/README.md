@@ -101,6 +101,31 @@ vgscan
   Found volume group "VolGroup01" using metadata type lvm2
 ```
 
+Так же переименовываем в следующих файлах:
+
+```
+sed -i -e "s/VolGroup00/VolGroup01/g" /etc/fstab
+sed -i -e "s/VolGroup00/VolGroup01/g" /etc/default/grub
+sed -i -e "s/VolGroup00/VolGroup01/g" /boot/grub2/grub.cfg
+```
+
+Пересоздаем initrd image, чтобы он знал новое название Volume Group
+
+```
+mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
+
+...
+*** Creating image file ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-862.2.3.el7.x86_64.img' done ***
+```
+
+### Добавить модуль в initrd
+
+
+
+
+
 
 
 
