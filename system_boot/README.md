@@ -205,5 +205,7 @@ reboot
 - **GitHub** - https://github.com/andrey21x6/dz-otus/tree/main/system_boot
 
 Получили доступ к системе, не зная пароля root.
+
 Получили переименованный volume group.
+
 Во время загрузки системы будет виден пингвин.
