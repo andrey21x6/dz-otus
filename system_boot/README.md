@@ -175,14 +175,12 @@ echo " continuing...."
 ```
 
 Делаем исполняемыми
-
 ```
 chmod +x /usr/lib/dracut/modules.d/01test/module-setup.sh
 chmod +x /usr/lib/dracut/modules.d/01test/test.sh
 ```
 
 Пересобирём образ initrd
-
 ```
 mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
 ```
