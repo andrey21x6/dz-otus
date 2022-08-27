@@ -202,8 +202,8 @@ reboot
 # **Результаты**
 
 Полученный в ходе работы `Vagrantfile` помещен в публичный репозиторий:
-- **GitHub** - https://github.com/andrey21x6/dz-otus/tree/main/nfs
+- **GitHub** - https://github.com/andrey21x6/dz-otus/tree/main/system_boot
 
-
-Во время загрузки системы будет виден пингвин
-
+Получили доступ к системе, не зная пароля root.
+Получили переименованный volume group.
+Во время загрузки системы будет виден пингвин.
