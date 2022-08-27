@@ -78,10 +78,28 @@ reboot
 ### Установить систему с LVM, после чего переименовать VG
 
 
+Смотрим, какие volume group имеются
+```
+vgscan
 
+  Reading volume groups from cache.
+  Found volume group "VolGroup00" using metadata type lvm2
+```
 
+Переименовываем volume group "VolGroup00" на "VolGroup01"
+```
+vgrename VolGroup00 VolGroup01
 
+ Volume group "VolGroup00" successfully renamed to "VolGroup01"
+```
 
+Смотрим, что получилось
+```
+vgscan
+
+  Reading volume groups from cache.
+  Found volume group "VolGroup01" using metadata type lvm2
+```
 
 
 
