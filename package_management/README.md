@@ -154,12 +154,12 @@ repolist: 14 720
 
 ```
 sudo yum reinstall
+
 Loaded plugins: fastestmirror
 Error: Need to pass a list of pkgs to reinstall
  Mini usage:
-
+ 
 reinstall PACKAGE...
-
 reinstall a package
 ```
 
