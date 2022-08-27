@@ -102,7 +102,6 @@ vgscan
 ```
 
 Так же переименовываем в следующих файлах:
-
 ```
 sed -i -e "s/VolGroup00/VolGroup01/g" /etc/fstab
 sed -i -e "s/VolGroup00/VolGroup01/g" /etc/default/grub
@@ -110,7 +109,6 @@ sed -i -e "s/VolGroup00/VolGroup01/g" /boot/grub2/grub.cfg
 ```
 
 Пересоздаем initrd image, чтобы он знал новое название Volume Group
-
 ```
 mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
 
@@ -148,7 +146,6 @@ install() {
 ```
 
 Создаём файл и добавляем в него код
-
 ```
 vi /usr/lib/dracut/modules.d/01test/test.sh
 
@@ -183,14 +180,19 @@ chmod +x /usr/lib/dracut/modules.d/01test/test.sh
 Пересобирём образ initrd
 ```
 mkinitrd -f -v /boot/initramfs-$(uname -r).img $(uname -r)
+
+...
+*** Creating image file ***
+*** Creating image file done ***
+*** Creating initramfs image file '/boot/initramfs-3.10.0-862.2.3.el7.x86_64.img' done ***
 ```
 
+Проверяем
+```
+lsinitrd -m /boot/initramfs-$(uname -r).img | grep test
 
-
-
-
-
-
+test
+```
 
 
 
