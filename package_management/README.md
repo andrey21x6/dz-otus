@@ -75,64 +75,7 @@ find RPMS
         RPMS/x86_64/nginx-debuginfo-1.22.0-1.el7.ngx.x86_64.rpm
 ```
 
-### Создаём репозиторий
-
-Установка
-
-```
-sudo yum install nginx createrepo -y
-```
-
-Создаём каталог
-
-```
-sudo mkdir -p /repos/CentOS/7/
-```
-
-Настройка репозитория
-
-```
-sudo createrepo /repos/CentOS/7/
-
-        Spawning worker 0 with 1 pkgs
-        Workers Finished
-        Saving Primary metadata
-        Saving file lists metadata
-        Saving other metadata
-        Generating sqlite DBs
-        Sqlite DBs complete
-```
-
-Проверяем, что получилось
-
-```
-ls -la /repos/CentOS/7/repodata/
-
-        total 32
-        drwxr-xr-x. 2 root root 4096 авг 27 10:43 .
-        drwxr-xr-x. 3 root root   60 авг 27 10:43 ..
-        -rw-r--r--. 1 root root  342 авг 27 10:43 1d8b3d9e51f42341b6dbe810f50726227040c205e3914130637a2ae6f6b9be8d-filelists.xml.gz
-        -rw-r--r--. 1 root root 1705 авг 27 10:43 248766cc70446a2161667e22174ffeb223136d3cf27919d3e41ea76e38af634c-primary.sqlite.bz2
-        -rw-r--r--. 1 root root 1173 авг 27 10:43 30415e7a2efba6ed2066c223eeecc49a3391bbe4e2abc9cf19e6363026923128-other.sqlite.bz2
-        -rw-r--r--. 1 root root  832 авг 27 10:43 56b36c1dd198ae04334450d61e80b513471cac656fed7c5b4e8da0c291704828-filelists.sqlite.bz2
-        -rw-r--r--. 1 root root  702 авг 27 10:43 a83ef2d4a25480a894d91d28cd3010a07b63a7d0946f25ea8d2146e9ba89e5d5-primary.xml.gz
-        -rw-r--r--. 1 root root  575 авг 27 10:43 e51ea145536efed716864edbd5538ec2b71c7efa10e3ab382a3eed51863aeb05-other.xml.gz
-        -rw-r--r--. 1 root root 2965 авг 27 10:43 repomd.xml
-```
-
-Создаём файл и вписываем туда
-
-```
-sudo vi /etc/yum.repos.d/local.repo
-
-        [local]
-        name=Local
-        baseurl=file:///repos/CentOS/7/
-        enabled=1
-        gpgcheck=0
-```
-
-Настройка репозитория на собственном сервере
+### Настройка репозитория на собственном сервере
 
 Установка и настройка nginx
 
@@ -158,20 +101,106 @@ vi /etc/selinux/config
         SELINUX=disabled
 ```
 
+Создаём каталоги и в rpm копирум файл rpm, который собрал
+```
+mkdir -p /usr/share/nginx/html/repo/rpm
+```
+
+Устанавливаем createrepo
+```
+yum install createrepo
+```
+
+
+Создаём репозиторий
+```
+createrepo /usr/share/nginx/html/repo/rpm/
+
+        Spawning worker 0 with 1 pkgs
+        Workers Finished
+        Saving Primary metadata
+        Saving file lists metadata
+        Saving other metadata
+        Generating sqlite DBs
+        Sqlite DBs complete
+```
+
 Перезагрузка
 ```
 shutdown -r now
 ```
 
+### Подключаем репозиторий в виртуалке Vagranta
 
 
 
+Проверяем подключенные репозитории
+```
+yum repolist
 
+        Loaded plugins: fastestmirror
+        Loading mirror speeds from cached hostfile
+         * base: mirror.docker.ru
+         * extras: mirror.sale-dedic.com
+         * updates: mirror.corbina.net
+        repo id                                                       repo name                                                                         status
+        base/7/x86_64                                                 CentOS-7 - Base                                                                   10 072
+        extras/7/x86_64                                               CentOS-7 - Extras                                                                    512
+        updates/7/x86_64                                              CentOS-7 - Updates                                                                 4 135
+        repolist: 14 720
+```
 
+Добавляем наш репозиторий
+```
+sudo yum-config-manager --add-repo http://82.148.18.18/repo/rpm/
+```
+Проверяем подключенные репозитории
+```
+yum repolist
 
+        Loaded plugins: fastestmirror
+        Loading mirror speeds from cached hostfile
+         * base: mirror.docker.ru
+         * extras: mirror.sale-dedic.com
+         * updates: mirror.corbina.net
+        repo id                                                       repo name                                                                         status
+        82.148.18.18_repo_rpm_                                        added from: http://82.148.18.18/repo/rpm/                                              1
+        base/7/x86_64                                                 CentOS-7 - Base                                                                   10 072
+        extras/7/x86_64                                               CentOS-7 - Extras                                                                    512
+        updates/7/x86_64                                              CentOS-7 - Updates                                                                 4 135
+        repolist: 14 720
+```
 
+Можно попробовать установить
+```
+sudo yum install nginx
 
+        Loaded plugins: fastestmirror
+        Loading mirror speeds from cached hostfile
+         * base: mirrors.datahouse.ru
+         * extras: mirror.sale-dedic.com
+         * updates: ftp.nsc.ru
+        Resolving Dependencies
+        --> Running transaction check
+        ---> Package nginx.x86_64 1:1.22.0-1.el7.ngx will be installed
+        --> Finished Dependency Resolution
 
+        Dependencies Resolved
+
+        ================================================================================================================================================
+         Package                     Arch                         Version                                  Repository                                    Size
+        ================================================================================================================================================
+        Installing:
+         nginx                       x86_64                       1:1.22.0-1.el7.ngx                       82.148.18.18_repo_rpm_                       795 k
+
+        Transaction Summary
+        ================================================================================================================================================
+        Install  1 Package
+
+        Total download size: 795 k
+        Installed size: 2.8 M
+        Is this ok [y/d/N]:
+```
 
 
 
