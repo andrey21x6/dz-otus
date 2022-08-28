@@ -140,7 +140,6 @@ sudo vi /etc/yum.repos.d/local.repo
 yum install nginx
 systemctl start nginx
 systemctl enable nginx
-systemctl enable nginx
 ```
 
 Отображать файлы
