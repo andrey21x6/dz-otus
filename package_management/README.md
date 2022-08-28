@@ -106,6 +106,11 @@ vi /etc/selinux/config
 mkdir -p /usr/share/nginx/html/repo/rpm
 ```
 
+C виртуалки Vagranta на удалённый сервер
+```
+scp /root/rpmbuild/RPMS/x86_64/nginx-1.22.0-1.el7.ngx.x86_64.rpm root@82.148.18.18:/usr/share/nginx/html/repo/rpm
+```
+
 Устанавливаем createrepo
 ```
 yum install createrepo
