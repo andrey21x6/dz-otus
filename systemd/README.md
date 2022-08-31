@@ -227,15 +227,88 @@ systemctl status spawn-fcgi
   Aug 31 09:52:35 systemdhost systemd[1]: Started Spawn-fcgi startup service by Otus.
 ```
 
+Для запуска несколþких экземпляров сервиса будем использовать шаблон в конфигурации файла окружения
+Копируем файл сервиса
+```
+cp /usr/lib/systemd/system/httpd.service /usr/lib/systemd/system/httpd@.service
+```
 
+Приводим к виду
+```
+vi /usr/lib/systemd/system/httpd@.service
 
+  [Unit]
+  Description=The Apache HTTP Server
+  Wants=httpd-init.service
+  After=network.target remote-fs.target nss-lookup.target httpd-init.service
+  Documentation=man:httpd.service(8)
 
+  [Service]
+  Type=notify
+  #Environment=LANG=C
+  EnvironmentFile=/etc/sysconfig/httpd-%I
 
+  ExecStart=/usr/sbin/httpd $OPTIONS -DFOREGROUND
+  ExecReload=/usr/sbin/httpd $OPTIONS -k graceful
+  # Send SIGWINCH for graceful stop
+  KillSignal=SIGWINCH
+  KillMode=mixed
+  PrivateTmp=true
 
+  [Install]
+  WantedBy=multi-user.target
+```
 
+В файлах окружения задаём опции для запуска веб-сервера с необходимым конфигурационным файлом
+```
+vi /etc/sysconfig/httpd-first
 
+  OPTIONS=-f conf/first.conf
+  
+vi /etc/sysconfig/httpd-second
 
+  OPTIONS=-f conf/second.conf
+```
 
+Создаём pid файлы с разными PID-ами
+```
+vi /var/run/httpd-first.pid
+vi /var/run/httpd-second.pid
+```
+
+В директории /etc/httpd/conf/ копируем два файла
+```
+cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/first.conf
+cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/second.conf
+```
+
+В них устанавливаем два параметра
+```
+vi  /etc/httpd/conf/first.conf
+
+  PidFile /var/run/httpd-first.pid
+  Listen 8081
+  
+vi  /etc/httpd/conf/second.conf
+
+  PidFile /var/run/httpd-second.pid
+  Listen 8082
+```
+
+Запускаем
+```
+systemctl start httpd@first
+systemctl start httpd@second
+```
+
+Проверим
+```
+ss -tunlp | grep httpd
+
+  tcp   LISTEN 0      128          0.0.0.0:8081        0.0.0.0:*    users:(("httpd",pid=8997,fd=3),("httpd",pid=8996,fd=3),("httpd",pid=8995,fd=3),("httpd",pid=8994,fd=3),("httpd",pid=8992,fd=3))
+  
+  tcp   LISTEN 0      128          0.0.0.0:8082        0.0.0.0:*    users:(("httpd",pid=8854,fd=3),("httpd",pid=8853,fd=3),("httpd",pid=8852,fd=3),("httpd",pid=8851,fd=3),("httpd",pid=8850,fd=3))
+```
 
 
 
