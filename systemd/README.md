@@ -123,6 +123,102 @@ systemctl status watchlog.timer
   Aug 31 08:44:06 systemdhost systemd[1]: Started Run watchlog script every 30 second.
 ```
 
+### Из репозитория epel установить spawn-fcgi и переписать init-скрипт на unit-файл (имя service должно называться так же: spawn-fcgi).
+
+Устанавливаем spawn-fcgi и необходимые для него пакеты
+
+```
+yum install epel-release -y && yum install spawn-fcgi php php-cli mod_fcgid httpd -y
+```
+
+Раскомментируем строки с переменными в файле /etc/sysconfig/spawn-fcgi
+```
+vi /etc/sysconfig/spawn-fcgi
+
+  SOCKET=/var/run/php-fcgi.sock
+  OPTIONS="-u apache -g apache -s $SOCKET -S -M 0600 -C 32 -F 1 -P /var/run/spawn-fcgi.pid -- /usr/bin/php-cgi"
+```
+
+Создаём файл юнита
+```
+vi /etc/systemd/system/spawn-fcgi.service
+
+[Unit]
+Description=Spawn-fcgi startup service by Otus
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/spawn-fcgi.pid
+EnvironmentFile=/etc/sysconfig/spawn-fcgi
+ExecStart=/usr/bin/spawn-fcgi -n $OPTIONS
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Запускаем
+```
+systemctl start spawn-fcgi
+```
+
+Убеждаемся что все успешно работает
+```
+systemctl status spawn-fcgi
+
+  ● spawn-fcgi.service - Spawn-fcgi startup service by Otus
+     Loaded: loaded (/etc/systemd/system/spawn-fcgi.service; disabled; vendor preset: disabled)
+     Active: active (running) since Wed 2022-08-31 09:52:35 UTC; 8s ago
+   Main PID: 5590 (php-cgi)
+      Tasks: 33 (limit: 4952)
+     Memory: 18.7M
+     CGroup: /system.slice/spawn-fcgi.service
+             ├─5590 /usr/bin/php-cgi
+             ├─5591 /usr/bin/php-cgi
+             ├─5592 /usr/bin/php-cgi
+             ├─5593 /usr/bin/php-cgi
+             ├─5594 /usr/bin/php-cgi
+             ├─5595 /usr/bin/php-cgi
+             ├─5596 /usr/bin/php-cgi
+             ├─5597 /usr/bin/php-cgi
+             ├─5598 /usr/bin/php-cgi
+             ├─5599 /usr/bin/php-cgi
+             ├─5600 /usr/bin/php-cgi
+             ├─5601 /usr/bin/php-cgi
+             ├─5602 /usr/bin/php-cgi
+             ├─5603 /usr/bin/php-cgi
+             ├─5604 /usr/bin/php-cgi
+             ├─5605 /usr/bin/php-cgi
+             ├─5606 /usr/bin/php-cgi
+             ├─5607 /usr/bin/php-cgi
+             ├─5608 /usr/bin/php-cgi
+             ├─5609 /usr/bin/php-cgi
+             ├─5610 /usr/bin/php-cgi
+             ├─5611 /usr/bin/php-cgi
+             ├─5612 /usr/bin/php-cgi
+             ├─5613 /usr/bin/php-cgi
+             ├─5614 /usr/bin/php-cgi
+             ├─5615 /usr/bin/php-cgi
+             ├─5616 /usr/bin/php-cgi
+             ├─5617 /usr/bin/php-cgi
+             ├─5618 /usr/bin/php-cgi
+             ├─5619 /usr/bin/php-cgi
+             ├─5620 /usr/bin/php-cgi
+             ├─5621 /usr/bin/php-cgi
+             └─5622 /usr/bin/php-cgi
+
+  Aug 31 09:52:35 systemdhost systemd[1]: Started Spawn-fcgi startup service by Otus.
+```
+
+
+
+
+
+
+
+
+
 
 
 
