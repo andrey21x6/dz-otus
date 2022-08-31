@@ -123,10 +123,26 @@ systemctl status watchlog.timer
   Aug 31 08:44:06 systemdhost systemd[1]: Started Run watchlog script every 30 second.
 ```
 
+Проверим
+```
+systemctl list-timers
+
+  NEXT                         LEFT          LAST                         PASSED       UNIT                         ACTIVATES
+  Wed 2022-08-31 10:05:29 UTC  11s left      Wed 2022-08-31 10:04:59 UTC  18s ago      watchlog.timer               watchlog.service
+  Wed 2022-08-31 10:10:00 UTC  4min 41s left Wed 2022-08-31 10:00:48 UTC  4min 29s ago sysstat-collect.timer        sysstat-collect.service
+  Wed 2022-08-31 10:30:22 UTC  25min left    Wed 2022-08-31 08:59:59 UTC  1h 5min ago  dnf-makecache.timer          dnf-makecache.service
+  Wed 2022-08-31 11:00:00 UTC  54min left    Wed 2022-08-31 10:00:48 UTC  4min 29s ago mlocate-updatedb.timer       mlocate-updatedb.service
+  Thu 2022-09-01 00:00:00 UTC  13h left      Wed 2022-08-31 07:00:13 UTC  3h 5min ago  unbound-anchor.timer         unbound-anchor.service
+  Thu 2022-09-01 00:07:00 UTC  14h left      n/a                          n/a          sysstat-summary.timer        sysstat-summary.service
+  Thu 2022-09-01 07:15:49 UTC  21h left      Wed 2022-08-31 07:15:49 UTC  2h 49min ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+
+  7 timers listed.
+  Pass --all to see loaded but inactive timers, too.
+```
+
 ### Из репозитория epel установить spawn-fcgi и переписать init-скрипт на unit-файл (имя service должно называться так же: spawn-fcgi).
 
 Устанавливаем spawn-fcgi и необходимые для него пакеты
-
 ```
 yum install epel-release -y && yum install spawn-fcgi php php-cli mod_fcgid httpd -y
 ```
