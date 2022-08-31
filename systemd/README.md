@@ -227,7 +227,7 @@ systemctl status spawn-fcgi
   Aug 31 09:52:35 systemdhost systemd[1]: Started Spawn-fcgi startup service by Otus.
 ```
 
-Для запуска несколþких экземпляров сервиса будем использовать шаблон в конфигурации файла окружения
+Для запуска нескольких экземпляров сервиса будем использовать шаблон в конфигурации файла окружения
 Копируем файл сервиса
 ```
 cp /usr/lib/systemd/system/httpd.service /usr/lib/systemd/system/httpd@.service
