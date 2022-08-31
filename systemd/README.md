@@ -310,25 +310,6 @@ ss -tunlp | grep httpd
   tcp   LISTEN 0      128          0.0.0.0:8082        0.0.0.0:*    users:(("httpd",pid=8854,fd=3),("httpd",pid=8853,fd=3),("httpd",pid=8852,fd=3),("httpd",pid=8851,fd=3),("httpd",pid=8850,fd=3))
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # **Результаты**
 
 Полученный в ходе работы `Vagrantfile` помещен в публичный репозиторий:
