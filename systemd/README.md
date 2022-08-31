@@ -3,7 +3,7 @@
 # **Prerequisite**
 
 - Host OS: Ubuntu Desktop 20.04.4
-- Guest OS: Cent OS 7.5.1804
+- Guest OS: Cent OS 8.5.2111
 - VirtualBox: 6.1.36
 - Vagrant: 2.3.0-1
 
