@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config|
+  
+	config.vm.define "systemdhost" do |systemdhost|
+		systemdhost.vm.box = "generic/centos8"
+		systemdhost.vm.box_url = 'file:///home/andrey/dz/systemd/virtualbox.box'
+		systemdhost.vm.hostname = "systemdhost"
+		systemdhost.vm.network "forwarded_port", guest: 8081, host: 8081
+		systemdhost.vm.network "forwarded_port", guest: 8082, host: 8082
+	
+		systemdhost.vm.provider "virtualbox" do |vb|
+			vb.cpus =1
+			vb.gui = true
+			vb.memory = "1024"
+		end
+		
+		systemdhost.vm.provision "shell", path: "bash.sh"
+    
+	end
+end
