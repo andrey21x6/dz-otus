@@ -78,6 +78,7 @@ vi /usr/lib/systemd/system/watchlog.timer
 
 Стартуем таймер
 ```
+systemctl daemon-reload
 systemctl start watchlog.timer
 ```
 
@@ -176,6 +177,7 @@ WantedBy=multi-user.target
 
 Запускаем
 ```
+systemctl daemon-reload
 systemctl start spawn-fcgi
 ```
 
@@ -297,6 +299,7 @@ vi  /etc/httpd/conf/second.conf
 
 Запускаем
 ```
+systemctl daemon-reload
 systemctl start httpd@first
 systemctl start httpd@second
 ```
