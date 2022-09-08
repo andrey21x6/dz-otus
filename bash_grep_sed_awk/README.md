@@ -69,14 +69,20 @@ grep "error"
 grep -o -E " HTTP/1.(0|1)\" [0-9]{3,3} "
 ```
 
-Меняет в строке Start___Script___Send___Mail на OFF___Start___Script___Send___Mail в лог-файле
+Вытаскивает запись даты и времени предыдущего запуска скрипта
 ```
-sed -i -e "s/Start___Script___Send___Mail/OFF___Start___Script___Send___Mail/g" log.log
+dateTimeOld=`cat log.log | awk 'go { print } $0 == "___Start_Script_Send_Mail___" { go = 1 }' | grep  '______' | cut -f 2 -d '*'`
+  Чт 08 сен 2022 19:36:43 +05
 ```
 
-Вставляет в конец лог-файла строку Start___Script___Send___Mail
+Меняет в строке ___Start_Script_Send_Mail___ на ___OFF_Script_Send_Mail___ в лог-файле
 ```
-echo Start___Script___Send___Mail >> log.log
+sed -i -e "s/___Start_Script_Send_Mail___/___OFF_Script_Send_Mail___/g" log.log
+```
+
+Вставляет в конец лог-файла строку ___Start_Script_Send_Mail___
+```
+echo ___Start_Script_Send_Mail___ >> log.log
 ```
 
 Вычисляет максимальное число в первом столбце файла ip_list.txt и заносит в переменную ipMax
