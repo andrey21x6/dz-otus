@@ -22,16 +22,16 @@
 
 Написал скрипт для планировщика cron на BASH send_email.sh
 
-В планировщике прописал запуск скрипта каждый час с блокировкой повторного запуска с помощью утилиты flock
+В планировщике прописал запуск скрипта каждый час с блокировкой повторного запуска с помощью утилиты flock и файла send_email.lock
 ```
 0 * * * * /usr/bin/flock -xn /var/lock/send_email.lock -c 'sh /root/send_email.sh'
 ```
 
 ### Описание работы скрипта
 
-Ищет строку, где есть запись Start___Script___Send___Mail и забирает всё, что идёт после нее
+Ищет строку, где есть запись ___Start_Script_Send_Mail___ и забирает всё, что идёт после нее
 ```
-awk 'go { print } $0 == "Start___Script___Send___Mail" { go = 1 }'
+awk 'go { print } $0 == "___Start_Script_Send_Mail___" { go = 1 }'
 ```
 
 Регулярное выражение для IP адреса, ключ -о вытаскивает только его
@@ -85,6 +85,12 @@ sed -i -e "s/___Start_Script_Send_Mail___/___OFF_Script_Send_Mail___/g" log.log
 echo ___Start_Script_Send_Mail___ >> log.log
 ```
 
+Вставляет в конец лог-файла дату и время
+```
+dateTimeIn=$(date)
+echo ______*${dateTimeIn}*______ >> log.log
+```
+
 Вычисляет максимальное число в первом столбце файла ip_list.txt и заносит в переменную ipMax
 ```
 ipMax=`awk '{if(max<$1){max=$1;line=$1}}END{print line}' ip_list.txt`
@@ -95,6 +101,23 @@ ipMax=`awk '{if(max<$1){max=$1;line=$1}}END{print line}' ip_list.txt`
 cat ip_list.txt | grep "^${ipMax} " > ip_max.txt
 ```
 
+Вычисляет максимальное число в первом столбце файла domains_list.txt и заносит в переменную ipMax
+```
+domainsMax=`awk '{if(max<$1){max=$1;line=$1}}END{print line}' domains_list.txt`
+```
+
+Записывает в файл http_max.txt строки, которые содержат максимальное число (переменная $httpMax) в первом столбце файла http_list.txt
+```
+cat http_list.txt | grep "^${httpMax} " > http_max.txt
+```
+
+Присваиваем значения переменным для отправки Email
+```
+ipListMax=`cat ip_max.txt`
+domainsListMax=`cat domains_max.txt`
+errorList=`cat error_list.txt`
+httpList=`cat http_list.txt`
+```
 
 
 
