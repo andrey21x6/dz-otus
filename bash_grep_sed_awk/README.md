@@ -3,6 +3,8 @@
 # **Prerequisite**
 
 - Host OS: Ubuntu Desktop 20.04.4
+- GNU bash, version 5.0.17(1)-release-(x86_64-pc-linux-gnu)
+- flock from util-linux 2.34
 
 # **Содержание ДЗ**
 
@@ -18,7 +20,12 @@
 
 # **Выполнение**
 
-Написал скрипт для планировщика Cron на BASH ### send_email.sh ###
+Написал скрипт для планировщика cron на BASH send_email.sh
+
+В планировщике прописал запуск скрипта каждый час с блокировкой повторного запуска с помощью утилиты flock
+```
+0 * * * * /usr/bin/flock -xn /var/lock/send_email.lock -c 'sh /root/send_email.sh'
+```
 
 ### Описание работы скрипта
 
