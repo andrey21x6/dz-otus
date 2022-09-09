@@ -26,7 +26,9 @@
 
 В планировщике прописал запуск скрипта каждый час с блокировкой повторного запуска с помощью утилиты flock и файла send_email.lock
 ```
-0 * * * * /usr/bin/flock -xn /var/lock/send_email.lock -c 'sh /root/send_email.sh'
+crontab -e
+
+  0 * * * * /usr/bin/flock -xn /var/lock/send_email.lock -c 'sh /root/send_email.sh'
 ```
 
 ### Описание работы скрипта
