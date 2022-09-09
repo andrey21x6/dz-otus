@@ -5,6 +5,8 @@
 - Host OS: Ubuntu Desktop 20.04.4
 - GNU bash, version 5.0.17(1)-release-(x86_64-pc-linux-gnu)
 - flock from util-linux 2.34
+- mail (GNU Mailutils) 3.7
+- postfix 3.14.13
 
 # **Содержание ДЗ**
 
