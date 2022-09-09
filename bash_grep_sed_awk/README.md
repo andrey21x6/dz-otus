@@ -1,4 +1,4 @@
-# Инициализация системы. Systemd.
+# Bash, grep, sed, awk и другие
 
 # **Prerequisite**
 
@@ -119,7 +119,15 @@ errorList=`cat error_list.txt`
 httpList=`cat http_list.txt`
 ```
 
+Устанавливаем утилиту для отправке писем (почтовый сервер postfix при этом тоже устанавливается)
+```
+apt install mailutils
+```
 
+Отправка почты
+```
+echo "\n${ipListMax}\n${domainsListMax}\n${errorList}\n${httpList}" | mail -s "Отчёт по лог файлу" andrey@mail.ru
+```
 
 
 
