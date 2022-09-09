@@ -105,7 +105,7 @@ ipMax=`awk '{if(max<$1){max=$1;line=$1}}END{print line}' ip_list.txt`
 cat ip_list.txt | grep "^${ipMax} " > ip_max.txt
 ```
 
-Вычисляет максимальное число в первом столбце файла domains_list.txt и заносит в переменную ipMax
+Вычисляет максимальное число в первом столбце файла domains_list.txt и заносит в переменную domainsMax
 ```
 domainsMax=`awk '{if(max<$1){max=$1;line=$1}}END{print line}' domains_list.txt`
 ```
