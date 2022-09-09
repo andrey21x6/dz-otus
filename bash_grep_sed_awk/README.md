@@ -110,9 +110,9 @@ cat ip_list.txt | grep "^${ipMax} " > ip_max.txt
 domainsMax=`awk '{if(max<$1){max=$1;line=$1}}END{print line}' domains_list.txt`
 ```
 
-Записывает в файл http_max.txt строки, которые содержат максимальное число (переменная $httpMax) в первом столбце файла http_list.txt
+Записывает в файл domains_max.txt строки, которые содержат максимальное число (переменная $domainsMax) в первом столбце файла domains_list.txt
 ```
-cat http_list.txt | grep "^${httpMax} " > http_max.txt
+cat domains_list.txt | grep "^${domainsMax} " > domains_max.txt
 ```
 
 Присваиваем значения переменным для отправки Email
