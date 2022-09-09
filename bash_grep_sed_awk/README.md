@@ -128,7 +128,7 @@ apt install mailutils
 
 Отправка почты
 ```
-echo "\n${ipListMax}\n${domainsListMax}\n${errorList}\n${httpList}" | mail -s "Отчёт по лог файлу" andrey@mail.ru
+echo "Диапазон времени:\n${dateTimeOld} - ${dateTimeIn}\n${ipListMax}\n${domainsListMax}\n${errorList}\n${httpList}" | mail -s "Отчёт по лог файлу" andrey@mail.ru
 ```
 
 # **Результаты**
