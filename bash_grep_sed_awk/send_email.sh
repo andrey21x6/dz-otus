@@ -33,3 +33,4 @@ errorList=`cat error_list.txt`
 httpList=`cat http_list.txt`
 
 echo "Диапазон времени:\n${dateTimeOld} - ${dateTimeIn}\n${ipListMax}\n${domainsListMax}\n${errorList}\n${httpList}" | mail -s "Отчёт по лог файлу" andrey@mail.ru
+
