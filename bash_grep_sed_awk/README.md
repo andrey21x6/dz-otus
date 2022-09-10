@@ -41,6 +41,7 @@ awk 'go { print } $0 == "___Start_Script_Send_Mail___" { go = 1 }'
 
 Проверяет на пустоту (при первом запуске сканирует весь файл)
 ```
+logTest=`cat log.log | awk 'go { print } $0 == "___Start_Script_Send_Mail___" { go = 1 }'`
 if [ -z "${logTest}" ]; then
   .........
   .........
