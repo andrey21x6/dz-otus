@@ -41,7 +41,7 @@ awk 'go { print } $0 == "___Start_Script_Send_Mail___" { go = 1 }'
 
 Проверяет на пустоту (при первом запуске сканирует весь файл)
 ```
-logTest=`cat log.log | awk 'go { print } $0 == "___Start_Script_Send_Mail___" { go = 1 }'`
+logTest=$(< log.log awk 'go { print } $0 == "___Start_Script_Send_Mail___" { go = 1 }')
 if [ -z "${logTest}" ]; then
   .........
   .........
@@ -84,7 +84,7 @@ grep -o -E " HTTP/1.(0|1)\" [0-9]{3,3} "
 
 Вытаскивает запись даты и времени предыдущего запуска скрипта
 ```
-dateTimeOld=`cat log.log | awk 'go { print } $0 == "___Start_Script_Send_Mail___" { go = 1 }' | grep  '______' | cut -f 2 -d '*'`
+dateTimeOld=$(< log.log awk 'go { print } $0 == "___Start_Script_Send_Mail___" { go = 1 }' | grep  '______' | cut -f 2 -d '*')
   Чт 08 сен 2022 19:36:43 +05
 ```
 
@@ -101,7 +101,7 @@ echo ___Start_Script_Send_Mail___ >> log.log
 Вставляет в конец лог-файла дату и время окончания работы скрипта
 ```
 dateTimeIn=$(date)
-echo ______*${dateTimeIn}*______ >> log.log
+echo "______*${dateTimeIn}*______" >> log.log
 ```
 
 Вычисляет максимальное число в первом столбце файла ip_list.txt и заносит в переменную ipMax
@@ -111,25 +111,25 @@ ipMax=`awk '{if(max<$1){max=$1;line=$1}}END{print line}' ip_list.txt`
 
 Записывает в файл ip_max.txt строки, которые содержат максимальное число (переменная $ipMax) в первом столбце файла ip_list.txt
 ```
-cat ip_list.txt | grep "^${ipMax} " > ip_max.txt
+< ip_list.txt grep "^${ipMax} " > ip_max.txt
 ```
 
 Вычисляет максимальное число в первом столбце файла domains_list.txt и заносит в переменную domainsMax
 ```
-domainsMax=`awk '{if(max<$1){max=$1;line=$1}}END{print line}' domains_list.txt`
+domainsMax=$(awk '{if(max<$1){max=$1;line=$1}}END{print line}' domains_list.txt)
 ```
 
 Записывает в файл domains_max.txt строки, которые содержат максимальное число (переменная $domainsMax) в первом столбце файла domains_list.txt
 ```
-cat domains_list.txt | grep "^${domainsMax} " > domains_max.txt
+< domains_list.txt grep "^${domainsMax} " > domains_max.txt
 ```
 
 Присваиваем значения переменным для отправки Email
 ```
-ipListMax=`cat ip_max.txt`
-domainsListMax=`cat domains_max.txt`
-errorList=`cat error_list.txt`
-httpList=`cat http_list.txt`
+ipListMax=$(cat ip_max.txt)
+domainsListMax=$(cat domains_max.txt)
+errorList=$(cat error_list.txt)
+httpList=$(cat http_list.txt)
 ```
 
 Устанавка утилиты для отправке писем (почтовый сервер postfix при этом тоже устанавливается)
@@ -139,7 +139,7 @@ apt install mailutils
 
 Отправка почты
 ```
-echo "Диапазон времени:\n${dateTimeOld} - ${dateTimeIn}\n${ipListMax}\n${domainsListMax}\n${errorList}\n${httpList}" | mail -s "Отчёт по лог файлу" andrey@mail.ru
+printf 'Диапазон времени:\t%s\n' "${dateTimeOld}" '- ' "${dateTimeIn}" '\t%s\n' "${ipListMax}" '\t%s\n' "${domainsListMax}" '\t%s\n' "${errorList}" '\t%s\n' "${httpList}" | mail -s "Отчёт по лог файлу" andrey@mail.ru
 ```
 
 Или можно прикрепить данные файлы к письму, предварительно поместить их в архив, воспользоваться можно утилитой Mutt
