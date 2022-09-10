@@ -106,7 +106,7 @@ echo "______*${dateTimeIn}*______" >> log.log
 
 Вычисляет максимальное число в первом столбце файла ip_list.txt и заносит в переменную ipMax
 ```
-ipMax=`awk '{if(max<$1){max=$1;line=$1}}END{print line}' ip_list.txt`
+ipMax=$(awk '{if(max<$1){max=$1;line=$1}}END{print line}' ip_list.txt)
 ```
 
 Записывает в файл ip_max.txt строки, которые содержат максимальное число (переменная $ipMax) в первом столбце файла ip_list.txt
