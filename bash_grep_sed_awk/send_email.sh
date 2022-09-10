@@ -26,6 +26,10 @@ fi
 
 dateTimeOld=`cat log.log | awk 'go { print } $0 == "___Start_Script_Send_Mail___" { go = 1 }' | grep  '______' | cut -f 2 -d '*'`
 
+if [ -z "${dateTimeOld}" ]; then
+	dateTimeOld="Первый запуск"
+fi
+
 sed -i -e "s/___Start_Script_Send_Mail___/___OFF_Script_Send_Mail___/g" log.log
 echo ___Start_Script_Send_Mail___ >> log.log
 
