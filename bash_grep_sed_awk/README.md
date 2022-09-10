@@ -142,7 +142,7 @@ apt install mailutils
 echo "Диапазон времени:\n${dateTimeOld} - ${dateTimeIn}\n${ipListMax}\n${domainsListMax}\n${errorList}\n${httpList}" | mail -s "Отчёт по лог файлу" andrey@mail.ru
 ```
 
-Или можно прикрепить данные файлы, предварительно поместить их в архив, воспользоваться можно утилитой Mutt
+Или можно прикрепить данные файлы к письму, предварительно поместить их в архив, воспользоваться можно утилитой Mutt
 ```
 zip log.zip ip_max.txt domains_max.txt error_list.txt http_list.txt
 echo "Логи в архиве" | mutt -s "Отчёт по лог файлу" -a /home/andrey/log.zip -- andrey@mail.ru
