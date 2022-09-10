@@ -144,7 +144,7 @@ echo "Диапазон времени:\n${dateTimeOld} - ${dateTimeIn}\n${ipList
 Или можно прикрепить данные файлы, предварительно поместить их в архив и воспользоваться для этого утилитой Mutt
 ```
 zip log.zip ip_max.txt domains_max.txt error_list.txt http_list.txt
-echo "Логи в архиве" | mutt -s "Отчёт по лог файлу" -a /home/andrey/log.zip -- andrey21x6@mail.ru
+echo "Логи в архиве" | mutt -s "Отчёт по лог файлу" -a /home/andrey/log.zip -- andrey@mail.ru
 ```
 
 # **Результаты**
