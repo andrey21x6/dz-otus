@@ -43,7 +43,7 @@ domainsListMax=$(cat domains_max.txt)
 errorList=$(cat error_list.txt)
 httpList=$(cat http_list.txt)
 
-echo "Диапазон времени:\n${dateTimeOld} - ${dateTimeIn}\n${ipListMax}\n${domainsListMax}\n${errorList}\n${httpList}" | mail -s "Отчёт по лог файлу" andrey@mail.ru
+printf 'Диапазон времени:\t%s\n' "${dateTimeOld}" ' - ' "${dateTimeIn}" '\t%s\n' "${ipListMax}" '\t%s\n' "${domainsListMax}" '\t%s\n' "${errorList}" '\t%s\n' "${httpList}" | mail -s "Отчёт по лог файлу" andrey@mail.ru
 
 # Или можно прикрепить данные файлы к письму, предварительно поместить их в архив, воспользоваться можно утилитой Mutt
 #zip log.zip ip_max.txt domains_max.txt error_list.txt http_list.txt
