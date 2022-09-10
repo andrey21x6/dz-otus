@@ -7,6 +7,7 @@
 - flock from util-linux 2.34
 - mail (GNU Mailutils) 3.7
 - postfix 3.14.13
+- (или Mutt 1.13.2 (2019-12-18))
 
 # **Содержание ДЗ**
 
