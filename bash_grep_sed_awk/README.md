@@ -95,7 +95,7 @@ sed -i -e "s/___Start_Script_Send_Mail___/___OFF_Script_Send_Mail___/g" log.log
 
 Вставляет в конец лог-файла строку ___Start_Script_Send_Mail___
 ```
-echo ___Start_Script_Send_Mail___ >> log.log
+echo "___Start_Script_Send_Mail___" >> log.log
 ```
 
 Вставляет в конец лог-файла дату и время окончания работы скрипта
