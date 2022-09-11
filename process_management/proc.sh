@@ -6,7 +6,7 @@ clkTck=$(getconf CLK_TCK)
 
 echo "PID  TTY  STAT TIME   COMMAND"
 
-for pid in $(find /proc -maxdepth 1 | grep -o -E "[0-9]*[0-9]$" | sort -n);
+for pid in $(find /proc -maxdepth 1 | grep -o -E "[0-9]*[0-9]$" | sort -n)
 do
 	tty=$(cat 2>/dev/null < /proc/"$pid"/stat | awk '{print $7}')
 	stat=$(cat 2>/dev/null < /proc/"$pid"/stat | awk '{print $3}')
