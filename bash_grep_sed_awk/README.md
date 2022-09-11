@@ -152,4 +152,5 @@ echo "Логи в архиве" | mutt -s "Отчёт по лог файлу" -a
 
 - Написал скрипт для планировщика cron на BASH. Проверил на https://www.shellcheck.net - No issues detected!
 - В планировщике прописал запуск скрипта каждый час с блокировкой повторного запуска
-- Приложил скрипт и файл лога для примера
+- Скрипт (файл лога тоже для примера) https://github.com/andrey21x6/dz-otus/blob/main/bash_grep_sed_awk/send_email.sh
+
