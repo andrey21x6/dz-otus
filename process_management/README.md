@@ -26,7 +26,7 @@ procUptime=$(awk '{printf("%d:%02d:%02d:%02d\n",($1/60/60/24),($1/60/60%24),($1/
 clkTck=$(getconf CLK_TCK)
 ```
 
-вывод шапки таблицы
+Вывод шапки таблицы
 ```
 echo "PID  TTY  STAT TIME   COMMAND"
 ```
