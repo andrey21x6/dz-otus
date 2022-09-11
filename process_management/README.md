@@ -71,4 +71,5 @@ echo "uptime:  $procUptime"
 # **Результаты**
 
 - Написал скрипт на BASH proc.sh. Проверил на https://www.shellcheck.net - No issues detected!
+- Скрипт https://github.com/andrey21x6/dz-otus/blob/main/process_management/proc.sh
 
