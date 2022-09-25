@@ -6,9 +6,6 @@
   gather_facts: no
 
   tasks:
-  
-  #- name: Task ping
-    #ping: 
     
   - name: Update
     apt:
