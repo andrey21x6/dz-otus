@@ -1,0 +1,2 @@
+ansible_host: 192.168.100.202
+nginx_port: 8081

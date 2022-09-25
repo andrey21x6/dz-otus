@@ -1,0 +1,46 @@
+ansible [core 2.13.4]
+python version = 3.8.10 (default, Jun 22 2022, 20:18:18) [GCC 9.4.0]
+jinja version = 3.1.2
+
+====================================================================
+
+---
+- name: NGINX | Install and configure NGINX
+  hosts: nginx
+  become: true
+
+
+
+    - name: NGINX | Install NGINX package from EPEL Repo
+      yum:
+        name: nginx
+        state: latest
+      notify:
+        - restart nginx
+      tags:
+        - nginx-package
+        - packages
+
+    - name: NGINX | Create NGINX config file from template
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - reload nginx
+      tags:
+        - nginx-configuration
+
+  handlers:
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+    
+    - name: reload nginx
+      systemd:
+        name: nginx
+        state: reloaded
+		
+===============================================================
+

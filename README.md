@@ -1,2 +1,0 @@
-# dz-otus
-dz-otus

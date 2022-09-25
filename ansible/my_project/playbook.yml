@@ -1,0 +1,43 @@
+---
+
+- name: Run commands
+  hosts: group1
+  become: yes
+  gather_facts: no
+
+  tasks:
+  
+  #- name: Task ping
+    #ping: 
+    
+  - name: Update
+    apt:
+      update_cache: yes
+    
+  - name: Nginx install
+    apt:
+      name: nginx
+      state: present
+    notify:
+    - restart nginx
+      
+  - name: Copy nginx config
+    template:
+      src: /home/andrey/dz/Ansible/my_project/templates/default.j2
+      dest: /etc/nginx/sites-available/default
+    notify:
+    - reload nginx
+      
+  handlers:
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+        enabled: yes
+    
+    - name: reload nginx
+      systemd:
+        name: nginx
+        state: reloaded
+        
+...
