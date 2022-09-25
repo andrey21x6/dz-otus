@@ -20,7 +20,7 @@
       
   - name: Copy nginx config
     template:
-      src: /home/andrey/dz/Ansible/my_project/templates/default.j2
+      src: ./templates/default.j2
       dest: /etc/nginx/sites-available/default
     notify:
     - reload nginx
