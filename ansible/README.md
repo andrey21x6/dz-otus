@@ -24,4 +24,4 @@
 
 Подготовил стенд на Vagrant с двумя серверами. Использовал Ansible, развернул nginx.
 
-Ссылка на Git по ДЗ: 
+Ссылка на Git по ДЗ: https://github.com/andrey21x6/dz-otus/tree/main/ansible
