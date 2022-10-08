@@ -6,7 +6,7 @@
 - GNU bash, version 5.0.17(1)-release-(x86_64-pc-linux-gnu)
 
 - Docker: 
-
+```
 Client: Docker Engine - Community
   Version:           20.10.18
   API version:       1.41
@@ -17,7 +17,8 @@ Server:
   Version:          20.10.14
   API version:      1.41 (minimum version 1.12)
   Go version:       go1.16.15
-  
+```
+
 - Docker Compose version v2.11.2
 
 # **Содержание ДЗ**
