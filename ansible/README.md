@@ -9,7 +9,6 @@
 - Guest OS 1: Ubuntu 20.04.5 LTS
 - Guest OS 2: Ubuntu 20.04.5 LTS
 - nginx_version: 1.18.0
->>>>>>> d5f77608ee69320b45367ebe76766a0a53f2c8c7
 - ansible [core 2.13.4]
 - python version = 3.8.10 (default, Jun 22 2022, 20:18:18) [GCC 9.4.0]
 - jinja version = 3.1.2
