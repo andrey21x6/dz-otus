@@ -5,7 +5,6 @@
 - Host OS: Ubuntu Desktop 20.04.4
 
 - GNU bash, version 5.0.17(1)-release-(x86_64-pc-linux-gnu)
-=======
 - Guest OS 1: Ubuntu 20.04.5 LTS
 - Guest OS 2: Ubuntu 20.04.5 LTS
 - nginx_version: 1.18.0
@@ -87,7 +86,6 @@ curl http://192.168.100.202:8081
     </body>
     </html>
 ```
->>>>>>> d5f77608ee69320b45367ebe76766a0a53f2c8c7
 
 # **Результаты**
 
