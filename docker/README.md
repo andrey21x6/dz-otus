@@ -30,11 +30,6 @@ Server:
 
 Создал свой кастомный образ nginx на базе alpine. 
 
-Скачивание и запуск: 
-```
-docker pull andrey21x6/nginx-dz:1.0
-```
-
 Ссылка на Docker Hub: https://hub.docker.com/r/andrey21x6/nginx-dz/tags
 ```
 docker run -d -p 80:80 --name My-Web-dz andrey21x6/nginx-dz:1.0
