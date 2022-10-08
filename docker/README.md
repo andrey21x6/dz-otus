@@ -13,9 +13,13 @@
 # **Выполнение**
 
 Создал свой кастомный образ nginx на базе alpine. 
+
 Скачивание и запуск: docker pull andrey21x6/nginx-dz:1.0
+
 Ссылка на Docker Hub: https://hub.docker.com/r/andrey21x6/nginx-dz/tags
+
 Ссылка на GitH ub: https://github.com/andrey21x6/dz-otus/tree/main/docker
+
 
 ### Разница между контейнером и образом:
 На основе образа, запускаются контейнеры в любом количестве. Запущенный экземпляр образа - это контейнер.
