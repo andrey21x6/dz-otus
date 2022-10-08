@@ -45,9 +45,8 @@ uname -a
 
 # **Дополнительное ДЗ**
 
-Создайте кастомные образы nginx и php, объедините их в docker-compose.
-После запуска nginx должен показывать php info.
-Все собранные образы должны быть в docker hub.
+Создал кастомные образы nginx и php, объединил их в docker-compose.
+После запуска nginx показывает php info.
 
 Ссылка на Docker Hub: 
 Ссылка на GitH Hub: https://github.com/andrey21x6/dz-otus/tree/main/docker-compose
