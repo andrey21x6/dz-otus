@@ -62,7 +62,9 @@ uname -a
 После запуска nginx показывает php info.
 
 Ссылка на Docker Hub nginx: https://hub.docker.com/r/andrey21x6/docker-compose-nginx/tags
+
 Ссылка на Docker Hub php: https://hub.docker.com/r/andrey21x6/docker-compose-php
+
 Ссылка на GitH Hub: https://github.com/andrey21x6/dz-otus/tree/main/docker-compose
 
 
