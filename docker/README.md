@@ -65,6 +65,6 @@ uname -a
 
 Ссылка на Docker Hub php: https://hub.docker.com/r/andrey21x6/docker-compose-php/tags
 
-Ссылка на GitH Hub по docker-compose: https://github.com/andrey21x6/dz-otus/tree/main/docker-compose
+Ссылка на GitH Hub по дополнительному ДЗ docker-compose: https://github.com/andrey21x6/dz-otus/tree/main/docker-compose
 
 
