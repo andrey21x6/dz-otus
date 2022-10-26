@@ -20,7 +20,7 @@
 
 # **Выполнение**
 
-###КЛИЕНТ
+### КЛИЕНТ
 
 Открываем файл конфига rsyslog
 ```
@@ -76,7 +76,7 @@ sudo systemctl restart rsyslog
 sudo systemctl status rsyslog
 ```
 
-###СЕРВЕР
+### СЕРВЕР
 
 Создаём каталог
 ```
