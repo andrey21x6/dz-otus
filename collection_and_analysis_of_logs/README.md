@@ -101,21 +101,6 @@ module(load="imtcp")
 input(type="imtcp" port="514")
 ```
 
-### ss -tulnp
-```
-Netid       State        Recv-Q       Send-Q                               Local Address:Port             Peer Address:Port       Process
-udp         UNCONN       0            0                                          0.0.0.0:514                   0.0.0.0:*
-udp         UNCONN       0            0                                    127.0.0.53%lo:53                    0.0.0.0:*
-udp         UNCONN       0            0                                   10.0.2.15%eth0:68                    0.0.0.0:*
-udp         UNCONN       0            0                                             [::]:514                      [::]:*
-udp         UNCONN       0            0                  [fe80::a00:27ff:febe:90b3]%eth1:546                      [::]:*
-tcp         LISTEN       0            25                                         0.0.0.0:514                   0.0.0.0:*
-tcp         LISTEN       0            4096                                 127.0.0.53%lo:53                    0.0.0.0:*
-tcp         LISTEN       0            128                                        0.0.0.0:22                    0.0.0.0:*
-tcp         LISTEN       0            25                                            [::]:514                      [::]:*
-tcp         LISTEN       0            128                                           [::]:22                       [::]:*
-```
-
 После строки: module(load="imklog" permitnonkernelfacility="on") добавить для получения удалённых логов, в том числе с аудита конфигов nginx
 ```
 $template RemoteLogs,"/var/log/rsyslog/%HOSTNAME%/%PROGRAMNAME%.log"
@@ -129,6 +114,21 @@ local6.* ?HostAudit
 Перезапуск rsyslog
 ```
 sudo systemctl restart rsyslog
+```
+
+### ss -tulnp
+```
+Netid       State        Recv-Q       Send-Q                               Local Address:Port             Peer Address:Port       Process
+udp         UNCONN       0            0                                          0.0.0.0:514                   0.0.0.0:*
+udp         UNCONN       0            0                                    127.0.0.53%lo:53                    0.0.0.0:*
+udp         UNCONN       0            0                                   10.0.2.15%eth0:68                    0.0.0.0:*
+udp         UNCONN       0            0                                             [::]:514                      [::]:*
+udp         UNCONN       0            0                  [fe80::a00:27ff:febe:90b3]%eth1:546                      [::]:*
+tcp         LISTEN       0            25                                         0.0.0.0:514                   0.0.0.0:*
+tcp         LISTEN       0            4096                                 127.0.0.53%lo:53                    0.0.0.0:*
+tcp         LISTEN       0            128                                        0.0.0.0:22                    0.0.0.0:*
+tcp         LISTEN       0            25                                            [::]:514                      [::]:*
+tcp         LISTEN       0            128                                           [::]:22                       [::]:*
 ```
 
 Через некоторое время, в каталоге /var/log/rsyslog появятся каталоги log и web (по названию хостов) и там будут лог-файлы.
