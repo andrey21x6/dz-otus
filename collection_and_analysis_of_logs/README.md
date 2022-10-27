@@ -76,7 +76,7 @@ sudo systemctl restart nginx
 sudo systemctl restart rsyslog
 ```
 
-### СЕРВЕР сервер log
+#### СЕРВЕР сервер log
 
 Создаём каталог
 ```
