@@ -1,4 +1,4 @@
 #!/bin/bash
 
 apt update
-apt install -y mc htop nginx
+apt install -y mc nginx auditd
