@@ -29,13 +29,6 @@
 sudo nano /etc/rsyslog.conf
 ```
 
-После $WorkDirectory /var/spool/rsyslog
-
-Добавить для Nginx
-```
-$ModLoad imfile
-```
-
 После строки: $IncludeConfig /etc/rsyslog.d/*.conf
 
 Добавить адрес и порт сервера rsyslog для отправки критических ошибок (crit)
@@ -48,7 +41,7 @@ $ModLoad imfile
  sudo nano /etc/audit/rules.d/audit.rules
 ```
 
-Добавить туда строки для контроля изменений перечисленных файлов
+Добавить туда строки для контроля изменений перечисленных файлов (кофиги nginx)
 ```
 -w /etc/nginx/nginx.conf -p wa -k nginx_conf
 -w /etc/nginx/default.d/ -p wa -k nginx_conf
@@ -60,7 +53,7 @@ $ModLoad imfile
 sudo systemctl restart auditd
 ```
 
-Открываем файл для редактирования
+Открываем файл конфига nginx для редактирования
 ```
 sudo nano /etc/nginx/nginx.conf
 ```
@@ -100,12 +93,27 @@ sudo chown -R syslog:syslog /var/log/rsyslog
 sudo nano /etc/rsyslog.conf
 ```
 
-Раскоментировать для того, чтобы rsyslog стал сервером
+Раскоментируем для того, чтобы rsyslog стал сервером и принимал запросы на 514 порту
 ```
 module(load="imudp")
 input(type="imudp" port="514")
 module(load="imtcp")
 input(type="imtcp" port="514")
+```
+
+### ss -tulnp
+```
+Netid       State        Recv-Q       Send-Q                               Local Address:Port             Peer Address:Port       Process
+udp         UNCONN       0            0                                          0.0.0.0:514                   0.0.0.0:*
+udp         UNCONN       0            0                                    127.0.0.53%lo:53                    0.0.0.0:*
+udp         UNCONN       0            0                                   10.0.2.15%eth0:68                    0.0.0.0:*
+udp         UNCONN       0            0                                             [::]:514                      [::]:*
+udp         UNCONN       0            0                  [fe80::a00:27ff:febe:90b3]%eth1:546                      [::]:*
+tcp         LISTEN       0            25                                         0.0.0.0:514                   0.0.0.0:*
+tcp         LISTEN       0            4096                                 127.0.0.53%lo:53                    0.0.0.0:*
+tcp         LISTEN       0            128                                        0.0.0.0:22                    0.0.0.0:*
+tcp         LISTEN       0            25                                            [::]:514                      [::]:*
+tcp         LISTEN       0            128                                           [::]:22                       [::]:*
 ```
 
 После module(load="imklog" permitnonkernelfacility="on") добавить для получения удалённых логов, в том числе с аудита конфигов nginx
