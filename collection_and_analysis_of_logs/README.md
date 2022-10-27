@@ -6,6 +6,8 @@
 - Guest OS: Cent OS 8.5.2111
 - VirtualBox: 6.1.36
 - Vagrant: 2.3.0-1
+- rsyslogd: 8.2001.0
+- nginx: 1.18.0
 - auditd 1:2.8.5-2ubuntu6 amd64
 
 # **Содержание ДЗ**
