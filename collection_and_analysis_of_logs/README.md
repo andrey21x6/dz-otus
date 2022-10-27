@@ -83,7 +83,7 @@ sudo systemctl restart nginx
 sudo systemctl restart rsyslog
 ```
 
-### СЕРВЕР
+### СЕРВЕР сервер log
 
 Создаём каталог
 ```
@@ -100,19 +100,22 @@ sudo chown -R syslog:syslog /var/log/rsyslog
 sudo nano /etc/rsyslog.conf
 ```
 
-Раскоментировать для того, чтобы rsyslog стал сервером и слушал порт 514 по TCP
+Раскоментировать для того, чтобы rsyslog стал сервером
 ```
+module(load="imudp")
+input(type="imudp" port="514")
 module(load="imtcp")
 input(type="imtcp" port="514")
 ```
 
-После module(load="imklog" permitnonkernelfacility="on")
-
-Добавить
+После module(load="imklog" permitnonkernelfacility="on") добавить для получения удалённых логов, в том числе с аудита конфигов nginx
 ```
 $template RemoteLogs,"/var/log/rsyslog/%HOSTNAME%/%PROGRAMNAME%.log"
 *.* ?RemoteLogs
 & ~
+
+$template HostAudit, "/var/log/rsyslog/%HOSTNAME%/audit.log"
+local6.* ?HostAudit
 ```
 
 Перезапуск rsyslog
@@ -120,8 +123,24 @@ $template RemoteLogs,"/var/log/rsyslog/%HOSTNAME%/%PROGRAMNAME%.log"
 sudo systemctl restart rsyslog
 ```
 
-Статус rsyslog
+Через некоторое время, в каталоге /var/log/rsyslog появятся каталоги log и web (по названию хостов) и там будут лог-файлы.
+
 ```
-sudo systemctl status rsyslog
+sudo ls /var/log/rsyslog/log -l
+   total 32
+   -rw-r--r-- 1 syslog syslog   361 Oct 27 12:05 50-motd-news.log
+   -rw-r--r-- 1 syslog syslog 10872 Oct 27 12:25 CRON.log
+   -rw-r--r-- 1 syslog syslog  1992 Oct 27 11:52 rsyslogd.log
+   -rw-r--r-- 1 syslog syslog  7713 Oct 27 12:28 sudo.log
+   -rw-r--r-- 1 syslog syslog  1606 Oct 27 12:18 systemd.log
+
+sudo ls /var/log/rsyslog/web -l
+   total 84
+   -rw-r--r-- 1 syslog syslog  1535 Oct 27 12:25 CRON.log
+   -rw-r--r-- 1 syslog syslog  1209 Oct 27 08:15 nginx_access.log
+   -rw-r--r-- 1 syslog syslog  1141 Oct 27 11:54 rsyslogd.log
+   -rw-r--r-- 1 syslog syslog  1283 Oct 27 12:14 sudo.log
+   -rw-r--r-- 1 syslog syslog   295 Oct 27 11:51 systemd.log
+   -rw-r--r-- 1 syslog syslog 58067 Oct 27 12:25 tag_audit_log.log
 ```
 
