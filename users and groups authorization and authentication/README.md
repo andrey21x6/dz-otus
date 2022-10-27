@@ -16,7 +16,7 @@ nano /etc/login.group
    admin
 ```
 
-Открываем для редактирования файл sshd
+Открываем для редактирования файл time.conf
 ```
 nano /etc/security/time.conf
 ```
