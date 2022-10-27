@@ -6,6 +6,7 @@
 - Guest OS: Cent OS 8.5.2111
 - VirtualBox: 6.1.36
 - Vagrant: 2.3.0-1
+- auditd 1:2.8.5-2ubuntu6 amd64
 
 # **Содержание ДЗ**
 
@@ -16,11 +17,10 @@
 * Все критичные логи с web должны собираться и локально и удаленно.
 * Все логи с nginx должны уходить на удаленный сервер (локально только критичные).
 * Логи аудита должны также уходить на удаленную систему.
-* Формат сдачи ДЗ - vagrant + ansible
 
 # **Выполнение**
 
-### КЛИЕНТ
+### КЛИЕНТ сервер web
 
 Открываем файл конфига rsyslog
 ```
@@ -34,46 +34,51 @@ sudo nano /etc/rsyslog.conf
 $ModLoad imfile
 ```
 
-После $IncludeConfig /etc/rsyslog.d/*.conf
+После строки: $IncludeConfig /etc/rsyslog.d/*.conf
 
-Добавить адрес и порт сервера rsyslog по TCP (@@...), отправляем все логи (*.*)
+Добавить адрес и порт сервера rsyslog для отправки критических ошибок (crit)
 ```
-*.* @@192.168.100.209:514
-```
-
-Создать
-```
-sudo nano /etc/rsyslog.d/nginx.conf
+*.crit @192.168.100.209:514
 ```
 
-Добавить
+Создать файл
 ```
-# error log
-$InputFileName /var/log/nginx/error.log
-$InputFileTag nginx:
-$InputFileStateFile stat-nginx-error
-$InputFileSeverity error
-$InputFileFacility local6
-$InputFilePollInterval 1
-$InputRunFileMonitor
-# access log
-$InputFileName /var/log/nginx/access.log
-$InputFileTag nginx:
-$InputFileStateFile stat-nginx-access
-$InputFileSeverity notice
-$InputFileFacility local6
-$InputFilePollInterval 1
-$InputRunFileMonitor
+ sudo nano /etc/audit/rules.d/audit.rules
 ```
 
-Перезапуск rsyslog
+Добавить туда строки для контроля изменений перечисленных файлов
+```
+-w /etc/nginx/nginx.conf -p wa -k nginx_conf
+-w /etc/nginx/default.d/ -p wa -k nginx_conf
+-w /etc/nginx/conf.d/ -p wa -k nginx_conf
+```
+
+Перезапускаем auditd
+```
+sudo systemctl restart auditd
+```
+
+Открываем файл для редактирования
+```
+sudo nano /etc/nginx/nginx.conf
+```
+
+И приводим к виду строки с логами, чтобы все логи с nginx уходили на удаленный сервер, а локально только критические (crit)
+```
+access_log syslog:server=192.168.100.209:514,tag=nginx_access;
+error_log syslog:server=192.168.100.209:514,tag=nginx_error,severity=info;
+access_log /var/log/nginx/access.log;
+error_log  /var/log/nginx/error.log,severity=crit;
+```
+
+Перезапускаем nginx
+```
+sudo systemctl restart nginx
+```
+
+Перезапускаем rsyslog
 ```
 sudo systemctl restart rsyslog
-```
-
-Статус rsyslog
-```
-sudo systemctl status rsyslog
 ```
 
 ### СЕРВЕР
