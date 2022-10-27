@@ -116,7 +116,7 @@ tcp         LISTEN       0            25                                        
 tcp         LISTEN       0            128                                           [::]:22                       [::]:*
 ```
 
-После module(load="imklog" permitnonkernelfacility="on") добавить для получения удалённых логов, в том числе с аудита конфигов nginx
+После строки: module(load="imklog" permitnonkernelfacility="on") добавить для получения удалённых логов, в том числе с аудита конфигов nginx
 ```
 $template RemoteLogs,"/var/log/rsyslog/%HOSTNAME%/%PROGRAMNAME%.log"
 *.* ?RemoteLogs
