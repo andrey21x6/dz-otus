@@ -1,4 +1,4 @@
 #!/bin/bash
 
-apt update
-apt install -y mc nginx auditd
+apt-get update
+apt-get install -y mc nginx auditd
