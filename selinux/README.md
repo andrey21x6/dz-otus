@@ -106,7 +106,7 @@ systemctl status nginx
 Заходим в браузер на хостовой машине по адресу http://127.0.0.1:4881
 
 
-![Screenshot of up-and-running server](http://i.imgur.com/TP1i9Zd.png)
+![Screenshot of up-and-running server](https://github.com/andrey21x6/dz-otus/tree/main/selinux/scrin/nginx.jpg)
 
 
 Проверить статус параметра можно с помощью команды
