@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/andrey/GIT/dz-otus/selinux2/selinux_dns_problems","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

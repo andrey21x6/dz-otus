@@ -7,6 +7,9 @@
 - VirtualBox: 6.1.36
 - Vagrant: 2.3.0-1
 - nginx: 1.20.1
+- ansible [core 2.13.4]
+- python version = 3.8.10
+- jinja version = 3.1.2
 
 # **Содержание ДЗ**
 
@@ -23,7 +26,7 @@
 * реализовать выбранное решение и продемонстрировать его работоспособность.
 
 
-# **Выполнение**
+# **Выполнение ДЗ № 1**
 
 Для начала проверим, что в ОС отключен файервол
 ```
@@ -271,3 +274,194 @@ semodule -r nginx
 
 	libsemanage.semanage_direct_remove_key: Removing last nginx module (no other nginx module exists at another priority).
 ```
+
+# **Выполнение ДЗ № 2**
+
+
+Выполним клонирование репозитория (удалил всё лишнее)
+```
+git clone git@github.com:mbfx/otus-linux-adm.git
+```
+
+Перейдём в каталог со стендом
+```
+cd selinux_dns_problems
+```
+
+Развернём 2 ВМ с помощью vagrant
+```
+vagrant up
+```
+
+Проверим ВМ
+```
+vagrant status
+
+	Current machine states:
+
+	ns01                      running (virtualbox)
+	client                    running (virtualbox)
+
+	This environment represents multiple VMs. The VMs are all listed
+	above with their current state. For more information about a specific
+	VM, run `vagrant status NAME`.
+```
+
+Подключимся к клиенту
+```
+vagrant ssh client
+```
+
+Попробуем внести изменения в зону
+```
+nsupdate -k /etc/named.zonetransfer.key
+> server 192.168.50.10
+> zone ddns.lab
+> update add www.ddns.lab. 60 A 192.168.50.15
+> send
+
+	update failed: SERVFAIL
+	
+quit
+```
+
+Изменения внести не получилось. Посмотрим логи SELinux, чтобы понять в чём может быть проблема, для этого воспользуемся утилитой audit2why
+```
+sudo -i
+cat /var/log/audit/audit.log | audit2why
+```
+
+Тут мы видим, что на клиенте отсутствуют ошибки.
+
+Не закрывая сессию на клиенте, подключимся к серверу ns01 и проверим логи SELinux
+```
+vagrant ssh ns01
+sudo -i
+cat /var/log/audit/audit.log | audit2why
+
+	type=AVC msg=audit(1667457535.307:1966): avc:  denied  { create } for  pid=5328 comm="isc-worker0000" name="named.ddns.lab.view1.jnl" scontext=system_u:system_r:named_t:s0 tcontext=system_u:object_r:etc_t:s0 tclass=file permissive=0
+
+			Was caused by:
+					Missing type enforcement (TE) allow rule.
+
+					You can use audit2allow to generate a loadable module to allow this access.
+```
+
+В логах мы видим, что ошибка в контексте безопасности. Вместо типа named_t используется тип etc_t. Проверим данную проблему в каталоге /etc/named
+```
+ls -laZ /etc/named
+
+	drw-rwx---. root named system_u:object_r:etc_t:s0       .
+	drwxr-xr-x. root root  system_u:object_r:etc_t:s0       ..
+	drw-rwx---. root named unconfined_u:object_r:etc_t:s0   dynamic
+	-rw-rw----. root named system_u:object_r:etc_t:s0       named.50.168.192.rev
+	-rw-rw----. root named system_u:object_r:etc_t:s0       named.dns.lab
+	-rw-rw----. root named system_u:object_r:etc_t:s0       named.dns.lab.view1
+	-rw-rw----. root named system_u:object_r:etc_t:s0       named.newdns.lab
+```
+
+Тут мы также видим, что контекст безопасности неправильный. Проблема заключается в том, что конфигурационные файлы лежат в другом каталоге.
+Посмотреть, в каком каталоги должны лежать файлы, чтобы на них распространялись правильные политики SELinux можно с помощью команды
+```
+semanage fcontext -l | grep named
+
+	/etc/rndc.*                                        regular file       system_u:object_r:named_conf_t:s0
+	/var/named(/.*)?                                   all files          system_u:object_r:named_zone_t:s0
+	...
+```
+
+Изменим тип контекста безопасности для каталога /etc/named
+```
+chcon -R -t named_zone_t /etc/named
+```
+
+Проверим
+```
+ls -laZ /etc/named
+
+	drw-rwx---. root named system_u:object_r:named_zone_t:s0 .
+	drwxr-xr-x. root root  system_u:object_r:etc_t:s0       ..
+	drw-rwx---. root named unconfined_u:object_r:named_zone_t:s0 dynamic
+	-rw-rw----. root named system_u:object_r:named_zone_t:s0 named.50.168.192.rev
+	-rw-rw----. root named system_u:object_r:named_zone_t:s0 named.dns.lab
+	-rw-rw----. root named system_u:object_r:named_zone_t:s0 named.dns.lab.view1
+	-rw-rw----. root named system_u:object_r:named_zone_t:s0 named.newdns.lab
+```
+
+Попробуем снова внести изменения с клиента
+```
+nsupdate -k /etc/named.zonetransfer.key
+> server 192.168.50.10
+> zone ddns.lab
+> update add www.ddns.lab. 60 A 192.168.50.15
+> send
+> quit
+```
+
+Прошло успешно. Проверим
+```
+dig www.ddns.lab
+
+	; <<>> DiG 9.11.4-P2-RedHat-9.11.4-26.P2.el7_9.10 <<>> www.ddns.lab
+	;; global options: +cmd
+	;; Got answer:
+	;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 14403
+	;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 2
+
+	;; OPT PSEUDOSECTION:
+	; EDNS: version: 0, flags:; udp: 4096
+	;; QUESTION SECTION:
+	;www.ddns.lab.                  IN      A
+
+	;; ANSWER SECTION:
+	www.ddns.lab.           60      IN      A       192.168.50.15
+
+	;; AUTHORITY SECTION:
+	ddns.lab.               3600    IN      NS      ns01.dns.lab.
+
+	;; ADDITIONAL SECTION:
+	ns01.dns.lab.           3600    IN      A       192.168.50.10
+
+	;; Query time: 2 msec
+	;; SERVER: 192.168.50.10#53(192.168.50.10)
+	;; WHEN: Thu Nov 03 06:56:23 UTC 2022
+	;; MSG SIZE  rcvd: 96
+```
+
+Видим, что изменения применились. Перезагрузим хосты
+```
+shutdown -r now
+```
+
+Ещё раз сделаем запрос с помощью dig
+```
+dig @192.168.50.10 www.ddns.lab
+
+	; <<>> DiG 9.11.4-P2-RedHat-9.11.4-26.P2.el7_9.10 <<>> @192.168.50.10 www.ddns.lab
+	; (1 server found)
+	;; global options: +cmd
+	;; Got answer:
+	;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 59137
+	;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 2
+
+	;; OPT PSEUDOSECTION:
+	; EDNS: version: 0, flags:; udp: 4096
+	;; QUESTION SECTION:
+	;www.ddns.lab.                  IN      A
+
+	;; ANSWER SECTION:
+	www.ddns.lab.           60      IN      A       192.168.50.15
+
+	;; AUTHORITY SECTION:
+	ddns.lab.               3600    IN      NS      ns01.dns.lab.
+
+	;; ADDITIONAL SECTION:
+	ns01.dns.lab.           3600    IN      A       192.168.50.10
+
+	;; Query time: 1 msec
+	;; SERVER: 192.168.50.10#53(192.168.50.10)
+	;; WHEN: Thu Nov 03 07:03:35 UTC 2022
+	;; MSG SIZE  rcvd: 96
+```
+
+![se2](https://github.com/andrey21x6/dz-otus/blob/main/selinux/scrin/se2.jpg)
