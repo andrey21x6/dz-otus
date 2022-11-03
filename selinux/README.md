@@ -463,5 +463,5 @@ dig @192.168.50.10 www.ddns.lab
 	;; MSG SIZE  rcvd: 96
 ```
 
-![se2](https://user-images.githubusercontent.com/91377497/199666244-d4a72733-0b68-4943-939f-6e0bf230d5ae.jpg)
+![se2](https://github.com/andrey21x6/dz-otus/blob/main/selinux/selinux2/scrin/se2.jpg)
 
