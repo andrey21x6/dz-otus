@@ -17,28 +17,28 @@ Description=Borg Backup
 [Service]
 Type=oneshot
 
-# Парольная фраза
-Environment="BORG_PASSPHRASE=Otus1234"
+# Парольная фраза / Passphrase
+Environment=BORG_PASSPHRASE=1
 
-# Репозиторий
+# Репозиторий /Repository
 Environment=REPO=borg@192.168.11.160:/var/backup/
 
-# Что бэкапим
+# Что бэкапим / What do we back up
 Environment=BACKUP_TARGET=/etc
 
-# Создание бэкапа
-ExecStart=/bin/borg create \
---stats \
+# Создание бэкапа / Creating a backup
+ExecStart=/bin/borg create \\
+--stats \\
 \${REPO}::etc-{now:%%Y-%%m-%%d_%%H:%%M:%%S} \${BACKUP_TARGET}
 
-# Проверка бэкапа
+# Проверка бэкапа / Backup verification
 ExecStart=/bin/borg check \${REPO}
 
-# Очистка старых бэкапов
-ExecStart=/bin/borg prune \
---keep-daily 90 \
---keep-monthly 12 \
---keep-yearly 1 \
+# Очистка старых бэкапов / Cleaning up old backups
+ExecStart=/bin/borg prune \\
+--keep-daily 90 \\
+--keep-monthly 12 \\
+--keep-yearly 1 \\
 \${REPO} 
 EOT
 
@@ -52,19 +52,8 @@ Description=Borg Backup
 
 [Timer]
 OnUnitActiveSec=5min
+Unit=borg-backup.service
 
 [Install]
 WantedBy=timers.target
 EOT
-
-###########################################################
-
-#echo "line 1
-#line 2
-#line 3" >> 1.txt
-
-#cat <<EOT >> result.txt
-#line 1
-#line 2
-#line 3
-#EOT
