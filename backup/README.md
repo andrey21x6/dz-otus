@@ -85,7 +85,7 @@ Description=Borg Backup
 Type=oneshot
 
 # Парольная фраза
-Environment="BORG_PASSPHRASE=Otus1234"
+Environment=BORG_PASSPHRASE=1
 
 # Репозиторий
 Environment=REPO=borg@192.168.11.160:/var/backup/
@@ -94,18 +94,18 @@ Environment=REPO=borg@192.168.11.160:/var/backup/
 Environment=BACKUP_TARGET=/etc
 
 # Создание бэкапа
-ExecStart=/bin/borg create \
---stats \
+ExecStart=/bin/borg create \\
+--stats \\
 \${REPO}::etc-{now:%%Y-%%m-%%d_%%H:%%M:%%S} \${BACKUP_TARGET}
 
 # Проверка бэкапа
 ExecStart=/bin/borg check \${REPO}
 
 # Очистка старых бэкапов
-ExecStart=/bin/borg prune \
---keep-daily 90 \
---keep-monthly 12 \
---keep-yearly 1 \
+ExecStart=/bin/borg prune \\
+--keep-daily 90 \\
+--keep-monthly 12 \\
+--keep-yearly 1 \\
 \${REPO} 
 EOT
 
@@ -203,9 +203,8 @@ mount | grep sdb1
 
 Добавим строку в файл /etc/fstab, чтобы при запуске системы данный диск монтировался
 ```
-nano /etc/fstab
-
-	/dev/sdb1            /var/backup                    xfs     defaults        0 0
+#echo "/dev/sdb1            /var/backup                    xfs     defaults        0 0" >> /etc/fstab
+sed -i '$a /dev/sdb1            /var/backup                    xfs     defaults        0 0' /etc/fstab
 ```
 
 Теперь запускаем вторую консоль и заходим на сервер client
@@ -237,7 +236,7 @@ cat .ssh/id_rsa.pub
 nano /home/borg/.ssh/authorized_keys
 ```
 
-Переходим на сервере client.
+Переходим на сервер client.
 
 Инициализируем репозиторий borg на backup сервере с client сервера
 ```
@@ -245,12 +244,11 @@ borg upgrade --disable-tam ssh://borg@192.168.11.160/var/backup
 borg init --encryption=repokey borg@192.168.11.160:/var/backup/
 ```
 
+Задаём пароль.
+
 Запускаем для проверки создания бэкапа
 ```
-borg create --stats --list borg@192.168.11.160:/var/backup/::"etc-{now:%Y-%m-%d_%H:%M:%S}" /etc
-
-BORG_PASSPHRASE=1
-borg create --stats --list borg@192.168.11.160:/var/backup/::"etc-{now:%Y-%m-%d_%H:%M:%S}" /etc
+borg create --stats --list borg@192.168.11.160:/var/backup/::etc-{now:%Y-%m-%d_%H:%M:%S} /etc
 ```
 
 Смотрим, что у нас получилось
