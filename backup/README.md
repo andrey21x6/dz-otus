@@ -6,8 +6,9 @@
 - Guest OS: 7.8.2003 (backup)
 - Guest OS: 7.8.2003 (client)
 - VirtualBox: 6.1.36
-- Vagrant: 2.3.0-1
+- Vagrant: 2.2.3
 - borg 1.1.18
+- rsyslogd 8.24.0-52.el7
 
 # **Содержание ДЗ**
 
@@ -276,8 +277,57 @@ cat etc/hostname
 	client
 ```
 
+Автоматизируем создание бэкапов с помощью systemd.
+В Vagrant файле, ранее создалось два файла: borg-backup.service (сервис) и borg-backup.timer (таймер).
+
+Включаем и запускаем службу таймера
+```
+sudo systemctl enable borg-backup.timer
+sudo systemctl start borg-backup.timer
+```
+
+Проверяем статус
+```
+sudo systemctl status borg-backup.timer
+
+	● borg-backup.timer - Borg Backup
+	   Loaded: loaded (/etc/systemd/system/borg-backup.timer; enabled; vendor preset: disabled)
+	   Active: active (waiting) since Sun 2022-11-06 10:07:46 UTC; 9s ago
+
+	Nov 06 10:07:46 client systemd[1]: Started Borg Backup.
+```
+
+Проверяем работу таймера
+```
+systemctl list-timers --all
+
+	NEXT                         LEFT          LAST                         PASSED    UNIT                         ACTIVATES
+	Sun 2022-11-06 10:12:46 UTC  4min 10s left Sun 2022-11-06 10:07:46 UTC  49s ago   borg-backup.timer            borg-backup.service
+	Mon 2022-11-07 09:22:31 UTC  23h left      Sun 2022-11-06 09:22:31 UTC  46min ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+	n/a                          n/a           n/a                          n/a       systemd-readahead-done.timer systemd-readahead-done.service
+
+	3 timers listed.
+```
+
+Проверяем список бекапов
+```
+borg list borg@192.168.11.160:/var/backup/
+
+	etc-2022-11-05_11:29:50              Sat, 2022-11-05 11:29:54 [491a5bb88a0562bc47a3145eedd28c4a5d9a9757c240eaba7cbb8e1a06543430]
+	etc-2022-11-06_10:07:47              Sun, 2022-11-06 10:07:48 [a8927966ff24be057214361664c7599decbf1d6f26b0f36d228c5d2efdcfcfb4]
+```
+
+Логирование
 
 
 
-borg upgrade --disable-tam ssh://borg@192.168.11.160/var/backup
-systemctl daemon-reload
+
+
+
+
+
+
+
+
+
+
