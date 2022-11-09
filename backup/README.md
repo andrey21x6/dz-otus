@@ -277,7 +277,7 @@ cat etc/hostname
 ```
 
 Автоматизируем создание бэкапов с помощью systemd.
-В Vagrant файле, ранее создалось два файла: borg-backup.service (сервис) и borg-backup.timer (таймер).
+С помощью Vagrant файла, ранее создалось два файла: borg-backup.service (сервис) и borg-backup.timer (таймер).
 
 Включаем и запускаем службу таймера
 ```
