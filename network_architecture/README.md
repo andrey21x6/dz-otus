@@ -112,23 +112,18 @@ Office2----/
 
 office1Server
 
-![office1Server-1](https://user-images.githubusercontent.com/91377497/200847435-e397157f-4cdc-43ff-a280-80b3b82f4706.jpg)
+![office1Server-1](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/centralServer-1.jpg)
 
-![office1Server-2](https://user-images.githubusercontent.com/91377497/200847457-6aac6cc3-4892-4ece-b1b8-a58bb1334664.jpg)
+![office1Server-2](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/centralServer-2.jpg)
 
 office2Server
 
-![office2Server-1](https://user-images.githubusercontent.com/91377497/200847496-06dd7ae2-98d9-48b9-a50f-8cd1b9e7195f.jpg)
+![office2Server-1](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/office2Server-1.jpg)
 
-![office2Server-2](https://user-images.githubusercontent.com/91377497/200847520-fda507e2-1b8e-443b-bc96-15ea5b1e7b18.jpg)
+![office2Server-2](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/office2Server-2.jpg)
 
 centralServer
 
-![centralServer-1](https://user-images.githubusercontent.com/91377497/200847549-edb2ba90-302f-432e-b312-881c2f31d09f.jpg)
+![centralServer-1](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/centralServer-1.jpg)
 
-![centralServer-2](https://user-images.githubusercontent.com/91377497/200847564-3d17cd12-f70a-4d9e-970b-1fa1030dd310.jpg)
-
-
-
-
-
+![centralServer-2](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/centralServer-1.jpg)
