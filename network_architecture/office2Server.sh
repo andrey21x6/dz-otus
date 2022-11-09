@@ -7,7 +7,10 @@ yum install mc nano traceroute -y
 echo "DEFROUTE=no" >> /etc/sysconfig/network-scripts/ifcfg-eth0 
 
 # Добавить запись в файле (сетевой интерфейс eth1) ifcfg-eth1, тем самым, установить шлюз 192.168.1.1
-echo "GATEWAY=192.168.1.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+echo "GATEWAY=192.168.1.193" >> /etc/sysconfig/network-scripts/ifcfg-eth1
+
+# Добавление статического маршрута
+ip route add default via 192.168.1.193 dev eth1
 
 # Перезапуск сетевых интерфейсов
 systemctl restart network
