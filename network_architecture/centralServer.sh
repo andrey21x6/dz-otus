@@ -12,7 +12,8 @@ echo "GATEWAY=192.168.0.1" >> /etc/sysconfig/network-scripts/ifcfg-eth1
 # Перезапуск сетевых интерфейсов
 systemctl restart network
 
-
-
+# Удаление маршрута по умолчанию
 ip route del default
+
+# Добавление маршрута по умолчанию через сетевой интерфейс 192.168.0.1
 ip route add default via 192.168.0.1 dev eth1 
