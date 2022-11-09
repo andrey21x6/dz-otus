@@ -112,9 +112,9 @@ Office2----/
 
 #### office1Server
 
-![office1Server-1](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/centralServer-1.jpg)
+![office1Server-1](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/office1Server-1.jpg)
 
-![office1Server-2](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/centralServer-2.jpg)
+![office1Server-2](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/office1Server-2.jpg)
 
 #### office2Server
 
