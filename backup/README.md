@@ -119,6 +119,7 @@ Description=Borg Backup
 
 [Timer]
 OnUnitActiveSec=5min
+Unit=borg-backup.service
 
 [Install]
 WantedBy=timers.target
@@ -256,6 +257,10 @@ borg create --stats --list borg@192.168.11.160:/var/backup/::etc-{now:%Y-%m-%d_%
 borg list borg@192.168.11.160:/var/backup/
 
 	etc-2022-11-05_11:29:50              Sat, 2022-11-05 11:29:54 [491a5bb88a0562bc47a3145eedd28c4a5d9a9757c240eaba7cbb8e1a06543430]
+	etc-2022-11-06_16:16:31              Sun, 2022-11-06 16:16:32 [17463ee523f05a4120afa93c696c7d5a25a14bace31a7903ff5e833ba0d38d92]
+	etc-2022-11-07_23:57:24              Mon, 2022-11-07 23:57:25 [935a5dc7c4087524cc8adf42e5622fda36436b6b9f4706eeb0b99403fa76ec66]
+	etc-2022-11-08_23:55:35              Tue, 2022-11-08 23:55:36 [7a02d4d74d5fc7ec00e863b3a585fff40530874764a6f4463dddc47073c9ccae]
+	etc-2022-11-09_06:16:21              Wed, 2022-11-09 06:16:22 [afa4b346be9f1133074407d682041848585507b3607340fa326b647b6b76b2c3]
 ```
 
 Смотрим список файлов
@@ -299,12 +304,12 @@ sudo systemctl status borg-backup.timer
 ```
 systemctl list-timers --all
 
-	NEXT                         LEFT          LAST                         PASSED    UNIT                         ACTIVATES
-	Sun 2022-11-06 10:12:46 UTC  4min 10s left Sun 2022-11-06 10:07:46 UTC  49s ago   borg-backup.timer            borg-backup.service
-	Mon 2022-11-07 09:22:31 UTC  23h left      Sun 2022-11-06 09:22:31 UTC  46min ago systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
-	n/a                          n/a           n/a                          n/a       systemd-readahead-done.timer systemd-readahead-done.service
+	NEXT                         LEFT          LAST                         PASSED      UNIT                         ACTIVATES
+	Wed 2022-11-09 06:21:21 UTC  1min 53s left Wed 2022-11-09 06:16:21 UTC  3min 6s ago borg-backup.timer            borg-backup.service
+	Wed 2022-11-09 09:23:31 UTC  3h 4min left  Tue 2022-11-08 09:23:31 UTC  20h ago     systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+	n/a                          n/a           n/a                          n/a         systemd-readahead-done.timer systemd-readahead-done.service
 
-	3 timers listed.
+3 timers listed.
 ```
 
 Проверяем список бекапов
