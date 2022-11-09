@@ -110,19 +110,19 @@ Office2----/
 ### Практическая часть
 
 
-office1Server
+#### office1Server
 
 ![office1Server-1](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/centralServer-1.jpg)
 
 ![office1Server-2](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/centralServer-2.jpg)
 
-office2Server
+#### office2Server
 
 ![office2Server-1](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/office2Server-1.jpg)
 
 ![office2Server-2](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/office2Server-2.jpg)
 
-centralServer
+#### centralServer
 
 ![centralServer-1](https://github.com/andrey21x6/dz-otus/blob/main/network_architecture/scrin/centralServer-1.jpg)
 
