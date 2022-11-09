@@ -5,4 +5,9 @@
 ------------------------------------------------------
 
 Выполнить после изменения файла сервиса
-systemctl daemon-reload
+sudo systemctl daemon-reload
+
+------------------------------------------------------
+
+sudo journalctl -xeu borg-backup.service
+sudo journalctl -u borg-backup.service

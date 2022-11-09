@@ -290,9 +290,9 @@ sudo systemctl status borg-backup.timer
 
 	● borg-backup.timer - Borg Backup
 	   Loaded: loaded (/etc/systemd/system/borg-backup.timer; enabled; vendor preset: disabled)
-	   Active: active (waiting) since Sun 2022-11-06 10:07:46 UTC; 9s ago
+	   Active: active (waiting) since Mon 2022-11-07 13:44:15 UTC; 1 day 16h ago
 
-	Nov 06 10:07:46 client systemd[1]: Started Borg Backup.
+	Nov 07 13:44:15 client systemd[1]: Started Borg Backup.
 ```
 
 Проверяем работу таймера
@@ -312,20 +312,14 @@ systemctl list-timers --all
 borg list borg@192.168.11.160:/var/backup/
 
 	etc-2022-11-05_11:29:50              Sat, 2022-11-05 11:29:54 [491a5bb88a0562bc47a3145eedd28c4a5d9a9757c240eaba7cbb8e1a06543430]
-	etc-2022-11-06_10:07:47              Sun, 2022-11-06 10:07:48 [a8927966ff24be057214361664c7599decbf1d6f26b0f36d228c5d2efdcfcfb4]
+	etc-2022-11-06_16:16:31              Sun, 2022-11-06 16:16:32 [17463ee523f05a4120afa93c696c7d5a25a14bace31a7903ff5e833ba0d38d92]
+	etc-2022-11-07_23:57:24              Mon, 2022-11-07 23:57:25 [935a5dc7c4087524cc8adf42e5622fda36436b6b9f4706eeb0b99403fa76ec66]
+	etc-2022-11-08_23:55:35              Tue, 2022-11-08 23:55:36 [7a02d4d74d5fc7ec00e863b3a585fff40530874764a6f4463dddc47073c9ccae]
+	etc-2022-11-09_06:11:20              Wed, 2022-11-09 06:11:21 [e780efdcbd733e7676267cee07ec16e1d85095352bc3455119d8ef34ed187fe2]
 ```
 
-Логирование
-
-
-
-
-
-
-
-
-
-
-
-
-
+Логи работы сервиса, можно посмотреть
+```
+sudo journalctl -xeu borg-backup.service
+sudo journalctl -u borg-backup.service
+```
