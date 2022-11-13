@@ -1,0 +1,38 @@
+default menu.c32
+prompt 0
+
+# Время счётчика с обратным отсчётом
+timeout {{ timeout_menu }}
+
+# Параметр использования локального времени
+ONTIME local
+
+# Имя «шапки» нашего меню
+menu title OTUS PXE Boot Menu
+
+    # Описание первой строки
+    label 1
+
+    # Имя, отображаемое в первой строке
+    menu label ^ Graph install {{ name_ver }}
+
+    # Адрес ядра, расположенного на TFTP-сервере
+    kernel /vmlinuz
+
+    # Адрес файла initrd, расположенного на TFTP-сервере
+    initrd /initrd.img
+
+    # Получаем адрес по DHCP и указываем адрес веб-сервера
+    append ip={{ lan_ip }}:dhcp inst.repo=http://{{ pxe_server }}/{{ centos_ver }}
+
+    label 2
+    menu label ^ Text install {{ name_ver }}
+    kernel /vmlinuz
+    initrd /initrd.img
+    append ip={{ lan_ip }}:dhcp inst.repo=http://{{ pxe_server }}/{{ centos_ver }} text
+
+    label 3
+    menu label ^ rescue installed system
+    kernel /vmlinuz
+    initrd /initrd.img
+    append ip={{ lan_ip }}:dhcp inst.repo=http://{{ pxe_server }}/{{ centos_ver }} rescue
