@@ -9,8 +9,8 @@
   become: yes
 
   # Указание файла с дополнителыми переменными (понадобится при добавлении темплейтов)
-  #vars_files:
-  #- defaults/main.yml
+  vars_files:
+  - defaults/main.yml
 
   tasks:
 
