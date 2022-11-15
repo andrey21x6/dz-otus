@@ -85,7 +85,7 @@ pxeboot.j2 - в каталоге templates
 
 Выбираем графическую установку
 
-##@Процесс установки:
+###Процесс установки:
 
 ![1_setup](https://user-images.githubusercontent.com/91377497/201866882-9546b675-6b0a-43ec-8ce3-ad5f9ede9800.jpg)
 
