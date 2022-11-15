@@ -87,29 +87,29 @@ pxeboot.j2 - в каталоге templates
 
 ### Процесс установки:
 
-![1_setup](https://user-images.githubusercontent.com/91377497/201866882-9546b675-6b0a-43ec-8ce3-ad5f9ede9800.jpg)
+![1_setup](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/1_setup.jpg)
 
-![2_setup](https://user-images.githubusercontent.com/91377497/201866912-5d13a1a3-03c6-4ae9-ac5b-0fe86c89d5d7.jpg)
+![2_setup](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/2_setup.jpg)
 
-![3_setup](https://user-images.githubusercontent.com/91377497/201866929-c8ef3cda-7be1-4e7f-819b-e43e08dccf35.jpg)
+![3_setup](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/3_setup.jpg)
 
-![4_setup](https://user-images.githubusercontent.com/91377497/201866941-a844f1d2-0853-4709-bfd7-430da4245664.jpg)
+![4_setup](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/4_setup.jpg)
 
-![5_setup](https://user-images.githubusercontent.com/91377497/201866958-90c0ba81-73cd-4a37-8f65-7708a500b81e.jpg)
+![5_setup](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/5_setup.jpg)
 
 ### Загрузка ОС:
 
-![1_start](https://user-images.githubusercontent.com/91377497/201867034-8fc38424-185c-4dde-bbfe-216a9fe20674.jpg)
+![1_start](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/1_start.jpg)
 
-![2_start](https://user-images.githubusercontent.com/91377497/201867077-cfe28bce-bfc0-4175-b0f7-a61ec83fcbff.jpg)
+![2_start](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/2_start.jpg)
 
-![3_start](https://user-images.githubusercontent.com/91377497/201867093-52569ce1-7048-496f-a26c-40203ff98d1d.jpg)
+![3_start](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/3_start.jpg)
 
-![4_start](https://user-images.githubusercontent.com/91377497/201867104-28e006fc-9718-4988-8992-e2e17485443f.jpg)
+![4_start](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/4_start.jpg)
 
-![5_start](https://user-images.githubusercontent.com/91377497/201867124-a702d739-749f-466f-ba6b-28faac8c6932.jpg)
+![5_start](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/5_start.jpg)
 
-![6_start](https://user-images.githubusercontent.com/91377497/201867140-4d0ef709-adb4-4132-908f-fd4f30167a18.jpg)
+![6_start](https://github.com/andrey21x6/dz-otus/blob/main/DHCP_PXE/scrin/6_start.jpg)
 
 
 
