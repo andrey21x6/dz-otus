@@ -54,5 +54,3 @@ iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 
 # Политика по умолчанию для цепочки INPUT
 iptables -P INPUT DROP
-
-#knock 192.168.255.1 2222:tcp 3333:tcp 4444:tcp && ssh vagrant@192.168.255.1
