@@ -35,7 +35,7 @@ vagrant up
 vagrant ssh centralRouter
 ```
 
-Пробуем подключиться по SSH к inetRouter подключение зависает (нет доступа)
+Пробуем подключиться по SSH к inetRouter, подключение зависает (нет доступа)
 ```
 ssh vagrant@192.168.255.1
 ```
@@ -60,6 +60,7 @@ hostname
 ```
 exit
 exit
+vagrant ssh inetRouter
 iptables -S
 
 	-P INPUT DROP
@@ -86,6 +87,7 @@ cat /var/log/knockd.log
 Выходим и заходим на inetRouter2 и проверяем доступность вебсервера на centralServer
 ```
 exit
+vagrant ssh inetRouter2
 curl 192.168.0.2
 
 	...
@@ -100,7 +102,8 @@ curl 192.168.0.2
 Выходим и заходим на centralServer и делаем трассировку на ya.ru
 ```
 exit
- traceroute ya.ru
+vagrant ssh centralServer
+traceroute ya.ru
  
 	 traceroute to ya.ru (87.250.250.242), 30 hops max, 60 byte packets
 	 1  gateway (192.168.0.1)  0.540 ms  0.448 ms  0.599 ms
