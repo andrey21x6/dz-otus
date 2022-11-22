@@ -94,9 +94,8 @@ curl 192.168.0.2
 ```
 
 Проверяем работу nginx с хостовой машины
-```
-scrin
-```
+
+![nginx_centralServer](https://user-images.githubusercontent.com/91377497/203328571-52c93bcd-53a3-4b5a-a735-c73dbc32dd48.jpg)
 
 Выходим и заходим на centralServer и делаем трассировку на ya.ru
 ```
