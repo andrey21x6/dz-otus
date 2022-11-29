@@ -2,32 +2,62 @@
 # vim: set ft=ruby :
 
 MACHINES = {
-  :inetRouter => {
-    :box_name => "centos/7",
+  :router1 => {
+    :box_name => "ubuntu/focal64",
     :net => [
-			   {ip: '192.168.255.1', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "router-net"}
+			    {ip: '10.0.10.1', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "r1-r2"},
+			    {ip: '10.0.12.1', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "r1-r3"},
+			    {ip: '192.168.10.1', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "net1"},
+				{ip: '192.168.50.10', adapter: 5}
             ]
   },
-  :centralRouter => {
-    :box_name => "centos/7",
+  :router2 => {
+    :box_name => "ubuntu/focal64",
     :net => [
-			   {ip: '192.168.255.2', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
-			   {ip: '192.168.0.1', adapter: 3, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"}
+			    {ip: '10.0.10.2', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "r1-r2"},
+				{ip: '10.0.11.2', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "r2-r3"},
+                {ip: '192.168.20.1', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "net2"},
+				{ip: '192.168.50.11', adapter: 5}
             ]
   },
-  :centralServer => {
-    :box_name => "centos/7",
+  :router3 => {
+    :box_name => "ubuntu/focal64",
     :net => [
-               {ip: '192.168.0.2', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"}
-            ]
-  },
-  :inetRouter2 => {
-    :box_name => "centos/7",
-    :net => [
-               {ip: '192.168.0.3', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"}
+			    {ip: '10.0.12.2', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "r1-r3"},
+				{ip: '10.0.11.1', adapter: 3, netmask: "255.255.255.252", virtualbox__intnet: "r2-r3"},
+                {ip: '192.168.30.1', adapter: 4, netmask: "255.255.255.0", virtualbox__intnet: "net3"},
+				{ip: '192.168.50.12', adapter: 5}
             ]
   }
 }
+
+# Vagrant.configure("2") do |config|
+
+#   MACHINES.each do |boxname, boxconfig|
+      
+#     config.vm.define boxname do |box|
+
+#         box.vm.box = boxconfig[:box_name]
+#         box.vm.host_name = boxconfig[:vm_name]
+
+#         if boxconfig[:vm_name] == "router3"
+# 			box.vm.provision "ansible" do |ansible|
+# 				ansible.playbook = "ansible/provision.yml"
+# 				ansible.inventory_path = "ansible/hosts"
+# 				ansible.host_key_checking = "false"
+# 				ansible.limit = "all"
+# 			end
+# 		end
+
+# 		boxconfig[:net].each do |ipconf|
+# 			box.vm.network "private_network", ipconf
+# 		end
+#     end
+#   end
+# end
+
+
+
 
 Vagrant.configure("2") do |config|
 
@@ -36,37 +66,25 @@ Vagrant.configure("2") do |config|
     config.vm.define boxname do |box|
 
         box.vm.box = boxconfig[:box_name]
-        box.vm.host_name = boxname.to_s
-
-        config.vm.provider "virtualbox" do |v|
-          v.memory = 256
-        end
-
-        boxconfig[:net].each do |ipconf|
-          box.vm.network "private_network", ipconf
-        end
-
-        box.vm.provision "shell", inline: <<-SHELL
-	      mkdir -p ~root/.ssh
-		  cp ~vagrant/.ssh/auth* ~root/.ssh
-        SHELL
+		
+		box.vm.host_name = boxname.to_s
         
         case boxname.to_s
-		
-          when "inetRouter"
-		    box.vm.provision "shell", path: "inetRouter.sh"
-			
-          when "centralRouter"
-		    box.vm.provision "shell", path: "centralRouter.sh"
-			
-          when "centralServer"
-			box.vm.provision "shell", path: "centralServer.sh"
-			
-          when "inetRouter2"
-		    box.vm.network "forwarded_port", guest: 80, host: 8080
-		    box.vm.provision "shell", path: "inetRouter2.sh"
-
+		    
+          when "router3"
+		    box.vm.provision "ansible" do |ansible|
+				ansible.playbook = "ansible/provision.yml"
+				ansible.inventory_path = "ansible/hosts"
+				ansible.host_key_checking = "false"
+				ansible.limit = "all"
+			end
+		    
         end
-      end
+		
+	    boxconfig[:net].each do |ipconf|
+		  box.vm.network "private_network", ipconf
+ 	    end
+	  
+    end
   end
 end

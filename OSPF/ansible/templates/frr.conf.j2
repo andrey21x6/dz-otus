@@ -1,0 +1,2 @@
+hostname {{ ansible_hostname }}
+{% if router_id_enable == false %}!{% endif %}router-id {{ router_id }}
