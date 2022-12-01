@@ -31,7 +31,7 @@
 
 Проверим доступность сетей с хоста router1
 ```
-vagrant ssh router1
+<b>vagrant ssh router1</b>
 ping 192.168.30.1
 
     64 bytes from 192.168.30.1: icmp_seq=1 ttl=64 time=0.763 ms
