@@ -191,16 +191,63 @@ tcpdump -i enp0s8
     0 packets dropped by kernel
 ```
 
-Видим что данный порт только отправляет ICMP-трафик на адрес 192.168.10.1. Таким образом мы видим ассиметричный роутинг.
+Видим что данный порт только отправляет ICMP-трафик на адрес 192.168.10.1. Таким образом мы видим ассиметричный роутинг
 
 ### Настройка симметичного роутинга
 
+Так как у нас уже есть один «дорогой» интерфейс, нам потребуется добавить ещё один дорогой интерфейс, чтобы у нас перестала работать ассиметричная маршрутизация
+
+Так как в прошлом задании мы заметили что router2 будет отправлять обратно трафик через порт enp0s8, мы также должны сделать его дорогим и далее проверить, что теперь используется симметричная маршрутизация
+
+Поменяем стоимость интерфейса enp0s8 на router2
+```
+vtysh
+conf t
+int enp0s8
+ip ospf cost 1000
+exit
+exit
+show ip route ospf
+
+    Codes: K - kernel route, C - connected, S - static, R - RIP,
+        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+        T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+        f - OpenFabric,
+        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+        t - trapped, o - offload failure
+
+    O   10.0.10.0/30 [110/1000] is directly connected, enp0s8, weight 1, 00:00:25
+    O   10.0.11.0/30 [110/100] is directly connected, enp0s9, weight 1, 03:14:46
+    O>* 10.0.12.0/30 [110/200] via 10.0.11.1, enp0s9, weight 1, 00:00:25
+    O>* 192.168.10.0/24 [110/300] via 10.0.11.1, enp0s9, weight 1, 00:00:25
+    O   192.168.20.0/24 [110/100] is directly connected, enp0s10, weight 1, 03:14:46
+    O>* 192.168.30.0/24 [110/200] via 10.0.11.1, enp0s9, weight 1, 03:14:11
+
+exit
+```
+
+На router1 запускаем пинг от 192.168.10.1 до 192.168.20.1
+```
+ping -I 192.168.10.1 192.168.20.1
+```
 
 
+На router2 запускаем tcpdump, который будет смотреть трафик только на порту enp0s9
+```
+tcpdump -i enp0s9
 
+    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+    listening on enp0s9, link-type EN10MB (Ethernet), capture size 262144 bytes
+    11:57:41.999613 IP 192.168.10.1 > router2: ICMP echo request, id 5, seq 110, length 64
+    11:57:41.999670 IP router2 > 192.168.10.1: ICMP echo reply, id 5, seq 110, length 64
+    11:57:43.000787 IP 192.168.10.1 > router2: ICMP echo request, id 5, seq 111, length 64
+    11:57:43.000839 IP router2 > 192.168.10.1: ICMP echo reply, id 5, seq 111, length 64
+    ^C
+    4 packets captured
+    4 packets received by filter
+    0 packets dropped by kernel
+```
 
+Теперь мы видим, что трафик между роутерами ходит симметрично
 
-
-
-
-Благодарю за проверку!
+### Благодарю за проверку!
