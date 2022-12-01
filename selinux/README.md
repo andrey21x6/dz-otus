@@ -1,4 +1,4 @@
-# SELinux - когда все запрещено
+# SELinux - когда все запрещено (Ansible)
 
 # **Prerequisite**
 
