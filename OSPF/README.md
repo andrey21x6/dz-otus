@@ -251,3 +251,5 @@ tcpdump -i enp0s9
 Теперь мы видим, что трафик между роутерами ходит симметрично
 
 ### <span style="color: green">Благодарю за проверку!</span>
+
+- ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `#f03c15`
