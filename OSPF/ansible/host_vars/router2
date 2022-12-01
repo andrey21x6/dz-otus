@@ -1,0 +1,14 @@
+ansible_host: 192.168.50.11
+ansible_ssh_private_key_file: /home/andrey/GIT/dz-otus/OSPF/.vagrant/machines/router2/virtualbox/private_key
+router_id: 2.2.2.2
+description_1: r1-r2
+ip_address_1: 10.0.10.2/30
+description_2: r2-r3
+ip_address_2: 10.0.11.2/30
+description_3: net_router2
+ip_address_3: 192.168.20.1/24
+neighbor_1: 10.0.10.1
+neighbor_2: 10.0.11.1
+network_anons_1: 10.0.10.0/30
+network_anons_2: 10.0.11.0/30
+network_anons_3: 192.168.20.0/24
