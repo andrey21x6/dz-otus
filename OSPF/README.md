@@ -30,8 +30,8 @@
 Первоначальные установки и настройки сделаем при запуске Vagrantfile с помощью ansible-playbook, в том числе сконфигурируем файлы frr.conf и daemons для каждого роутера
 
 Проверим доступность сетей с хоста router1
-```html
-<b>vagrant ssh router1</b>
+```
+vagrant ssh router1
 ping 192.168.30.1
 
     64 bytes from 192.168.30.1: icmp_seq=1 ttl=64 time=0.763 ms
