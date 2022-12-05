@@ -5,6 +5,7 @@
 
   tasks:
 
+  # Установка пакетов
   - name: install packages
     yum:
       name:
@@ -16,20 +17,28 @@
       state: latest
       update_cache: true
 
+  # Для запуска службы chronyd
   - name: start chronyd
     service:
       name: chronyd
       state: restarted
       enabled: true
 
+  # Копируем файл и задаём владельца и права
   - name: copy transferkey to all servers and the client
-    copy: src=named.zonetransfer.key dest=/etc/named.zonetransfer.key owner=root group=named mode=0644
+    copy:
+      src: named.zonetransfer.key
+      dest: /etc/named.zonetransfer.key
+      owner: root
+      group: named
+      mode: 0644
 
 - hosts: ns01
   become: yes
 
   tasks:
 
+  # Копируем файл и задаём владельца и права
   - name: copy named.conf
     copy:
       src: master-named.conf
@@ -38,6 +47,7 @@
       group: named
       mode: 0640
 
+  # Копируем файлы и задаём владельца и права
   - name: copy zones
     copy:
       src: "{{ item }}"
@@ -52,14 +62,16 @@
       - named.dns.lab.rev
       - named.newdns.lab
 
+  # Копируем файл и задаём владельца и права
   - name: copy resolv.conf to the servers
     template:
-      src: servers-resolv.conf.j2
+      src: servers-resolv.conf1.j2
       dest: /etc/resolv.conf
       owner: root
       group: root
       mode: 0644
   
+  # Измененяем права на каталог
   - name: set /etc/named permissions
     file:
       path: /etc/named
@@ -67,6 +79,7 @@
       group: named
       mode: 0670
 
+  # Перезапускаем службу DNS named
   - name: ensure named is running and enabled
     service:
       name: named
@@ -78,6 +91,7 @@
 
   tasks:
 
+  # Копируем файл и задаём владельца и права
   - name: copy named.conf
     copy:
       src: slave-named.conf
@@ -86,14 +100,16 @@
       group: named
       mode: 0640
 
+  # Копируем файл и задаём владельца и права
   - name: copy resolv.conf to the servers
     template:
-      src: servers-resolv.conf.j2
+      src: servers-resolv.conf2.j2
       dest: /etc/resolv.conf
       owner: root
       group: root
       mode: 0644
 
+  # Измененяем права на каталог
   - name: set /etc/named permissions
     file:
       path: /etc/named
@@ -101,6 +117,7 @@
       group: named
       mode: 0670
 
+  # Перезапускаем службу DNS named
   - name: ensure named is running and enabled
     service:
       name: named
@@ -113,12 +130,27 @@
   tasks:
 
   - name: copy resolv.conf to the client
-    copy: src=client-resolv.conf dest=/etc/resolv.conf owner=root group=root mode=0644
+    copy:
+      src: client-resolv.conf
+      dest: /etc/resolv.conf
+      owner: root
+      group: root
+      mode: 0644
 
   - name: copy rndc conf file
-    copy: src=rndc.conf dest=/home/vagrant/rndc.conf owner=vagrant group=vagrant mode=0644
+    copy:
+      src: rndc.conf
+      dest: /home/vagrant/rndc.conf
+      owner: vagrant
+      group: vagrant
+      mode: 0644
 
   - name: copy motd to the client
-    copy: src=client-motd dest=/etc/motd owner=root group=root mode=0644
+    copy:
+      src: client-motd
+      dest: /etc/motd
+      owner: root
+      group: root
+      mode: 0644
 
 ...

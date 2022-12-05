@@ -1,4 +1,3 @@
-### Welcome to the DNS lab! ###
 
 - Use this client to test the enviroment, with dig or nslookup.
     dig @192.168.50.10 ns01.dns.lab
