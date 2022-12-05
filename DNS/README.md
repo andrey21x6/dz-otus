@@ -152,6 +152,22 @@ dig @192.168.50.11 web2.dns.lab
     ;; MSG SIZE  rcvd: 87
 ```
 
+Проверим работу службы синхронизации времени chronyd
+```
+systemctl status chronyd
+
+    ● chronyd.service - NTP client/server
+    Loaded: loaded (/usr/lib/systemd/system/chronyd.service; enabled; vendor preset: enabled)
+    Active: active (running) since Mon 2022-12-05 11:02:51 UTC; 51min ago
+        Docs: man:chronyd(8)
+            man:chrony.conf(5)
+    Process: 3608 ExecStartPost=/usr/libexec/chrony-helper update-daemon (code=exited, status=0/SUCCESS)
+    Process: 3604 ExecStart=/usr/sbin/chronyd $OPTIONS (code=exited, status=0/SUCCESS)
+    Main PID: 3607 (chronyd)
+    CGroup: /system.slice/chronyd.service
+            └─3607 /usr/sbin/chronyd
+```
+
 Согласно заданию, c client1 доступен web1.dns.lab и не доступен web2.dns.lab
 
 Сделаем пинг
@@ -304,7 +320,55 @@ dig @192.168.50.11 web2.dns.lab
     ;; MSG SIZE  rcvd: 127
 ```
 
+Проверим работу службы синхронизации времени chronyd
+```
+systemctl status chronyd
+
+    ● chronyd.service - NTP client/server
+    Loaded: loaded (/usr/lib/systemd/system/chronyd.service; enabled; vendor preset: enabled)
+    Active: active (running) since Mon 2022-12-05 11:04:21 UTC; 51min ago
+        Docs: man:chronyd(8)
+            man:chrony.conf(5)
+    Process: 3609 ExecStartPost=/usr/libexec/chrony-helper update-daemon (code=exited, status=0/SUCCESS)
+    Process: 3605 ExecStart=/usr/sbin/chronyd $OPTIONS (code=exited, status=0/SUCCESS)
+    Main PID: 3608 (chronyd)
+    CGroup: /system.slice/chronyd.service
+            └─3608 /usr/sbin/chronyd
+```
+
 Согласно заданию, c client2 видит только dns.lab, то есть newdns.lab не видит
+
+Перейдём на ns01 и проверим работу службы синхронизации времени chronyd
+```
+exit
+vagrant ssh ns01
+systemctl status chronyd
+
+    ● chronyd.service - NTP client/server
+    Loaded: loaded (/usr/lib/systemd/system/chronyd.service; enabled; vendor preset: enabled)
+    Active: active (running) since Mon 2022-12-05 10:59:50 UTC; 51min ago
+        Docs: man:chronyd(8)
+            man:chrony.conf(5)
+    Main PID: 3809 (chronyd)
+    CGroup: /system.slice/chronyd.service
+            └─3809 /usr/sbin/chronyd
+```
+
+Перейдём на ns02 и проверим работу службы синхронизации времени chronyd
+```
+exit
+vagrant ssh ns02
+systemctl status chronyd
+
+    ● chronyd.service - NTP client/server
+    Loaded: loaded (/usr/lib/systemd/system/chronyd.service; enabled; vendor preset: enabled)
+    Active: active (running) since Mon 2022-12-05 11:01:22 UTC; 50min ago
+        Docs: man:chronyd(8)
+            man:chrony.conf(5)
+    Main PID: 3830 (chronyd)
+    CGroup: /system.slice/chronyd.service
+            └─3830 /usr/sbin/chronyd
+```
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!
