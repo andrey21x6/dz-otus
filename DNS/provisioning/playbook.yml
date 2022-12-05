@@ -129,6 +129,7 @@
   
   tasks:
 
+  # Копируем файл и задаём владельца и права
   - name: copy resolv.conf to the client
     copy:
       src: client-resolv.conf
@@ -137,6 +138,7 @@
       group: root
       mode: 0644
 
+  # Копируем файл и задаём владельца и права
   - name: copy rndc conf file
     copy:
       src: rndc.conf
@@ -145,6 +147,7 @@
       group: vagrant
       mode: 0644
 
+  # Копируем файл и задаём владельца и права
   - name: copy motd to the client
     copy:
       src: client-motd
