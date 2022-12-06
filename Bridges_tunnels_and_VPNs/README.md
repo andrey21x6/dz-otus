@@ -374,6 +374,41 @@ iperf3: interrupt - the client has terminated
 
 ### RAS на базе OpenVPN
 
+После запуска машины из Vagrantfile заходим на ВМ serverras
+
+Устанавливаем epel репозиторий  и пакеты
+```
+sudo -i
+yum install -y epel-release
+yum install -y openvpn easy-rsa
+```
+
+Отключаем SELinux
+```
+setenforce 0
+```
+
+Переходим в директорию /etc/openvpn/ и инициализируем pki
+```
+cd /etc/openvpn/
+/usr/share/easy-rsa/3.0.3/easyrsa init-pki
+```
+
+Сгенерируем необходимые ключи и сертификаты для сервера serverras
+```
+echo 'rasvpn' | /usr/share/easy-rsa/3.0.3/easyrsa build-ca nopass
+echo 'rasvpn' | /usr/share/easy-rsa/3.0.3/easyrsa gen-req server nopass
+echo 'yes' | /usr/share/easy-rsa/3.0.3/easyrsa sign-req server server
+/usr/share/easy-rsa/3.0.3/easyrsa gen-dh
+openvpn --genkey --secret ta.key
+```
+
+Сгенерируем сертификаты для клиента
+```
+echo 'client' | /usr/share/easy-rsa/3/easyrsa gen-req client nopass
+echo 'yes' | /usr/share/easy-rsa/3/easyrsa sign-req client client
+```
+
 
 
 
