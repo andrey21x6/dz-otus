@@ -146,7 +146,7 @@ iperf3 -s &
 iperf3 -c 10.10.10.1 -t 40 -i 5
 ```
 
-Результат на сервере в режиме TAP
+**Результат на сервере в режиме TAP**
 ```
 [1] 3690
 [root@server ~]# -----------------------------------------------------------
@@ -202,7 +202,7 @@ Server listening on 5201
 ^C
 ```
 
-Результат на клиенте в режиме TAP
+**Результат на клиенте в режиме TAP**
 ```
 Connecting to host 10.10.10.1, port 5201
 [  4] local 10.10.10.2 port 50240 connected to 10.10.10.1 port 5201
@@ -261,7 +261,7 @@ iperf3 -s &
 iperf3 -c 10.10.10.1 -t 40 -i 5
 ```
 
-Результат на сервере в режиме TUN
+**Результат на сервере в режиме TUN**
 ```
 [2] 3742
 [root@server ~]# iperf3: error - unable to start listener for connections: Address already in use
@@ -318,7 +318,7 @@ Server listening on 5201
 -----------------------------------------------------------
 ```
 
-Результат на клиенте в режиме TUN
+**Результат на клиенте в режиме TUN**
 ```
 Connecting to host 10.10.10.1, port 5201
 [  4] local 10.10.10.2 port 50244 connected to 10.10.10.1 port 5201
@@ -338,7 +338,7 @@ Connecting to host 10.10.10.1, port 5201
 iperf3: interrupt - the client has terminated
 ```
 
-Разница tun и tap режимов:
+**Разница tun и tap режимов**:
 
 ***TAP***:
 
