@@ -6,6 +6,8 @@
 - Guest OS: CentOS 7.8.2003
 - VirtualBox: 6.1.40
 - Vagrant: 2.3.2
+- OpenVPN: 2.4.7 x86_64-pc-linux-gnu
+- library versions: OpenSSL 1.1.1f
 - easy-rsa: 3.0.8
 
 # **Содержание ДЗ**
