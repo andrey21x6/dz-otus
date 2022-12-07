@@ -32,14 +32,10 @@ vagrant up
 vagrant ssh server
 ```
 
-Устанавливаем epel репозиторий
+Устанавливаем epel репозиторий и пакеты
 ```
 sudo -i
-yum install -y epel-release
-```
-
-Устанавливаем пакет openvpn, easy-rsa и iperf3
-```
+yum install -y epel-release mc nano
 yum install -y openvpn iperf3
 ```
 
@@ -55,21 +51,21 @@ setenforce 0
 openvpn --genkey --secret /etc/openvpn/static.key
 ```
 
-Cоздаём конфигурационнýй файл vpn-сервера (TUN/TAP режимы VPN)
+Cоздаём конфигурационный файл vpn-сервера для режима TAP
 ```
-vi /etc/openvpn/server.conf
+nano /etc/openvpn/server.conf
 
-dev tap
-ifconfig 10.10.10.1 255.255.255.0
-topology subnet
-secret /etc/openvpn/static.key
-comp-lzo
-status /var/log/openvpn-status.log
-log /var/log/openvpn.log
-verb 3
+	dev tap
+	ifconfig 10.10.10.1 255.255.255.0
+	topology subnet
+	secret /etc/openvpn/static.key
+	comp-lzo
+	status /var/log/openvpn-status.log
+	log /var/log/openvpn.log
+	verb 3
 ```
 
-Запускаем openvpn сервер и добавлāем в автозагрузку
+Запускаем openvpn сервер и добавляем в автозагрузку
 ```
 systemctl start openvpn@server
 systemctl enable openvpn@server
@@ -87,19 +83,15 @@ systemctl status openvpn@server
 	Dec 06 08:16:31 server.loc systemd[1]: Started OpenVPN Robust And Highly Flexible Tunneling Application On server.
 ```
 
-Откроем второй терминал и зайдём на client
+Откроем второй терминал и зайдём на ВМ client
 ```
 vagrant ssh client
 ```
 
-Устанавливаем epel репозиторий
+Устанавливаем epel репозиторий и пакеты
 ```
 sudo -i
-yum install -y epel-release
-```
-
-Устанавливаем пакет openvpn, easy-rsa и iperf3
-```
+yum install -y epel-release mc nano
 yum install -y openvpn iperf3
 ```
 
@@ -112,7 +104,7 @@ setenforce 0
 
 Cоздаём конфигурационнýй файл клиента
 ```
-vi /etc/openvpn/server.conf
+nano /etc/openvpn/server.conf
 
 	dev tap
 	remote 192.168.10.10
@@ -128,7 +120,7 @@ vi /etc/openvpn/server.conf
 
 С сервера на клиент в директорию /etc/openvpn/ копируем файл-ключ static.key
 
-Запускаем openvpn клиент и добавлāем в автозагрузку
+Запускаем openvpn клиент и добавляем в автозагрузку
 ```
 systemctl start openvpn@server
 systemctl enable openvpn@server
@@ -146,14 +138,12 @@ systemctl status openvpn@server
 	Dec 06 08:34:06 client.loc systemd[1]: Started OpenVPN Robust And Highly Flexible Tunneling Application On server.
 ```
 
-Далее необходимо замерить скорость в туннеле на openvpn сервере
-
-Запускаем iperf3 в режиме сервера
+Запускаем iperf3 на сервере в режиме сервера и замеряем скорость в туннеле
 ```
 iperf3 -s &
 ```
 
-На openvpn клиенте запускаем iperf3 в режиме клиента и замеряем скорость в туннеле
+Запускаем iperf3 на клиенте в режиме клиента и замеряем скорость в туннеле
 ```
 iperf3 -c 10.10.10.1 -t 40 -i 5
 ```
@@ -252,9 +242,9 @@ Connecting to host 10.10.10.1, port 5201
 iperf3: interrupt - the client has terminated
 ```
 
-Редактируем конфигурационнýй файл на сервере и клиенте /etc/openvpn/server.conf, меняем режим на TUN
+Редактируем конфигурационный файл на сервере и клиенте /etc/openvpn/server.conf, меняем режим на TUN
 ```
-vi /etc/openvpn/server.conf
+nano /etc/openvpn/server.conf
 
 	...
 	dev tun
@@ -263,12 +253,12 @@ vi /etc/openvpn/server.conf
 systemctl restart openvpn@server
 ```
 
-Запускаем iperf3 в режиме сервера
+Запускаем iperf3 на сервере в режиме сервера и замеряем скорость в туннеле
 ```
 iperf3 -s &
 ```
 
-На openvpn клиенте запускаем iperf3 в режиме клиента и замеряем скорость в туннеле
+Запускаем iperf3 на клиенте в режиме клиента и замеряем скорость в туннеле
 ```
 iperf3 -c 10.10.10.1 -t 40 -i 5
 ```
@@ -350,7 +340,7 @@ Connecting to host 10.10.10.1, port 5201
 iperf3: interrupt - the client has terminated
 ```
 
-**Разница tun и tap режимов**:
+**Разница tap и tun режимов**:
 
 ***TAP***:
 
@@ -386,22 +376,21 @@ iperf3: interrupt - the client has terminated
 
 ### RAS на базе OpenVPN
 
+Перейдём в папку RAS и запустим Vagrantfile
+```
+vagrant up
+```
+
 После запуска машины из Vagrantfile заходим на ВМ serverras
+```
+vagrant ssh serverras
+```
 
 Устанавливаем epel репозиторий и пакеты
 ```
 sudo -i
-
 yum install -y epel-release mc nano
 yum install -y openvpn easy-rsa
-```
-
-Включаем forward
-```
-echo 'net.ipv4.conf.all.forwarding=1'  >> /etc/sysctl.conf
-echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
-sysctl -p /etc/sysctl.conf
-systemctl restart network
 ```
 
 Отключаем SELinux
@@ -572,7 +561,7 @@ nano /etc/openvpn/server.conf
 	verb 3
 ```
 
-Запускаем openvpn сервер и добавлāем в автозагрузку
+Запускаем openvpn сервер и добавляем в автозагрузку
 ```
 systemctl start openvpn@server
 systemctl enable openvpn@server
@@ -599,7 +588,7 @@ systemctl status openvpn@server
 
 Создадим конфигурационный файл клиента client.conf на хост-машине
 ```
-vi /etc/openvpn/client/client.conf
+nano /etc/openvpn/client/client.conf
 
 	client
 	dev tun
@@ -615,7 +604,7 @@ vi /etc/openvpn/client/client.conf
 	verb 3
 ```
 
-После того, как все готово, подключаемся к openvpn сервер с хост-машины
+Подключаемся к openvpn сервер с хост-машины
 ```
 openvpn --config /etc/openvpn/client/client.conf
 ```
