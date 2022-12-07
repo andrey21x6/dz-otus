@@ -6,6 +6,7 @@
 - Guest OS: CentOS 7.8.2003
 - VirtualBox: 6.1.40
 - Vagrant: 2.3.2
+- easy-rsa: 3.0.8
 
 # **Содержание ДЗ**
 
@@ -21,7 +22,15 @@
 
 ### TUN/TAP режимы VPN
 
+Перейдём в папку OpenVPN и запустим Vagrantfile
+```
+vagrant up
+```
+
 После запуска машин из Vagrantfile заходим на ВМ server
+```
+vagrant ssh server
+```
 
 Устанавливаем epel репозиторий
 ```
@@ -79,6 +88,9 @@ systemctl status openvpn@server
 ```
 
 Откроем второй терминал и зайдём на client
+```
+vagrant ssh client
+```
 
 Устанавливаем epel репозиторий
 ```
@@ -376,11 +388,20 @@ iperf3: interrupt - the client has terminated
 
 После запуска машины из Vagrantfile заходим на ВМ serverras
 
-Устанавливаем epel репозиторий  и пакеты
+Устанавливаем epel репозиторий и пакеты
 ```
 sudo -i
-yum install -y epel-release
+
+yum install -y epel-release mc nano
 yum install -y openvpn easy-rsa
+```
+
+Включаем forward
+```
+echo 'net.ipv4.conf.all.forwarding=1'  >> /etc/sysctl.conf
+echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+sysctl -p /etc/sysctl.conf
+systemctl restart network
 ```
 
 Отключаем SELinux
@@ -391,32 +412,249 @@ setenforce 0
 Переходим в директорию /etc/openvpn/ и инициализируем pki
 ```
 cd /etc/openvpn/
-/usr/share/easy-rsa/3.0.3/easyrsa init-pki
+/usr/share/easy-rsa/3.0.8/easyrsa init-pki
+
+	init-pki complete; you may now create a CA or requests.
+	Your newly created PKI dir is: /etc/openvpn/pki
 ```
 
 Сгенерируем необходимые ключи и сертификаты для сервера serverras
 ```
-echo 'rasvpn' | /usr/share/easy-rsa/3.0.3/easyrsa build-ca nopass
-echo 'rasvpn' | /usr/share/easy-rsa/3.0.3/easyrsa gen-req server nopass
-echo 'yes' | /usr/share/easy-rsa/3.0.3/easyrsa sign-req server server
-/usr/share/easy-rsa/3.0.3/easyrsa gen-dh
+echo 'rasvpn' | /usr/share/easy-rsa/3.0.8/easyrsa build-ca nopass
+
+	Using SSL: openssl OpenSSL 1.0.2k-fips  26 Jan 2017
+	Generating RSA private key, 2048 bit long modulus
+	.......+++
+	...............+++
+	e is 65537 (0x10001)
+	You are about to be asked to enter information that will be incorporated
+	into your certificate request.
+	What you are about to enter is what is called a Distinguished Name or a DN.
+	There are quite a few fields but you can leave some blank
+	For some fields there will be a default value,
+	If you enter '.', the field will be left blank.
+	-----
+	Common Name (eg: your user, host, or server name) [Easy-RSA CA]:
+	CA creation complete and you may now import and sign cert requests.
+	Your new CA certificate file for publishing is at:
+	/etc/openvpn/pki/ca.crt
+
+echo 'rasvpn' | /usr/share/easy-rsa/3.0.8/easyrsa gen-req server nopass
+
+	Using SSL: openssl OpenSSL 1.0.2k-fips  26 Jan 2017
+	Generating a 2048 bit RSA private key
+	...............................+++
+	......................+++
+	writing new private key to '/etc/openvpn/pki/easy-rsa-22770.F2hnTq/tmp.q2r4zp'
+	-----
+	You are about to be asked to enter information that will be incorporated
+	into your certificate request.
+	What you are about to enter is what is called a Distinguished Name or a DN.
+	There are quite a few fields but you can leave some blank
+	For some fields there will be a default value,
+	If you enter '.', the field will be left blank.
+	-----
+	Common Name (eg: your user, host, or server name) [server]:
+	Keypair and certificate request completed. Your files are:
+	req: /etc/openvpn/pki/reqs/server.req
+	key: /etc/openvpn/pki/private/server.key
+
+echo 'yes' | /usr/share/easy-rsa/3.0.8/easyrsa sign-req server server
+
+	Using SSL: openssl OpenSSL 1.0.2k-fips  26 Jan 2017
+
+	You are about to sign the following certificate.
+	Please check over the details shown below for accuracy. Note that this request
+	has not been cryptographically verified. Please be sure it came from a trusted
+	source or that you have verified the request checksum with the sender.
+
+	Request subject, to be signed as a server certificate for 825 days:
+
+	subject=
+		commonName                = rasvpn
+
+	Type the word 'yes' to continue, or any other input to abort.
+	  Confirm request details: Using configuration from /etc/openvpn/pki/easy-rsa-22813.0A65Zo/tmp.FIzyTd
+	Check that the request matches the signature
+	Signature ok
+	The Subject's Distinguished Name is as follows
+	commonName            :ASN.1 12:'rasvpn'
+	Certificate is to be certified until Mar 11 06:12:26 2025 GMT (825 days)
+
+	Write out database with 1 new entries
+	Data Base Updated
+
+	Certificate created at: /etc/openvpn/pki/issued/server.crt
+
+/usr/share/easy-rsa/3.0.8/easyrsa gen-dh
+
+	Using SSL: openssl OpenSSL 1.0.2k-fips  26 Jan 2017
+	Generating DH parameters, 2048 bit long safe prime, generator 2
+	This is going to take a long time
+	...................................................................+...
+
+	DH parameters of size 2048 created at /etc/openvpn/pki/dh.pem
+
 openvpn --genkey --secret ta.key
 ```
 
 Сгенерируем сертификаты для клиента
 ```
 echo 'client' | /usr/share/easy-rsa/3/easyrsa gen-req client nopass
+
+	Using SSL: openssl OpenSSL 1.0.2k-fips  26 Jan 2017
+	Generating a 2048 bit RSA private key
+	.............................................+++
+	..........+++
+	writing new private key to '/etc/openvpn/pki/easy-rsa-23010.2KpeZe/tmp.TMu1ij'
+	-----
+	You are about to be asked to enter information that will be incorporated
+	into your certificate request.
+	What you are about to enter is what is called a Distinguished Name or a DN.
+	There are quite a few fields but you can leave some blank
+	For some fields there will be a default value,
+	If you enter '.', the field will be left blank.
+	-----
+	Common Name (eg: your user, host, or server name) [client]:
+	Keypair and certificate request completed. Your files are:
+	req: /etc/openvpn/pki/reqs/client.req
+	key: /etc/openvpn/pki/private/client.key
+
 echo 'yes' | /usr/share/easy-rsa/3/easyrsa sign-req client client
+
+	Using SSL: openssl OpenSSL 1.0.2k-fips  26 Jan 2017
+
+	You are about to sign the following certificate.
+	Please check over the details shown below for accuracy. Note that this request
+	has not been cryptographically verified. Please be sure it came from a trusted
+	source or that you have verified the request checksum with the sender.
+
+	Request subject, to be signed as a client certificate for 825 days:
+
+	subject=
+		commonName                = client
+
+	Type the word 'yes' to continue, or any other input to abort.
+	  Confirm request details: Using configuration from /etc/openvpn/pki/easy-rsa-23053.RyNJvy/tmp.MIoFcq
+	Check that the request matches the signature
+	Signature ok
+	The Subject's Distinguished Name is as follows
+	commonName            :ASN.1 12:'client'
+	Certificate is to be certified until Mar 11 06:15:03 2025 GMT (825 days)
+
+	Write out database with 1 new entries
+	Data Base Updated
+
+	Certificate created at: /etc/openvpn/pki/issued/client.crt
 ```
 
+Создадим конфигурационнýй файл /etc/openvpn/server.conf
+```
+nano /etc/openvpn/server.conf
 
+	port 1207
+	proto udp
+	dev tun
+	ca /etc/openvpn/pki/ca.crt
+	cert /etc/openvpn/pki/issued/server.crt
+	key /etc/openvpn/pki/private/server.key
+	dh /etc/openvpn/pki/dh.pem
+	server 10.10.10.0 255.255.255.0
+	ifconfig-pool-persist ipp.txt
+	client-to-client
+	client-config-dir /etc/openvpn/client
+	keepalive 10 120
+	comp-lzo
+	persist-key
+	persist-tun
+	status /var/log/openvpn-status.log
+	log /var/log/openvpn.log
+	verb 3
+```
 
+Запускаем openvpn сервер и добавлāем в автозагрузку
+```
+systemctl start openvpn@server
+systemctl enable openvpn@server
+systemctl status openvpn@server
 
+	● openvpn@server.service - OpenVPN Robust And Highly Flexible Tunneling Application On server
+	   Loaded: loaded (/usr/lib/systemd/system/openvpn@.service; disabled; vendor preset: disabled)
+	   Active: active (running) since Wed 2022-12-07 06:20:05 UTC; 8s ago
+	 Main PID: 23368 (openvpn)
+	   Status: "Initialization Sequence Completed"
+	   CGroup: /system.slice/system-openvpn.slice/openvpn@server.service
+			   └─23368 /usr/sbin/openvpn --cd /etc/openvpn/ --config server.conf
 
+	Dec 07 06:20:05 serverras systemd[1]: Starting OpenVPN Robust And Highly Flexible Tunneling Application On server...
+	Dec 07 06:20:05 serverras systemd[1]: Started OpenVPN Robust And Highly Flexible Tunneling Application On server.
+```
 
+Скопируем следующие файлы сертификатов и ключ для клиента на хостмашину в каталог /etc/openvpn/client
+```
+/etc/openvpn/pki/ca.crt
+/etc/openvpn/pki/issued/client.crt
+/etc/openvpn/pki/private/client.key
+```
 
+Создадим конфигурационный файл клиента client.conf на хост-машине
+```
+vi /etc/openvpn/client/client.conf
 
+	client
+	dev tun
+	proto udp
+	remote 192.168.100.239 1207
+	resolv-retry infinite
+	ca /etc/openvpn/client/ca.crt
+	cert /etc/openvpn/client/client.crt
+	key /etc/openvpn/client/client.key
+	persist-key
+	persist-tun
+	comp-lzo
+	verb 3
+```
 
+После того, как все готово, подключаемся к openvpn сервер с хост-машины
+```
+openvpn --config /etc/openvpn/client/client.conf
+```
+
+При успешном подключении проверяем пинг по внутреннему IP адресу сервера в туннеле
+```
+ping -c 4 10.10.10.1
+
+	PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
+	64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=0.811 ms
+	64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.736 ms
+	64 bytes from 10.10.10.1: icmp_seq=3 ttl=64 time=0.773 ms
+	64 bytes from 10.10.10.1: icmp_seq=4 ttl=64 time=0.793 ms
+```
+
+Также проверяем командами на хостовой машине, что сеть туннеля импортирована в таблицу маршрутизации
+```
+ip r
+
+	default via 192.168.100.1 dev enp3s0 proto dhcp metric 100
+	10.10.10.0/24 via 10.10.10.5 dev tun0
+	10.10.10.5 dev tun0 proto kernel scope link src 10.10.10.6
+	169.254.0.0/16 dev enp3s0 scope link metric 1000
+	172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown
+	192.168.10.0/24 dev vboxnet2 proto kernel scope link src 192.168.10.1 linkdown
+	192.168.100.0/24 dev enp3s0 proto kernel scope link src 192.168.100.29 metric 100
+	
+netstat -rn
+
+	Таблица маршутизации ядра протокола IP
+	Destination Gateway Genmask Flags MSS Window irtt Iface
+	0.0.0.0         192.168.100.1   0.0.0.0         UG        0 0          0 enp3s0
+	10.10.10.0      10.10.10.5      255.255.255.0   UG        0 0          0 tun0
+	10.10.10.5      0.0.0.0         255.255.255.255 UH        0 0          0 tun0
+	169.254.0.0     0.0.0.0         255.255.0.0     U         0 0          0 enp3s0
+	172.17.0.0      0.0.0.0         255.255.0.0     U         0 0          0 docker0
+	192.168.10.0    0.0.0.0         255.255.255.0   U         0 0          0 vboxnet2
+	192.168.100.0   0.0.0.0         255.255.255.0   U         0 0          0 enp3s0
+```
 
 
 
