@@ -656,7 +656,7 @@ netstat -rn
 	192.168.100.0   0.0.0.0         255.255.255.0   U         0 0          0 enp3s0
 ```
 
-
+![openvpn_ras_test](https://user-images.githubusercontent.com/91377497/206120102-882a84c4-bb71-4873-bf7e-94cd432321f5.jpg)
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!
