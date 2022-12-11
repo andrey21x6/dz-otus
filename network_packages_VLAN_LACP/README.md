@@ -25,9 +25,7 @@
 	
 	-- testClient2 <-> testServer2
 	
-- Между centralRouter и inetRouter
-
-- "Пробросить" 2 линка (общая inernal сеть) и объединить их в бонд
+- Между centralRouter и inetRouter "пробросить" 2 линка (общая inernal сеть) и объединить их в бонд
 
 - Проверить работу c отключением интерфейсов
 
