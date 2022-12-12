@@ -1,0 +1,169 @@
+---
+- hosts: all
+  become: yes
+  
+  tasks:
+  - name: install packages
+    yum: name={{ item }} state=present
+    with_items:
+      - vim
+      - tcpdump
+      - iperf3
+      - nano
+      - mc
+
+- hosts: testServer1
+  become: yes
+  
+  tasks:
+  
+  - name: copy ifcfg-eth1 config
+    copy:
+      src: config/ifcfg-eth1.testServer1
+      dest: /etc/sysconfig/network-scripts/ifcfg-vlan100
+      owner: root
+      group: root
+      mode: 0644
+    
+  # Перезапускаем службу network
+  - name: restarted network
+    service:
+      name: network
+      state: restarted
+      enabled: yes
+
+- hosts: testClient1
+  become: yes
+  
+  tasks:
+  
+  - name: copy ifcfg-eth1 config
+    copy:
+      src: config/ifcfg-eth1.testClient1
+      dest: /etc/sysconfig/network-scripts/ifcfg-vlan100
+      owner: root
+      group: root
+      mode: 0644
+    
+  # Перезапускаем службу network
+  - name: restarted network
+    service:
+      name: network
+      state: restarted
+      enabled: yes
+    
+- hosts: testServer2
+  become: yes
+  
+  tasks:
+  
+  - name: copy ifcfg-eth1 config
+    copy:
+      src: config/ifcfg-eth1.testServer2
+      dest: /etc/sysconfig/network-scripts/ifcfg-vlan101
+      owner: root
+      group: root
+      mode: 0644
+    
+  # Перезапускаем службу network
+  - name: restarted network
+    service:
+      name: network
+      state: restarted
+      enabled: yes
+
+- hosts: testClient2
+  become: yes
+  
+  tasks:
+  
+  - name: copy ifcfg-eth1 config
+    copy:
+      src: config/ifcfg-eth1.testClient2
+      dest: /etc/sysconfig/network-scripts/ifcfg-vlan101
+      owner: root
+      group: root
+      mode: 0644
+    
+  # Перезапускаем службу network
+  - name: restarted network
+    service:
+      name: network
+      state: restarted
+      enabled: yes
+
+- hosts: inetRouter
+  become: yes
+  
+  tasks:
+  
+  - name: copy ifcfg-eth1 config
+    copy:
+      src: config/ifcfg-eth1.{{ inventory_hostname }}
+      dest: /etc/sysconfig/network-scripts/ifcfg-eth1
+      owner: root
+      group: root
+      mode: 0644
+  
+  - name: copy ifcfg-eth2 config
+    copy:
+      src: config/ifcfg-eth2.{{ inventory_hostname }}
+      dest: /etc/sysconfig/network-scripts/ifcfg-eth2
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: copy ifcfg-bond0 config
+    copy:
+      src: config/ifcfg-bond0.{{ inventory_hostname }}
+      dest: /etc/sysconfig/network-scripts/ifcfg-bond0
+      owner: root
+      group: root
+      mode: 0644
+    when: inventory_hostname == ("inetRouter") or ("centralRouter")
+    
+  # Перезапускаем службу network
+  - name: restarted network
+    service:
+      name: network
+      state: restarted
+      enabled: yes
+
+- hosts: centralRouter
+  become: yes
+  
+  tasks:
+  
+  - name: copy ifcfg-eth1 config
+    copy:
+      src: config/ifcfg-eth1.{{ inventory_hostname }}
+      dest: /etc/sysconfig/network-scripts/ifcfg-eth1
+      owner: root
+      group: root
+      mode: 0644
+  
+  - name: copy ifcfg-eth2 config
+    copy:
+      src: config/ifcfg-eth2.{{ inventory_hostname }}
+      dest: /etc/sysconfig/network-scripts/ifcfg-eth2
+      owner: root
+      group: root
+      mode: 0644
+    
+  - name: copy ifcfg-bond0 config
+    copy:
+      src: config/ifcfg-bond0.{{ inventory_hostname }}
+      dest: /etc/sysconfig/network-scripts/ifcfg-bond0
+      owner: root
+      group: root
+      mode: 0644
+    when: inventory_hostname == ("inetRouter") or ("centralRouter")
+    
+  # Перезапускаем службу network
+  - name: restarted network
+    service:
+      name: network
+      state: restarted
+      enabled: yes
+
+...

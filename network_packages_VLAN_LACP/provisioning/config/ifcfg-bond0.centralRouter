@@ -1,0 +1,10 @@
+DEVICE=bond0
+NAME=bond0
+TYPE=Bond
+IPADDR=192.168.255.2
+NETMASK=255.255.255.0
+ONBOOT=yes
+BOOTPROTO=static
+BONDING_OPTS="mode=1 miimon=100 fail_over_mac=1"
+NM_CONTROLLED=yes
+USERCTL=no

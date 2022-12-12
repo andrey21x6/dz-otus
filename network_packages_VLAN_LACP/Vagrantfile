@@ -1,72 +1,49 @@
 # -*- mode: ruby -*-
-# vim: set ft=ruby :
+# vi: set ft=ruby :
 
-MACHINES = {
-  :inetRouter => {
-    :box_name => "centos/7",
-    :net => [
-			   {ip: '192.168.255.1', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "router-net"}
-            ]
-  },
-  :centralRouter => {
-    :box_name => "centos/7",
-    :net => [
-			   {ip: '192.168.255.2', adapter: 2, netmask: "255.255.255.252", virtualbox__intnet: "router-net"},
-			   {ip: '192.168.0.1', adapter: 3, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"}
-            ]
-  },
-  :centralServer => {
-    :box_name => "centos/7",
-    :net => [
-               {ip: '192.168.0.2', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"}
-            ]
-  },
-  :inetRouter2 => {
-    :box_name => "centos/7",
-    :net => [
-               {ip: '192.168.0.3', adapter: 2, netmask: "255.255.255.240", virtualbox__intnet: "dir-net"}
-            ]
-  }
-}
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
 
-Vagrant.configure("2") do |config|
-
-  MACHINES.each do |boxname, boxconfig|
-      
-    config.vm.define boxname do |box|
-
-        box.vm.box = boxconfig[:box_name]
-        box.vm.host_name = boxname.to_s
-
-        config.vm.provider "virtualbox" do |v|
-          v.memory = 256
-        end
-
-        boxconfig[:net].each do |ipconf|
-          box.vm.network "private_network", ipconf
-        end
-
-        box.vm.provision "shell", inline: <<-SHELL
-	      mkdir -p ~root/.ssh
-		  cp ~vagrant/.ssh/auth* ~root/.ssh
-        SHELL
-        
-        case boxname.to_s
-		
-          when "inetRouter"
-		    box.vm.provision "shell", path: "inetRouter.sh"
-			
-          when "centralRouter"
-		    box.vm.provision "shell", path: "centralRouter.sh"
-			
-          when "centralServer"
-			box.vm.provision "shell", path: "centralServer.sh"
-			
-          when "inetRouter2"
-		    box.vm.network "forwarded_port", guest: 80, host: 8080
-		    box.vm.provision "shell", path: "inetRouter2.sh"
-
-        end
-      end
+  config.vm.provider "virtualbox" do |v|
+	  v.memory = 512
   end
+
+  config.vm.define "inetRouter" do |inetRouter|
+    inetRouter.vm.network "private_network", ip: "192.168.255.11", virtualbox__intnet: "router-net"
+    inetRouter.vm.network "private_network", ip: "192.168.255.12", virtualbox__intnet: "router-net"
+	inetRouter.vm.hostname = "inetRouter"
+  end
+  
+  config.vm.define "centralRouter" do |centralRouter|
+    centralRouter.vm.network "private_network", ip: "192.168.255.13", virtualbox__intnet: "router-net"
+    centralRouter.vm.network "private_network", ip: "192.168.255.14", virtualbox__intnet: "router-net"
+    centralRouter.vm.network "private_network", ip: "192.168.100.1", virtualbox__intnet: "office1-net"
+	centralRouter.vm.hostname = "centralRouter"
+  end
+  
+   config.vm.define "testServer1" do |testServer1|
+    testServer1.vm.network "private_network", ip: "192.168.100.2", virtualbox__intnet: "office1-net"
+    testServer1.vm.hostname = "testServer1"
+  end
+  
+  config.vm.define "testClient1" do |testClient1|
+    testClient1.vm.network "private_network", ip: "192.168.100.3", virtualbox__intnet: "office1-net"
+    testClient1.vm.hostname = "testClient1"
+  end
+ 
+  config.vm.define "testServer2" do |testServer2|
+    testServer2.vm.network "private_network", ip: "192.168.100.4", virtualbox__intnet: "office1-net"
+    testServer2.vm.hostname = "testServer2"
+  end
+  
+   config.vm.define "testClient2" do |testClient2|
+    testClient2.vm.network "private_network", ip: "192.168.100.5", virtualbox__intnet: "office1-net"
+    testClient2.vm.hostname = "testClient2"
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "provisioning/playbook.yml"
+    ansible.become = "true"
+  end
+
 end
