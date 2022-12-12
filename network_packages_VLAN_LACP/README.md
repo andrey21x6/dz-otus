@@ -31,21 +31,81 @@
 
 # **Выполнение ДЗ**
 
+Описание команд и настроек находятся в файлах Vagrantfile и playbook.yml
 
+Запускаем стенд
+```
+vagrabt up
+```
 
+После запуска стенда, открывает шесть окон терминалов для удобства и подключаемся к ВМ
+```
+vagrant ssh testServer1
+vagrant ssh testClient1
+vagrant ssh testServer2
+vagrant ssh testClient2
+vagrant ssh inetRouter
+vagrant ssh centralRouter
+```
 
+На ВМ testServer1, testClient1, testServer2, testClient2 введём команду ip a и посмотрим, что получилось
+```
+ip a
+```
 
+IMG
 
+На inetRouter и centralRouter, нужно зайти в sudo, выполнить перезапуск сетевой службы (в playbook.yml перезапуск прописан, но видимо одного раза мало) и команду ip a
+```
+sudo -i
+systemctl restart network
+ip a
+```
 
+IMG
 
+На testClient1 запустим tcpdump (VLAN 100)
+```
+sudo -i
+tcpdump -nvvv -ieth1
+```
 
+В на testServer1 запустим пинг на testClient1 (VLAN 100)
+```
+ping -c 4 10.10.10.254
+```
 
+IMG
 
+Делаем тоже самое на VLAN 101
 
+На testClient2 запустим tcpdump (VLAN 101)
+```
+sudo -i
+tcpdump -nvvv -ieth1
+```
 
+В на testServer2 запустим пинг на testClient2 (VLAN 101)
+```
+ping -c 4 10.10.10.254
+```
 
+IMG
 
+На inetRouter проверяем пинг
+```
+sudo -i
+ping -c 4 192.168.255.2
+```
 
+IMG
+
+Отключаем один интерфейс и снова пингуем
+```
+ip link set eth1 down
+```
+
+IMG
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!

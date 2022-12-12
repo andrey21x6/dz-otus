@@ -2,6 +2,7 @@
 - hosts: all
   become: yes
   
+  # Установка пакетов
   tasks:
   - name: install packages
     yum: name={{ item }} state=present
@@ -17,6 +18,7 @@
   
   tasks:
   
+  # Копирование конфиг файла для сетевого интерфейса
   - name: copy ifcfg-eth1 config
     copy:
       src: config/ifcfg-eth1.testServer1
@@ -37,6 +39,7 @@
   
   tasks:
   
+  # Копирование конфиг файла для сетевого интерфейса
   - name: copy ifcfg-eth1 config
     copy:
       src: config/ifcfg-eth1.testClient1
@@ -57,6 +60,7 @@
   
   tasks:
   
+  # Копирование конфиг файла для сетевого интерфейса
   - name: copy ifcfg-eth1 config
     copy:
       src: config/ifcfg-eth1.testServer2
@@ -77,6 +81,7 @@
   
   tasks:
   
+  # Копирование конфиг файла для сетевого интерфейса
   - name: copy ifcfg-eth1 config
     copy:
       src: config/ifcfg-eth1.testClient2
@@ -97,6 +102,7 @@
   
   tasks:
   
+  # Копирование конфиг файла для сетевого интерфейса
   - name: copy ifcfg-eth1 config
     copy:
       src: config/ifcfg-eth1.{{ inventory_hostname }}
@@ -113,6 +119,7 @@
       group: root
       mode: 0644
 
+  # Копирование конфиг файла для сетевого интерфейса
   - name: copy ifcfg-bond0 config
     copy:
       src: config/ifcfg-bond0.{{ inventory_hostname }}
@@ -134,6 +141,7 @@
   
   tasks:
   
+  # Копирование конфиг файла для сетевого интерфейса
   - name: copy ifcfg-eth1 config
     copy:
       src: config/ifcfg-eth1.{{ inventory_hostname }}
@@ -142,6 +150,7 @@
       group: root
       mode: 0644
   
+  # Копирование конфиг файла для сетевого интерфейса
   - name: copy ifcfg-eth2 config
     copy:
       src: config/ifcfg-eth2.{{ inventory_hostname }}
@@ -150,6 +159,7 @@
       group: root
       mode: 0644
     
+  # Копирование конфиг файла для сетевого интерфейса
   - name: copy ifcfg-bond0 config
     copy:
       src: config/ifcfg-bond0.{{ inventory_hostname }}
