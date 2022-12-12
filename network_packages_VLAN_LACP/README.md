@@ -53,7 +53,13 @@ vagrant ssh centralRouter
 ip a
 ```
 
-IMG
+![ip_a_testServer1](https://user-images.githubusercontent.com/91377497/207095925-bbd31d20-4394-4b45-a8b7-edf1e0dbde57.jpg)
+
+![ip_a_testClient1](https://user-images.githubusercontent.com/91377497/207096004-9049be3b-1e89-40bf-9dcf-9536e63bd40f.jpg)
+
+![ip_a_testServer2](https://user-images.githubusercontent.com/91377497/207096046-79eea531-c739-4404-8d81-d8920d1dc549.jpg)
+
+![ip_a_testClient2](https://user-images.githubusercontent.com/91377497/207096102-5ba4e9c5-48be-40ed-9b19-23357a74ab1d.jpg)
 
 На inetRouter и centralRouter, нужно зайти в sudo, выполнить перезапуск сетевой службы (в playbook.yml перезапуск прописан, но видимо одного раза мало) и команду ip a
 ```
@@ -62,7 +68,9 @@ systemctl restart network
 ip a
 ```
 
-IMG
+![ip_a_inetRouter](https://user-images.githubusercontent.com/91377497/207096215-dc7c5faf-8704-4d8e-8b50-6896508b65e2.jpg)
+
+![ip_a_centralRouter](https://user-images.githubusercontent.com/91377497/207096237-8c5250ac-ee45-413d-99c9-d5b8243e2f58.jpg)
 
 На testClient1 запустим tcpdump (VLAN 100)
 ```
@@ -75,7 +83,7 @@ tcpdump -nvvv -ieth1
 ping -c 4 10.10.10.254
 ```
 
-IMG
+![tcpdump_testClient1](https://user-images.githubusercontent.com/91377497/207096341-72ebbaa4-a118-4b2b-942b-e897c4376546.jpg)
 
 Делаем тоже самое на VLAN 101
 
@@ -90,7 +98,7 @@ tcpdump -nvvv -ieth1
 ping -c 4 10.10.10.254
 ```
 
-IMG
+![tcpdump_testClient2](https://user-images.githubusercontent.com/91377497/207096540-bf401bab-a052-427e-9b0d-1d27d445339e.jpg)
 
 На inetRouter проверяем пинг
 ```
@@ -98,14 +106,14 @@ sudo -i
 ping -c 4 192.168.255.2
 ```
 
-IMG
+![ping_1_inetRouter](https://user-images.githubusercontent.com/91377497/207096602-618fb170-da76-4823-ae3a-74369acb8d1b.jpg)
 
 Отключаем один интерфейс и снова пингуем
 ```
 ip link set eth1 down
 ```
 
-IMG
+![ping_2_inetRouter](https://user-images.githubusercontent.com/91377497/207096634-7c51a895-5332-4263-83ec-3878f9805942.jpg)
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!
