@@ -111,6 +111,7 @@ ping -c 4 192.168.255.2
 Отключаем один интерфейс и снова пингуем
 ```
 ip link set eth1 down
+ping -c 4 192.168.255.2
 ```
 
 ![ping_2_inetRouter](https://github.com/andrey21x6/dz-otus/blob/main/network_packages_VLAN_LACP/scrin/ping_2_inetRouter.jpg)
