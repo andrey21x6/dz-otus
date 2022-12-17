@@ -148,7 +148,7 @@ server.vm.network "public_network", ip: "192.168.100.210", bridge: "enp3s0"
 
 И он перебрасывает на адрес: https://server.freeipa.loc/ipa/ui по которому открывается веб интерфейса FreeIPA сервера
 
-IMG
+![FreeIPA_web_1](https://user-images.githubusercontent.com/91377497/208233735-84a57cdf-8b3f-4d81-8e54-54d271eca6dd.jpg)
 
 Авторизуемся
 ```
@@ -156,7 +156,7 @@ admin
 12345678
 ```
 
-IMG
+![FreeIPA_web_2](https://user-images.githubusercontent.com/91377497/208233739-3129a9ad-2d5e-4403-b036-887d43032b6b.jpg)
 
 Теперь можно запустить ansible-playbook lдля конфигурации клиента
 ```
