@@ -71,7 +71,8 @@ Following DNS servers are configured in /etc/resolv.conf: 10.0.2.3. Do you want 
 {В файле /etc/resolv.conf настроены следующие DNS-серверы: 10.0.2.3. Вы хотите настроить эти серверы как серверы пересылки DNS}
 yes
 
-Enter an IP address for a DNS forwarder, or press Enter to skip: (Введите IP-адрес сервера пересылки DNS или нажмите Enter, чтобы пропустить)
+Enter an IP address for a DNS forwarder, or press Enter to skip: 
+(Введите IP-адрес сервера пересылки DNS или нажмите Enter, чтобы пропустить)
 "Enter"
 
 Do you want to search for missing reverse zones? [yes]: (Вы хотите искать недостающие обратные зоны)
@@ -89,7 +90,8 @@ FREEIPA
 Do you want to configure chrony with NTP server or pool address? [no]: (Вы хотите настроить chrony с адресом NTP-сервера или пула)
 yes
 
-Enter NTP source server addresses separated by comma, or press Enter to skip: (Введите адреса исходного NTP-сервера через запятую или нажмите Enter, чтобы пропустить)
+Enter NTP source server addresses separated by comma, or press Enter to skip: 
+(Введите адреса исходного NTP-сервера через запятую или нажмите Enter, чтобы пропустить)
 ntp7.ntp-servers.net,ntp6.ntp-servers.net,ntp5.ntp-servers.net
 
 Enter a NTP source pool address, or press Enter to skip: (Введите адрес исходного пула NTP или нажмите Enter, чтобы пропустить)
