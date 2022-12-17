@@ -18,3 +18,5 @@ dnf install ipa-server-dns -y
 
 #ipa-server-install --mkhomedir
 #kinit admin
+#klist
+#ipa user-find admin
