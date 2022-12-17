@@ -35,68 +35,68 @@ sudo -i
 ipa-server-install --mkhomedir
 
 Do you want to configure integrated DNS (BIND)? [no]: (Вы хотите настроить интегрированный DNS)
-**yes**
+yes
 
 Server host name [server.freeipa.loc]: (Имя хоста сервера)
-**"Enter"**
+"Enter"
 
 Please confirm the domain name [freeipa.loc]: (Пожалуйста, подтвердите доменное имя)
-**"Enter"**
+"Enter"
 
 Please provide a realm name [FREEIPA.LOC]: (Please provide a realm name [FREEIPA.LOC]:)
-**"Enter"**
+"Enter"
 
 Directory Manager password: (Пароль диспетчера каталогов)
-**12345678**
+12345678
 
 Password (confirm):
-**12345678**
+12345678
 
 IPA admin password: (пароль администратора сервера IPA)
-**12345678**
+12345678
 
 Password (confirm):
-**12345678**
+12345678
 
 Please provide the IP address to be used for this host name: (Укажите IP-адрес, который будет использоваться для этого имени хоста)
-**192.168.10.10**
+192.168.10.10
 
 Enter an additional IP address, or press Enter to skip: (Введите дополнительный IP-адрес или нажмите Enter, чтобы пропустить)
-**"Enter"**
+"Enter"
 
 Do you want to configure DNS forwarders? [yes]: (Вы хотите настроить серверы пересылки DNS)
-**yes**
+yes
 
 Following DNS servers are configured in /etc/resolv.conf: 10.0.2.3. Do you want to configure these servers as DNS forwarders? [yes]:
 {В файле /etc/resolv.conf настроены следующие DNS-серверы: 10.0.2.3. Вы хотите настроить эти серверы как серверы пересылки DNS}
-**yes**
+yes
 
 Enter an IP address for a DNS forwarder, or press Enter to skip: (Введите IP-адрес сервера пересылки DNS или нажмите Enter, чтобы пропустить)
-**"Enter"**
+"Enter"
 
 Do you want to search for missing reverse zones? [yes]: (Вы хотите искать недостающие обратные зоны)
-**yes**
+yes
 
 Do you want to create reverse zone for IP 192.168.10.10 [yes]: (Вы хотите создать обратную зону для IP 192.168.10.10)
-**yes**
+yes
 
 Please specify the reverse zone name [10.168.192.in-addr.arpa.]: (Укажите имя обратной зоны)
-**"Enter"**
+"Enter"
 
 NetBIOS domain name [FREEIPA]: (Доменное имя NetBIOS)
-**FREEIPA**
+FREEIPA
 
 Do you want to configure chrony with NTP server or pool address? [no]: (Вы хотите настроить chrony с адресом NTP-сервера или пула)
-**yes**
+yes
 
 Enter NTP source server addresses separated by comma, or press Enter to skip: (Введите адреса исходного NTP-сервера через запятую или нажмите Enter, чтобы пропустить)
-**ntp7.ntp-servers.net,ntp6.ntp-servers.net,ntp5.ntp-servers.net**
+ntp7.ntp-servers.net,ntp6.ntp-servers.net,ntp5.ntp-servers.net
 
 Enter a NTP source pool address, or press Enter to skip: (Введите адрес исходного пула NTP или нажмите Enter, чтобы пропустить)
-**"Enter"**
+"Enter"
 
 Continue to configure the system with these values? [no]: (Продолжать настраивать систему с этими значениями?)
-**yes**
+yes
 ```
 
 
