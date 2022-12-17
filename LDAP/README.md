@@ -68,7 +68,7 @@ Do you want to configure DNS forwarders? [yes]: (Вы хотите настро�
 yes
 
 Following DNS servers are configured in /etc/resolv.conf: 10.0.2.3. Do you want to configure these servers as DNS forwarders? [yes]:
-{В файле /etc/resolv.conf настроены следующие DNS-серверы: 10.0.2.3. Вы хотите настроить эти серверы как серверы пересылки DNS}
+(В файле /etc/resolv.conf настроены следующие DNS-серверы: 10.0.2.3. Вы хотите настроить эти серверы как серверы пересылки DNS)
 yes
 
 Enter an IP address for a DNS forwarder, or press Enter to skip: 
