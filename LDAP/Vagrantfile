@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/8"
+  
+  config.vm.define "client" do |client|
+    client.vm.hostname = "client.freeipa.loc"
+	client.vm.network "private_network", ip: "192.168.10.20"
+	#client.vm.provision "shell", path: "client.sh"
+	
+	client.vm.provider "virtualbox" do |vb|
+		vb.memory = "512"
+	end
+	
+  end
+
+  config.vm.define "server" do |server|
+    server.vm.hostname = "server.freeipa.loc"
+	server.vm.network "private_network", ip: "192.168.10.10"
+	server.vm.network "forwarded_port", guest: 80, host: 580
+	server.vm.network "forwarded_port", guest: 443, host: 5443
+    server.vm.provision "shell", path: "server.sh"
+	
+	server.vm.provider "virtualbox" do |vb|
+		vb.cpus = 1
+		vb.memory = "4096"
+	end
+	
+  end
+
+end
