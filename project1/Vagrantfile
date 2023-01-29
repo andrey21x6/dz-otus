@@ -1,0 +1,102 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+MACHINES = {
+  :nginx => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.90.11', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            ]
+  },
+  :backend1 => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.90.12', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            ]
+  },
+  #:backend2 => {
+    #:box_name => "centos/8",
+    #:net => [
+			   #{ip: '192.168.90.13', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            #]
+  #},
+  :database1 => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.90.14', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            ]
+  #},
+  #:database2 => {
+    #:box_name => "centos/8",
+    #:net => [
+			   #{ip: '192.168.90.15', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            #]
+  #},
+  #:logserver => {
+    #:box_name => "centos/8",
+    #:net => [
+			   #{ip: '192.168.90.16', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            #]
+  #},
+  #:backupserver => {
+    #:box_name => "centos/8",
+    #:net => [
+			   #{ip: '192.168.90.17', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            #]
+  }
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+      
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.host_name = boxname.to_s
+
+        config.vm.provider "virtualbox" do |v|
+          v.memory = 512
+        end
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", ipconf
+        end
+
+        #box.vm.provision "shell", inline: <<-SHELL
+	      #mkdir -p ~root/.ssh
+		  #cp ~vagrant/.ssh/auth* ~root/.ssh
+        #SHELL
+        
+        case boxname.to_s
+		
+          when "nginx"
+		    box.vm.network "forwarded_port", guest: 80, host: 8181
+			box.vm.provision "file", source: "config/nginx/nginx.conf", destination: "~/nginx.conf"
+		    box.vm.provision "shell", path: "nginx.sh"
+			
+          when "backend1"
+		    box.vm.network "forwarded_port", guest: 80, host: 8282
+			box.vm.provision :file, source: "config/html", destination: "~/"
+		    box.vm.provision "shell", path: "backend1.sh"
+			
+          #when "backend2"
+			#box.vm.provision "shell", path: "backend2.sh"
+			
+          when "database1"
+		    box.vm.network "forwarded_port", guest: 3306, host: 3306
+		    box.vm.provision "shell", path: "database1.sh"
+			
+	      #when "database2"
+		    #box.vm.provision "shell", path: "database2.sh"
+			
+		  #when "logserver"
+		    #box.vm.provision "shell", path: "logserver.sh"
+			
+		  #when "backupserver"
+		    #box.vm.provision "shell", path: "backupserver.sh"
+
+        end
+      end
+  end
+end

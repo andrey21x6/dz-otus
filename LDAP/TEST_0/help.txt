@@ -1,0 +1,72 @@
+
+vagrant ssh ipaserver -c 'echo password | kinit admin && ipa user-add --first="andrey" --last="andrey" --cn="User User" --password 12345678 --shell="/bin/bash"'
+vagrant ssh client
+su -l user
+
+ipa-server-install --mkhomedir
+kinit admin
+klist
+ipa user-find admin
+
+
+
+
+
+
+ipa-client-install --domain client1.freeipa.loc -p admin -w 12345678
+
+	This program will set up IPA client.
+	Version 4.9.6
+
+	Provide your IPA server name: (Укажите имя вашего IPA-сервера)
+server.freeipa.loc
+
+	Proceed with fixed values and no DNS discovery? (Продолжить с фиксированными значениями и без обнаружения DNS?)
+yes
+
+	Do you want to configure chrony with NTP server or pool address? (Вы хотите настроить chrony с адресом NTP-сервера или пула?)
+yes
+
+	Enter NTP source server addresses separated by comma, or press Enter to skip
+"Enter"
+
+	Enter a NTP source pool address, or press Enter to skip:
+"Enter"
+
+	Continue to configure the system with these values?
+yes
+
+	Synchronizing time
+	No SRV records of NTP servers found and no NTP server or pool address was provided.
+	Using default chrony configuration.
+	Attempting to sync time with chronyc.
+	Time synchronization was successful.
+	Successfully retrieved CA cert
+		Subject:     CN=Certificate Authority,O=FREEIPA.LOC
+		Issuer:      CN=Certificate Authority,O=FREEIPA.LOC
+		Valid From:  2023-01-15 11:36:31
+		Valid Until: 2043-01-15 11:36:31
+
+	Enrolled in IPA realm FREEIPA.LOC
+	Created /etc/ipa/default.conf
+	Configured sudoers in /etc/authselect/user-nsswitch.conf
+	Configured /etc/sssd/sssd.conf
+	Configured /etc/krb5.conf for IPA realm FREEIPA.LOC
+	Systemwide CA database updated.
+	Hostname (client.freeipa.loc) does not have A/AAAA record.
+	Missing reverse record(s) for address(es): 192.168.10.20.
+	Adding SSH public key from /etc/ssh/ssh_host_ecdsa_key.pub
+	Adding SSH public key from /etc/ssh/ssh_host_ed25519_key.pub
+	Adding SSH public key from /etc/ssh/ssh_host_rsa_key.pub
+	SSSD enabled
+	Configured /etc/openldap/ldap.conf
+	Configured /etc/ssh/ssh_config
+	Configured /etc/ssh/sshd_config
+	Configuring client1.freeipa.loc as NIS domain.
+	Client configuration complete.
+	The ipa-client-install command was successful
+
+
+
+
+

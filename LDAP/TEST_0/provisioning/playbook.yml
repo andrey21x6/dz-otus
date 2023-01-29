@@ -1,0 +1,86 @@
+---
+
+- hosts: server
+  become: yes
+  tasks:
+  
+  #- name: sed and localectl server
+    #command:
+      #sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
+      #sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
+      #localectl set-locale LANG=en_US.UTF-8
+  
+  #- name: install packages
+    #yum: name={{ item }} state=latest
+    #with_items:
+      #- langpacks-en
+      #- glibc-all-langpacks
+      #- mc
+      #- nano
+      #- @idm:DL1
+      #- ipa-server
+      #- ipa-server-dns
+    
+   #Копирование конфиг файла
+  - name: copy server hosts file
+    copy:
+      src: freeipa_hosts
+      dest: /etc/hosts
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: configure server
+    command: |
+      ipa-server-install -U \
+      -r FREEIPA.LOC \
+      -n freeipa.loc \
+      -p 12345678 \
+      -a 12345678 \
+      --hostname=server.freeipa.loc \
+      --ip-address=192.168.10.10 \
+      --mkhomedir \
+      --setup-dns \
+      --auto-forwarders \
+      --auto-reverse
+
+  #- ipa_user:
+      #name: andrey
+      #givenname: andrey
+      #sn: P
+      #password: password
+      #sshpubkey:
+      #- ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsWqMv7ZZB2WG6fWPPX5VZBY75Oz7xptwRut55Noq/DaUR2pMQ52o36i8AeHnSns6lRDPO0H2kL4NdUIWzASjfthqgawmlKfzKMkVmpGZ3w36jr/5Ln6b+HBFeBdQpAhZKSCY4NilpWM3cmjNIN1EG7evFh/TG+c+sX5RR5JArqoNjePHVWuO4i9Rb88hgLvzO0ZYVg/KZnw9Eo0da4MBqWkY8VAb9XpLPJG/QqVgp5srOUHCWmzqzpBzJt5YZ0VbL74n98/SR0hADxv7UHVMSnGK9oQwtleREzSjPHX5JPt5Aw1HW2DhNiNAb53zpE5TcKMQfprO+K46p21n2KsXX
+      #loginshell: /bin/bash
+      #ipa_host: client.freeipa.loc
+      #ipa_user: admin
+      #ipa_pass: 12345678
+
+- hosts: client
+  become: yes
+  tasks:
+
+  #- name: install freeipa package
+    #yum: name=freeipa-client state=latest
+    
+   # Копирование конфиг файла
+  - name: add ipa server as nameserver
+    copy:
+      src: client_resolv.conf
+      dest: /etc/resolv.conf
+      owner: root
+      group: root
+      mode: 0644
+
+  #- name: configure ipa client
+    #command: |
+      #ipa-client-install -U \
+      #--principal admin@FREEIPA.LOC \
+      #--password 12345678 \
+      #--server server.freeipa.loc \
+      #--domain freeipa.loc \
+      #--realm FREEIPA.LOC \
+      #--mkhomedir \
+      #--force-join
+
+...

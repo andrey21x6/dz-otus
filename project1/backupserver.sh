@@ -9,4 +9,4 @@ localectl set-locale LANG=en_US.UTF-8
 dnf install langpacks-en glibc-all-langpacks -y
 
 # Установка программ
-dnf install mc nano freeipa-client -y
+dnf install mc nano telnet net-tools -y

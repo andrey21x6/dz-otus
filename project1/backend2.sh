@@ -9,4 +9,10 @@ localectl set-locale LANG=en_US.UTF-8
 dnf install langpacks-en glibc-all-langpacks -y
 
 # Установка программ
-dnf install mc nano freeipa-client -y
+dnf install mc nano telnet net-tools nginx -y
+
+# Установка PHP
+dnf install php php-cli php-mysqlnd php-json php-gd php-ldap php-odbc php-pdo php-opcache php-pear php-xml php-xmlrpc php-mbstring php-snmp php-soap php-zip -y
+
+# Старт nginx
+systemctl start nginx

@@ -7,8 +7,8 @@ Vagrant.configure(2) do |config|
   config.vm.define "server" do |server|
     server.vm.hostname = "server.freeipa.loc"
 	server.vm.network "private_network", ip: "192.168.10.10"
-	server.vm.network "public_network", ip: "192.168.100.210", bridge: "enp3s0"
-    #server.vm.provision "shell", path: "server.sh"
+	server.vm.network "public_network", ip: "192.168.100.212", bridge: "enp3s0"
+    server.vm.provision "shell", path: "server.sh"
 	
 	server.vm.provider "virtualbox" do |vb|
 		vb.cpus = 1
@@ -19,13 +19,18 @@ Vagrant.configure(2) do |config|
   config.vm.define "client" do |client|
     client.vm.hostname = "client.freeipa.loc"
 	client.vm.network "private_network", ip: "192.168.10.20"
-	client.vm.network "public_network", ip: "192.168.100.211", bridge: "enp3s0"
-	#client.vm.provision "shell", path: "client.sh"
+	client.vm.network "public_network", ip: "192.168.100.213", bridge: "enp3s0"
+	client.vm.provision "shell", path: "client.sh"
 	
 	client.vm.provider "virtualbox" do |vb|
 		vb.memory = "512"
 	end
 	
   end
+  
+  #config.vm.provision "ansible" do |ansible|
+    #ansible.playbook = "provisioning/playbook.yml"
+    #ansible.become = "true"
+  #end
 
 end

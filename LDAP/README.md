@@ -131,7 +131,7 @@ ipa user-find admin
 	---------------------------------
 ```
 
-Для проверки доступности веб интерфейса FreeIPA сервера, в Vagrantfile прописал публичный IP
+Для проверки доступности веб интерфейса FreeIPA сервера c хостовой машины, в Vagrantfile прописал public_network
 ```
 server.vm.network "public_network", ip: "192.168.100.210", bridge: "enp3s0"
 ```
@@ -158,7 +158,7 @@ admin
 
 ![FreeIPA_web_2](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/scrin/FreeIPA_web_2.jpg)
 
-Теперь можно запустить ansible-playbook lдля конфигурации клиента
+Теперь можно запустить ansible-playbook для конфигурации клиента
 ```
 
 ``` 
