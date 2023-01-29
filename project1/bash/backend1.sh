@@ -23,3 +23,12 @@ systemctl enable nginx
 
 # Старт nginx
 systemctl start nginx
+
+# Включение SSH по паролю
+sed -i -e "s/\PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+
+# Установка пароля
+echo root:1 | /usr/sbin/chpasswd
+
+# Рестарт службы SSH
+systemctl restart sshd

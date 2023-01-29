@@ -11,11 +11,15 @@ getsebool httpd_can_network_connect
 
 ========================================================================
 
+   *** backend1 ***
+   
+nano /usr/share/nginx/html/index.php
+
+========================================================================
+
    *** database ***
    
 systemctl status mariadb
-
-mysql -uroot -p
 
 # Запуск утилиты настройки безопасности mariadb
 /usr/bin/mysql_secure_installation
@@ -27,6 +31,23 @@ mysql -uroot -p
 mysql -h 127.0.0.1 -uroot -p123456 \
   "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '12345678';" \
   exit
+
+
+mysql -uroot -p
+
+show databases;
+use mysql;
+show tables;
+
+CREATE DATABASE test1;
+USE test1;
+Database changed
+
+CREATE TABLE table1
+(
+    id INT,
+    name VARCHAR(255)
+);
 
 
 ========================================================================

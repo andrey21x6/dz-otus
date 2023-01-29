@@ -13,7 +13,19 @@ dnf install mc nano telnet net-tools -y
 
 # Установка mariadb
 dnf install mariadb mariadb-server -y
-	
+
+# Разрешение в SELinux на на удалённое подключение к mariadb
+setsebool -P httpd_can_network_connect_db 1
+
+# Включение SSH по паролю
+sed -i -e "s/\PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+
+# Установка пароля
+echo root:1 | /usr/sbin/chpasswd
+
+# Рестарт службы SSH
+systemctl restart sshd
+
 # Разрешить доступ к БД с любого IP по порту 3306
 sed -i -e "s/\#bind-address=0.0.0.0/bind-address=0.0.0.0/g" /etc/my.cnf.d/mariadb-server.cnf
 
