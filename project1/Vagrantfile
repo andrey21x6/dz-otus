@@ -73,28 +73,29 @@ Vagrant.configure("2") do |config|
           when "nginx"
 		    box.vm.network "forwarded_port", guest: 80, host: 8181
 			box.vm.provision "file", source: "config/nginx/nginx.conf", destination: "~/nginx.conf"
-		    box.vm.provision "shell", path: "nginx.sh"
+		    box.vm.provision "shell", path: "bash/nginx.sh"
 			
           when "backend1"
 		    box.vm.network "forwarded_port", guest: 80, host: 8282
 			box.vm.provision :file, source: "config/html", destination: "~/"
-		    box.vm.provision "shell", path: "backend1.sh"
+		    box.vm.provision "shell", path: "bash/backend1.sh"
 			
           #when "backend2"
-			#box.vm.provision "shell", path: "backend2.sh"
+			#box.vm.provision "shell", path: "bash/backend2.sh"
 			
           when "database1"
 		    box.vm.network "forwarded_port", guest: 3306, host: 3306
-		    box.vm.provision "shell", path: "database1.sh"
+			box.vm.provision "file", source: "bash/msi.sh", destination: "~/msi.sh"
+		    box.vm.provision "shell", path: "bash/database1.sh"
 			
 	      #when "database2"
-		    #box.vm.provision "shell", path: "database2.sh"
+		    #box.vm.provision "shell", path: "bash/database2.sh"
 			
 		  #when "logserver"
-		    #box.vm.provision "shell", path: "logserver.sh"
+		    #box.vm.provision "shell", path: "bash/logserver.sh"
 			
 		  #when "backupserver"
-		    #box.vm.provision "shell", path: "backupserver.sh"
+		    #box.vm.provision "shell", path: "bash/backupserver.sh"
 
         end
       end

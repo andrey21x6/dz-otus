@@ -20,19 +20,10 @@ sed -i -e "s/\#bind-address=0.0.0.0/bind-address=0.0.0.0/g" /etc/my.cnf.d/mariad
 # Старт mariadb
 systemctl start mariadb
 
+# Запуск mysql_secure_installation с подготовленными ответами для автоматизации
+sh /home/vagrant/msi.sh
 
-/usr/bin/mysql_secure_installation <<EOF
-
-y
-123456
-123456
-y
-y
-y
-y
-EOF
-
-
+# Разрешение на удалённое подключение к mariadb (с любого IP)
 mysql -h 127.0.0.1 -uroot -p123456 <<EOF
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456';
 EOF
