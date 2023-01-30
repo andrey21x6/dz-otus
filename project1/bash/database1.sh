@@ -39,3 +39,11 @@ sh /home/vagrant/msi.sh
 mysql -h 127.0.0.1 -uroot -p123456 <<EOF
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456';
 EOF
+
+# Создание БД project1
+mysql -h 127.0.0.1 -uroot -p123456 <<EOF
+CREATE DATABASE project1;
+EOF
+
+# Импорт БД project1
+mysql -u root -p123456 project1 < /home/vagrant/project1.sql

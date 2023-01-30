@@ -90,6 +90,7 @@ Vagrant.configure("2") do |config|
 		    box.vm.network "forwarded_port", guest: 3306, host: 3306
 			box.vm.network "forwarded_port", guest: 22, host: 2304
 			box.vm.provision "file", source: "bash/msi.sh", destination: "~/msi.sh"
+			box.vm.provision "file", source: "sql/project1.sql", destination: "~/project1.sql"
 		    box.vm.provision "shell", path: "bash/database1.sh"
 			
 	      #when "database2"

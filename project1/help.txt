@@ -33,6 +33,7 @@ mysql -h 127.0.0.1 -uroot -p123456 \
   exit
 
 
+
 mysql -uroot -p
 
 show databases;
@@ -49,6 +50,12 @@ CREATE TABLE table1
     name VARCHAR(255)
 );
 
+
+
+CREATE DATABASE project1;
+mysql -u root -p123456 project1 < /root/project1.sql
+
+mysqldump -u root -p123456 project1 text_entries > /root/project1_2.sql
 
 ========================================================================
 
