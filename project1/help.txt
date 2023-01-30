@@ -15,6 +15,8 @@ getsebool httpd_can_network_connect
    
 nano /usr/share/nginx/html/index.php
 
+getsebool httpd_can_network_connect
+
 ========================================================================
 
    *** database ***
@@ -34,14 +36,12 @@ mysql -h 127.0.0.1 -uroot -p123456 \
 
 
 
-mysql -uroot -p
+mysql -u root -p123456
 
 show databases;
 use mysql;
 show tables;
 
-CREATE DATABASE test1;
-USE test1;
 Database changed
 
 CREATE TABLE table1
@@ -56,6 +56,11 @@ CREATE DATABASE project1;
 mysql -u root -p123456 project1 < /root/project1.sql
 
 mysqldump -u root -p123456 project1 text_entries > /root/project1_2.sql
+
+USE project1;
+show tables;
+
+text_entries
 
 ========================================================================
 

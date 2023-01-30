@@ -18,6 +18,9 @@ dnf install php php-cli php-mysqlnd php-json php-gd php-ldap php-odbc php-pdo ph
 rm -rf /usr/share/nginx/html/
 cp -r /home/vagrant/html /usr/share/nginx/html
 
+# Разрешение в SELinux на на удалённое подключение по http
+setsebool -P httpd_can_network_connect 1
+
 # Автозапуск nginx
 systemctl enable nginx
 
@@ -29,6 +32,7 @@ sed -i -e "s/\PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/s
 
 # Установка пароля
 echo root:1 | /usr/sbin/chpasswd
+#yes 1 | passwd root
 
 # Рестарт службы SSH
 systemctl restart sshd
