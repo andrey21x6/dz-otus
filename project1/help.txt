@@ -105,12 +105,6 @@ SHOW MASTER STATUS \G
 change master to master_host = "192.168.90.14", master_user = "replicatuser", master_password = "passuser", master_log_file = "mariadb-bin.000001", master_log_pos = 897;
 start slave;
 
-
-
-mysql -h 127.0.0.1 -uroot -p123456 <<EOF
-SHOW MASTER STATUS \G
-EOF
-
 -------------------------------------------------------------------------------
 
 mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position:';
@@ -124,6 +118,16 @@ STR=`mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File
 bind-address=0.0.0.0
 server-id = 1
 log_bin = /var/log/mariadb/mariadb-bin.log
+
+
+
+
+# Для настройки репликации master-master, логин: replicatuser, пароль: passuser (IP 192.168.90.14 второй БД)
+mysql -h 127.0.0.1 -uroot -p123456 <<EOF
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.15" IDENTIFIED BY "passuser";
+change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "${V4}", master_log_pos = ${V2};
+start slave;
+EOF
 
 ========================================================================
 

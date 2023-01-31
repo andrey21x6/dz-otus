@@ -52,3 +52,16 @@ EOF
 
 # Импорт БД project1
 mysql -u root -p123456 project1 < /home/vagrant/project1.sql
+
+# Для настройки репликации master-master, логин: replicatuser, пароль: passuser (IP 192.168.90.14 первой БД)
+mysql -h 127.0.0.1 -uroot -p123456 <<EOF
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.14" IDENTIFIED BY "passuser";
+EOF
+
+
+
+STR=`mysql -h 192.168.90.14 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $STR | sed 's:^:V1=":; /Position: / s::";V2=": ;s:$:":')
+STR=`mysql -h 192.168.90.14 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $STR | sed 's:^:V3=":; /File: / s::";V4=": ;s:$:":')
+mysql -h 127.0.0.1 -u root -p123456 -e 'GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.14" IDENTIFIED BY "passuser"'
+mysql -h 127.0.0.1 -u root -p123456 -e 'change master to master_host = "192.168.90.14", master_user = "replicatuser", master_password = "passuser", master_log_file = "$V4", master_log_pos = '$V2''
+mysql -h 127.0.0.1 -u root -p123456 -e 'start slave'
