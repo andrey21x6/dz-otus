@@ -105,6 +105,20 @@ SHOW MASTER STATUS \G
 change master to master_host = "192.168.90.14", master_user = "replicatuser", master_password = "passuser", master_log_file = "mariadb-bin.000001", master_log_pos = 897;
 start slave;
 
+
+
+mysql -h 127.0.0.1 -uroot -p123456 <<EOF
+SHOW MASTER STATUS \G
+EOF
+
+-------------------------------------------------------------------------------
+
+mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position:';
+mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File:';
+
+STR=`mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $STR | sed 's:^:V1=":; /Position: / s::";V2=": ;s:$:":') ; echo $V2
+STR=`mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $STR | sed 's:^:V1=":; /File: / s::";V2=": ;s:$:":') ; echo $V2
+
 ========================================================================
 
 user nginx;
