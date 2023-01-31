@@ -119,6 +119,12 @@ mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File:';
 STR=`mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $STR | sed 's:^:V1=":; /Position: / s::";V2=": ;s:$:":') ; echo $V2
 STR=`mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $STR | sed 's:^:V1=":; /File: / s::";V2=": ;s:$:":') ; echo $V2
 
+
+
+bind-address=0.0.0.0
+server-id = 1
+log_bin = /var/log/mariadb/mariadb-bin.log
+
 ========================================================================
 
 user nginx;

@@ -27,6 +27,10 @@ systemctl restart sshd
 # Разрешить доступ к БД с любого IP по порту 3306
 sed -i -e "s/\#bind-address=0.0.0.0/bind-address=0.0.0.0/g" /etc/my.cnf.d/mariadb-server.cnf
 
+# Для настройки репликации master-master
+sed -i '/'bind-address=0.0.0.0'/a server-id = 1'  /etc/my.cnf.d/mariadb-server.cnf
+sed -i '/'"server-id = 2"'/a log_bin = /var/log/mariadb/mariadb-bin.log'  /etc/my.cnf.d/mariadb-server.cnf
+
 # Разрешение в SELinux на на удалённое подключение к mariadb
 setsebool -P httpd_can_network_connect_db 1
 
