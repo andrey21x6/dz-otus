@@ -79,12 +79,14 @@ Vagrant.configure("2") do |config|
           when "backend1"
 		    box.vm.network "forwarded_port", guest: 80, host: 8282
 			box.vm.network "forwarded_port", guest: 22, host: 2302
-			box.vm.provision :file, source: "config/html", destination: "~/"
+			box.vm.provision :file, source: "config/html", destination: "~/html"
 		    box.vm.provision "shell", path: "bash/backend1.sh"
 			
-          #when "backend2"
-		    #box.vm.network "forwarded_port", guest: 22, host: 2303
-			#box.vm.provision "shell", path: "bash/backend2.sh"
+          when "backend2"
+		    box.vm.network "forwarded_port", guest: 80, host: 8383
+		    box.vm.network "forwarded_port", guest: 22, host: 2303
+			box.vm.provision :file, source: "config/html2", destination: "~/html"
+		    box.vm.provision "shell", path: "bash/backend2.sh"
 			
           when "database1"
 		    box.vm.network "forwarded_port", guest: 3306, host: 3306
@@ -93,9 +95,12 @@ Vagrant.configure("2") do |config|
 			box.vm.provision "file", source: "sql/project1.sql", destination: "~/project1.sql"
 		    box.vm.provision "shell", path: "bash/database1.sh"
 			
-	      #when "database2"
-		    #box.vm.network "forwarded_port", guest: 22, host: 2305
-		    #box.vm.provision "shell", path: "bash/database2.sh"
+	      when "database2"
+		    box.vm.network "forwarded_port", guest: 3306, host: 3307
+		    box.vm.network "forwarded_port", guest: 22, host: 2305
+			box.vm.provision "file", source: "bash/msi.sh", destination: "~/msi.sh"
+			box.vm.provision "file", source: "sql/project1.sql", destination: "~/project1.sql"
+		    box.vm.provision "shell", path: "bash/database2.sh"
 			
 		  #when "logserver"
 		    #box.vm.network "forwarded_port", guest: 22, host: 2306

@@ -22,6 +22,7 @@ getsebool httpd_can_network_connect
    *** database ***
    
 systemctl status mariadb
+systemctl restart mariadb
 
 # Запуск утилиты настройки безопасности mariadb
 /usr/bin/mysql_secure_installation
@@ -53,7 +54,7 @@ CREATE TABLE table1
 
 
 CREATE DATABASE project1;
-mysql -u root -p123456 project1 < /root/project1.sql
+mysql -u root -p123456 project1 < /home/vagrant/project1.sql
 
 mysqldump -u root -p123456 project1 text_entries > /root/project1_2.sql
 
@@ -61,6 +62,48 @@ USE project1;
 show tables;
 
 text_entries
+
+
+
+---------------------------------------------------------------------------
+
+1.
+
+nano /etc/my.cnf.d/mariadb-server.cnf
+	server-id = 1
+	log_bin = /var/log/mariadb/mariadb-bin.log
+
+systemctl restart mariadb
+systemctl status mariadb
+
+mysql -u root -p123456
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.15" IDENTIFIED BY "passuser";
+
+SHOW MASTER STATUS \G
+	File: mariadb-bin.000001
+    Position: 897
+	
+change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "mariadb-bin.000001", master_log_pos = 1825;
+start slave;
+	
+2.
+
+nano /etc/my.cnf.d/mariadb-server.cnf
+	server-id = 2
+	log_bin = /var/log/mariadb/mariadb-bin.log
+
+systemctl restart mariadb
+systemctl status mariadb
+
+mysql -u root -p123456
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.14" IDENTIFIED BY "passuser";
+
+SHOW MASTER STATUS \G
+	File: mariadb-bin.000001
+    Position: 1825
+
+change master to master_host = "192.168.90.14", master_user = "replicatuser", master_password = "passuser", master_log_file = "mariadb-bin.000001", master_log_pos = 897;
+start slave;
 
 ========================================================================
 

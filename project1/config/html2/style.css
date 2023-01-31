@@ -1,0 +1,78 @@
+
+body{
+	font: 16px 'Trebuchet MS', Arial, Calibri, sans-serif, 'Trebuchet MS', Helvetica, 'Comic Sans MS';
+}
+
+h3{
+	margin: 2px 2px 0px 2px;
+}
+
+.input-submit {
+	margin: 10px 0 0px 0;
+}
+
+.text-header{
+	border: 1px solid rgba(200, 200, 200, 0.8);
+	background-repeat: no-repeat;
+	background-position: 4px;
+	outline: none;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px; 
+	border-radius: 3px;
+	padding: 5px 5px 5px 5px;
+	height: 30px;
+	width: 400px;
+	font-size: 1em;
+}
+
+.text-header:focus{
+	border: 1px solid rgba(100, 100, 100, 0.8);
+}
+
+textarea {
+	border: 1px solid rgba(200, 200, 200, 0.9);
+	resize: none;
+	width: 400px;
+	height: 100px;
+	padding: 5px;
+	outline: none;
+	outline-offset: 0;
+	-moz-appearance: none;
+	border-radius: 3px;
+	margin-top: 10px;
+}
+
+textarea:focus {
+	border: 1px solid #969696;
+}
+
+.knopka {
+	font-size: 1em;
+	position: relative;
+	color: #fff;
+	padding: 12px 12px 12px 12px;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 1px;
+	border: none;
+	outline: none;
+	transition: 0.1s;
+	background-color: #3EBE3E;
+	cursor: pointer;
+}
+
+.knopka:hover {
+	transition: 0.1s;
+	background-color: green;
+}
+
+.out-div{
+	border-bottom: 1px solid rgba(200, 200, 200, 0.9);
+	width: 400px;
+}
+
+.sms{
+	color: red;
+	font-weight: 500;
+}
