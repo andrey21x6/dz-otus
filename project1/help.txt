@@ -108,6 +108,7 @@ start slave;
 -------------------------------------
 
 stop slave;
+mysql -h 127.0.0.1 -u root -p123456 -e 'stop slave'
 SHOW SLAVE STATUS \G;
 
 mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G'

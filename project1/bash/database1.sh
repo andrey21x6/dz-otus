@@ -27,8 +27,10 @@ systemctl restart sshd
 # Разрешить доступ к БД с любого IP по порту 3306
 sed -i -e "s/\#bind-address=0.0.0.0/bind-address=0.0.0.0/g" /etc/my.cnf.d/mariadb-server.cnf
 
-# Для настройки репликации master-master
+# Для настройки репликации прописываем server-id для database1 равное 1
 sed -i '/'bind-address=0.0.0.0'/a server-id = 1'  /etc/my.cnf.d/mariadb-server.cnf
+
+# Для настройки репликации прописываем файл лога
 sed -i '/'"server-id = 1"'/a log_bin = /var/log/mariadb/mariadb-bin.log'  /etc/my.cnf.d/mariadb-server.cnf
 
 # Разрешение в SELinux на на удалённое подключение к mariadb
@@ -38,15 +40,24 @@ setsebool -P httpd_can_network_connect_db 1
 systemctl start mariadb
 
 # Запуск mysql_secure_installation с подготовленными ответами для автоматизации
-sh /home/vagrant/msi.sh
+/usr/bin/mysql_secure_installation <<EOF
+ 
+y
+123456
+123456
+y
+n
+y
+y
+EOF
 
-# Разрешение на удалённое подключение к mariadb (с любого IP)
+# Разрешение на удалённое подключение к mariadb (с любого IP) и создаём пользователя с разрешением на репликацию
 mysql -h 127.0.0.1 -uroot -p123456 <<EOF
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456';
 GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.15" IDENTIFIED BY "passuser";
 EOF
 
-# Создание БД project1
+# Созданём БД project1
 mysql -h 127.0.0.1 -uroot -p123456 <<EOF
 CREATE DATABASE project1;
 EOF
