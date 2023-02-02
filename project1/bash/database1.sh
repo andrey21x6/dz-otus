@@ -43,6 +43,7 @@ sh /home/vagrant/msi.sh
 # Разрешение на удалённое подключение к mariadb (с любого IP)
 mysql -h 127.0.0.1 -uroot -p123456 <<EOF
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456';
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.15" IDENTIFIED BY "passuser";
 EOF
 
 # Создание БД project1
@@ -52,11 +53,3 @@ EOF
 
 # Импорт БД project1
 mysql -u root -p123456 project1 < /home/vagrant/project1.sql
-
-
-
-STR=`mysql -h 192.168.90.15 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $STR | sed 's:^:V1=":; /Position: / s::";V2=": ;s:$:":')
-STR=`mysql -h 192.168.90.15 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $STR | sed 's:^:V3=":; /File: / s::";V4=": ;s:$:":')
-mysql -h 127.0.0.1 -u root -p123456 -e 'GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.15" IDENTIFIED BY "passuser"'
-mysql -h 127.0.0.1 -u root -p123456 -e 'change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "$V4", master_log_pos = '$V2''
-mysql -h 127.0.0.1 -u root -p123456 -e 'start slave'
