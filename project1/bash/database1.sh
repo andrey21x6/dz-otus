@@ -64,3 +64,12 @@ EOF
 
 # Импорт БД project1
 mysql -u root -p123456 project1 < /home/vagrant/project1.sql
+
+
+mkdir BACKUP
+
+
+chmod +x /home/vagrant/backup.sh
+
+
+(crontab -l; echo "00 1 * * * /home/vagrant/backup.sh") | sort -u | crontab -

@@ -1,4 +1,6 @@
 
+=================================================================================================================================================
+
    *** nginx ***
 
 systemctl status nginx
@@ -9,7 +11,7 @@ nano /usr/share/nginx/html/index.html
 # Проверить разрешение в SELinux на обратное проксирование
 getsebool httpd_can_network_connect
 
-========================================================================
+================================================================================================================================================
 
    *** backend1 ***
    
@@ -17,7 +19,7 @@ nano /usr/share/nginx/html/index.php
 
 getsebool httpd_can_network_connect
 
-========================================================================
+================================================================================================================================================
 
    *** database ***
    
@@ -54,16 +56,26 @@ CREATE TABLE table1
 
 
 CREATE DATABASE project1;
-mysql -u root -p123456 project1 < /home/vagrant/project1.sql
-
-mysqldump -u root -p123456 project1 text_entries > /root/project1_2.sql
+mysql -u root -p123456 project1 < /home/vagrant/project1_2.sql
+mysqldump -u root -p123456 project1 text_entries > project1_2.sql
 
 USE project1;
 show tables;
 
 text_entries
 
+---------------------------------------------------------------------------
 
+crontab <<EOF
+00 1 * * * /home/vagrant/backup.sh
+EOF
+
+echo "00 1 * * * /home/vagrant/backup.sh" |sudo tee /etc/crond.d/backup
+
+(crontab -l; echo "00 1 * * * /home/vagrant/backup.sh") | sort -u | crontab -
+
+# Ежедневно в 07:00 перезагрузка сервера !!!
+00 1 * * * /home/vagrant/backup.sh
 
 ---------------------------------------------------------------------------
 
@@ -156,7 +168,7 @@ mysql -h 192.168.90.15 -u root -p123456 -e 'GRANT replication slave ON *.* TO "r
 mysql -h 192.168.90.15 -u root -p123456 -e 'change master to master_host = "192.168.90.14", master_user = "replicatuser", master_password = "passuser", master_log_file = "$V4", master_log_pos = '$V2''
 mysql -h 192.168.90.15 -u root -p123456 -e 'start slave'
 
-========================================================================
+================================================================================================================================================
 
 user nginx;
 worker_processes auto;

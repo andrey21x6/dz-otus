@@ -10,3 +10,7 @@ dnf install langpacks-en glibc-all-langpacks -y
 
 # Установка программ
 dnf install mc nano telnet net-tools -y
+
+mkdir ~/BACKUP
+mkdir ~/BACKUP/SQL
+mkdir ~/BACKUP/LOG
