@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Установка временной зоны
+timedatectl set-timezone Asia/Yekaterinburg
+
+# Перезапуск сервиса cron после смены часового пояса
+systemctl status crond.service
+
 # Настройка репозитория
 sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
 sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
@@ -65,11 +71,17 @@ EOF
 # Импорт БД project1
 mysql -u root -p123456 project1 < /home/vagrant/project1.sql
 
-
+# Создаём каталог
 mkdir BACKUP
 
-
+# Разрешаем файл на исполнение
 chmod +x /home/vagrant/backup.sh
 
-
+# Добавляем в cron задание (каждый день в 1 час ночи) с проверкой от дублирования
 (crontab -l; echo "00 1 * * * /home/vagrant/backup.sh") | sort -u | crontab -
+
+# Добавляем в cron задание (каждый час) с проверкой от дублирования
+#(crontab -l; echo "0 * * * * /home/vagrant/backup.sh") | sort -u | crontab -
+
+# Добавляем в cron задание (каждую минуту) с проверкой от дублирования
+#(crontab -l; echo "* * * * * /home/vagrant/backup.sh") | sort -u | crontab -

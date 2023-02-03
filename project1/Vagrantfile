@@ -38,12 +38,12 @@ MACHINES = {
 			   {ip: '192.168.90.16', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
             ]
   },
-  #:logserver => {
-    #:box_name => "centos/8",
-    #:net => [
-			   #{ip: '192.168.90.17', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
-            #]
-  #}
+  :logserver => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.90.17', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            ]
+  }
 }
 
 Vagrant.configure("2") do |config|
@@ -104,9 +104,13 @@ Vagrant.configure("2") do |config|
 			box.vm.provision "file", source: "sql/project1.sql", destination: "~/project1.sql"
 		    box.vm.provision "shell", path: "bash/database2.sh"	  
 
-		  #when "logserver"
-		    #box.vm.network "forwarded_port", guest: 22, host: 2307
-		    #box.vm.provision "shell", path: "bash/logserver.sh"
+		  when "logserver"
+		    box.vm.network "forwarded_port", guest: 22, host: 2307
+			box.vm.network "forwarded_port", guest: 9200, host: 9200
+			box.vm.network "forwarded_port", guest: 5601, host: 5601
+			box.vm.network "forwarded_port", guest: 5044, host: 5044
+			box.vm.provision "file", source: "config/filebeat/filebeat.yml", destination: "~/filebeat.yml"
+		    box.vm.provision "shell", path: "bash/logserver.sh"
 
         end
       end

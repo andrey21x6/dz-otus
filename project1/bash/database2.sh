@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Установка временной зоны
+timedatectl set-timezone Asia/Yekaterinburg
+
 # Настройка репозитория
 sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
 sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
