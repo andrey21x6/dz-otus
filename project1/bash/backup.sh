@@ -7,4 +7,4 @@ rm -rf $FOLDERBACKUP/*
 mysqldump -u root -p123456 project1 text_entries > $FOLDERBACKUP/$FILE.sql
 tar -cvf $FOLDERBACKUP/ZIP_$FILE.tar.gz -P $FOLDERBACKUP/$FILE.sql
 
-scp -P 22 -i ~/backup_private_key $FOLDERBACKUP/ZIP_$FILE.tar.gz vagrant@192.168.90.16:~/BACKUP/SQL/ZIP_$FILE.tar.gz
+scp -P 22 -i ~/backup_private_key $FOLDERBACKUP/ZIP_$FILE.tar.gz vagrant@192.168.90.14:~/BACKUP/SQL/ZIP_$FILE.tar.gz

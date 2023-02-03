@@ -54,7 +54,7 @@ EOF
 # Разрешение на удалённое подключение к mariadb (с любого IP) и создаём пользователя с разрешением на репликацию
 mysql -h 127.0.0.1 -uroot -p123456 <<EOF
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456';
-GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.14" IDENTIFIED BY "passuser";
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.15" IDENTIFIED BY "passuser";
 EOF
 
 # Получаем в переменные окружения строки File (имя файла) и Position (номер позиции) из состояния двоичных файлов журнала сервера database2
@@ -62,17 +62,17 @@ stroka=`mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'F
 stroka=`mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $stroka | sed 's:^:V4=":; /Position: / s::";V2=": ;s:$:":')
 
 # Создаём запись на сервере database1 для настройки репликации
-mysql -h 192.168.90.14 -u root -p123456 -e 'change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "'$V1'", master_log_pos = '$V2''
+mysql -h 192.168.90.15 -u root -p123456 -e 'change master to master_host = "192.168.90.16", master_user = "replicatuser", master_password = "passuser", master_log_file = "'$V1'", master_log_pos = '$V2''
 
 # Запускаем сервер репликации на сервере database1
-mysql -h 192.168.90.14 -u root -p123456 -e 'start slave'
+mysql -h 192.168.90.15 -u root -p123456 -e 'start slave'
 
 # Получаем в переменные окружения строки File (имя файла) и Position (номер позиции) из состояния двоичных файлов журнала сервера database1
-stroka=`mysql -h 192.168.90.14 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $stroka | sed 's:^:V3=":; /File: / s::";V1=": ;s:$:":')
-stroka=`mysql -h 192.168.90.14 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $stroka | sed 's:^:V4=":; /Position: / s::";V2=": ;s:$:":')
+stroka=`mysql -h 192.168.90.15 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $stroka | sed 's:^:V3=":; /File: / s::";V1=": ;s:$:":')
+stroka=`mysql -h 192.168.90.15 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $stroka | sed 's:^:V4=":; /Position: / s::";V2=": ;s:$:":')
 
 # Создаём запись на сервере database2 для настройки репликации
-mysql -h 127.0.0.1 -u root -p123456 -e 'change master to master_host = "192.168.90.14", master_user = "replicatuser", master_password = "passuser", master_log_file = "'$V1'", master_log_pos = '$V2''
+mysql -h 127.0.0.1 -u root -p123456 -e 'change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "'$V1'", master_log_pos = '$V2''
 
 # Запускаем сервер репликации на сервере database2
 mysql -h 127.0.0.1 -u root -p123456 -e 'start slave'

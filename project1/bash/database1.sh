@@ -54,7 +54,7 @@ EOF
 # Разрешение на удалённое подключение к mariadb (с любого IP) и создаём пользователя с разрешением на репликацию
 mysql -h 127.0.0.1 -uroot -p123456 <<EOF
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456';
-GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.15" IDENTIFIED BY "passuser";
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.16" IDENTIFIED BY "passuser";
 EOF
 
 # Созданём БД project1

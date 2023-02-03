@@ -20,22 +20,22 @@ MACHINES = {
 			   {ip: '192.168.90.13', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
             ]
   },
-  :database1 => {
+  :backupserver => {
     :box_name => "centos/8",
     :net => [
 			   {ip: '192.168.90.14', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
             ]
   },
-  :database2 => {
+  :database1 => {
     :box_name => "centos/8",
     :net => [
 			   {ip: '192.168.90.15', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
             ]
   },
-  :backupserver => {
+  :database2 => {
     :box_name => "centos/8",
     :net => [
-			   #{ip: '192.168.90.16', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+			   {ip: '192.168.90.16', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
             ]
   },
   #:logserver => {
@@ -87,23 +87,23 @@ Vagrant.configure("2") do |config|
 		    box.vm.network "forwarded_port", guest: 22, host: 2303
 			box.vm.provision :file, source: "config/html2", destination: "~/html"
 		    box.vm.provision "shell", path: "bash/backend.sh"
+			
+		  when "backupserver"
+		    box.vm.network "forwarded_port", guest: 22, host: 2304
+		    box.vm.provision "shell", path: "bash/backupserver.sh"
 
           when "database1"
-			box.vm.network "forwarded_port", guest: 22, host: 2304
+			box.vm.network "forwarded_port", guest: 22, host: 2305
 			box.vm.provision "file", source: "sql/project1.sql", destination: "~/project1.sql"
 			box.vm.provision "file", source: "bash/backup.sh", destination: "~/backup.sh"
 			box.vm.provision "file", source: ".vagrant/machines/backupserver/virtualbox/private_key", destination: "~/backup_private_key"
 		    box.vm.provision "shell", path: "bash/database1.sh"
 			
 	      when "database2"
-		    box.vm.network "forwarded_port", guest: 22, host: 2305
+		    box.vm.network "forwarded_port", guest: 22, host: 2306
 			box.vm.provision "file", source: "sql/project1.sql", destination: "~/project1.sql"
 		    box.vm.provision "shell", path: "bash/database2.sh"	  
-		
-		  when "backupserver"
-		    box.vm.network "forwarded_port", guest: 22, host: 2306
-		    box.vm.provision "shell", path: "bash/backupserver.sh"
-			
+
 		  #when "logserver"
 		    #box.vm.network "forwarded_port", guest: 22, host: 2307
 		    #box.vm.provision "shell", path: "bash/logserver.sh"

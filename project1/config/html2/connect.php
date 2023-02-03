@@ -1,6 +1,6 @@
 <?php
 
-	define("CONNECT_BD", "mysql:host=192.168.90.15; dbname=project1");
+	define("CONNECT_BD", "mysql:host=192.168.90.16; dbname=project1");
 	define("LOGIN_BD", "root");
 	define("PASS_BD", "123456");
 
