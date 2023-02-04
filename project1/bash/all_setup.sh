@@ -30,7 +30,7 @@ dnf install mc nano telnet net-tools -y
 echo ""
 echo " *** Включение SSH по паролю ***"
 echo ""
-sed -i -e "s/\PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+sed -i -e "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 
 echo ""
 echo " *** Установка пароля root ***"
