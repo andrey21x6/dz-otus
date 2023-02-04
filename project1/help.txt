@@ -120,11 +120,23 @@ start slave;
 -------------------------------------
 
 stop slave;
-mysql -h 127.0.0.1 -u root -p123456 -e 'stop slave'
+mysql -e 'stop slave'
 SHOW SLAVE STATUS \G;
+
+mysql -h 192.168.90.15 -e 'stop slave'
+mysql -h 192.168.90.16 -e 'stop slave'
+
+mysql -h 192.168.90.15 -e 'start slave'
+mysql -h 192.168.90.16 -e 'start slave'
 
 mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G'
 mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW SLAVE STATUS \G'
+
+mysql -h 192.168.90.16 -u root -p123456 -e 'SHOW MASTER STATUS \G'
+mysql -h 192.168.90.16 -u root -p123456 -e 'SHOW SLAVE STATUS \G'
+
+mysql -e 'SHOW MASTER STATUS \G'
+mysql -e 'SHOW SLAVE STATUS \G'
 
 -------------------------------------------------------------------------------
 

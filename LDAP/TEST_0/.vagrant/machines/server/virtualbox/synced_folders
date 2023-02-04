@@ -1,1 +1,0 @@
-{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/andrey/GIT/dz-otus/LDAP/TEST_0","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
