@@ -8,7 +8,7 @@ timedatectl set-timezone Asia/Yekaterinburg
 echo ""
 echo " *** Перезапуск сервиса cron после смены часового пояса ***"
 echo ""
-systemctl status crond.service
+systemctl restart crond.service
 
 echo ""
 echo " *** Настройка репозитория ***"
