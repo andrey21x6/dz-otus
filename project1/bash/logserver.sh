@@ -1,34 +1,50 @@
 #!/bin/bash
 
-dnf install java-11-openjdk-devel
+#dnf install java-11-openjdk-devel
 #java -version
 
-#=================================================================================================================
+echo ""
+echo " *** Копируем новые файлы repo ***"
+echo ""
+cp -R /home/vagrant/elk/yum.repos.d/* /etc/yum.repos.d
 
+echo ""
+echo " *** Импортируем ключ для установки ***"
+echo ""
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
-
-
-nano /etc/yum.repos.d/elasticsearch.repo
-
-[elasticsearch]
-name=Elasticsearch repository for 8.x packages
-baseurl=https://artifacts.elastic.co/packages/8.x/yum
-gpgcheck=1
-gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
-enabled=0
-autorefresh=1
-type=rpm-md
-
-
-
+echo ""
+echo " *** Устанавливаем elasticsearch ***"
+echo ""
 dnf install --enablerepo=elasticsearch elasticsearch -y
 
+echo ""
+echo " *** Переименовываем оригинальный конфиг elasticsearch.yml ***"
+echo ""
+mv /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml_bak
+
+echo ""
+echo " *** Копируем новый конфиг elasticsearch.yml ***"
+echo ""
+cp /home/vagrant/elk/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
+
+echo ""
+echo " *** Изменяем владельца файла ***"
+echo ""
+chown root:elasticsearch /etc/elasticsearch/elasticsearch.yml
+
+echo ""
+echo " *** Включаем автозапуск elasticsearch ***"
+echo ""
 #systemctl daemon-reload
 systemctl enable elasticsearch
+
+echo ""
+echo " *** Старт elasticsearch ***"
+echo ""
 systemctl start elasticsearch
 
-
+#-------------------------------------------------------------------------------------------------------------------------
 
 # https://192.168.100.29:9200
 # Логин: elastic
@@ -39,125 +55,111 @@ systemctl start elasticsearch
 
 # Подключение с помощью сертификата
 #curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
-#Вводим пароль
+# Вводим пароль
 
+#-------------------------------------------------------------------------------------------------------------------------
 
+echo ""
+echo " *** Смена пароля elasticsearch с автоответами ***"
+echo ""
+/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u elastic <<EOF
+y
+123456
+123456
+EOF
 
-# Конфигурационный файл
-#nano /etc/elasticsearch/elasticsearch.yml
-	#node.name: logserver
-	#network.host: 192.168.90.17
-	
+#echo ""
+#echo " *** Импортируем ключ для установки ***"
+#echo ""
+#rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
-
-#==================================================================================================================
-
-rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
-
-
-
-nano /etc/yum.repos.d/kibana.repo
-
-[kibana-8.x]
-name=Kibana repository for 8.x packages
-baseurl=https://artifacts.elastic.co/packages/8.x/yum
-gpgcheck=1
-gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
-enabled=1
-autorefresh=1
-type=rpm-md
-
-
-
+echo ""
+echo " *** Устанавливаем kibana ***"
+echo ""
 dnf install kibana -y
 
-systemctl daemon-reload
+echo ""
+echo " *** Переименовываем оригинальный конфиг kibana.yml ***"
+echo ""
+mv /etc/kibana/kibana.yml /etc/kibana/kibana.yml_bak
+
+echo ""
+echo " *** Копируем новый конфиг kibana.yml ***"
+echo ""
+cp /home/vagrant/elk/kibana/kibana.yml /etc/kibana/kibana.yml
+
+echo ""
+echo " *** Изменяем владельца файла ***"
+echo ""
+chown root:kibana /etc/kibana/kibana.yml
+
+echo ""
+echo " *** Создаём каталог certs и копируем certs в kibana ***"
+echo ""
+cp -R /etc/elasticsearch/certs /etc/kibana/certs
+
+echo ""
+echo " *** Изменяем владельца каталога и файлов ***"
+echo ""
+chown -R root:kibana /etc/kibana/certs
+
+echo ""
+echo " *** Включаем автозапуск kibana ***"
+echo ""
+#systemctl daemon-reload
 systemctl enable kibana.service
+
+echo ""
+echo " *** Старт kibana ***"
+echo ""
 systemctl start kibana.service
 
+echo ""
+echo " *** Смена пароля для kibana в elasticsearch с автоответами ***"
+echo ""
+/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u kibana_system <<EOF
+y
+123456
+123456
+EOF
 
+#echo ""
+#echo " *** Импортируем ключ для установки ***"
+#echo ""
+#rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
 echo ""
-echo " *** Изменяем конфигурацию kibana ***"
+echo " *** Устанавливаем logstash ***"
 echo ""
-sed -i -e "s/\#server.host: \"localhost\"/server.host: \"192.168.90.17\"/g" /etc/kibana/kibana.yml
-sed -i -e "s/\#elasticsearch.hosts\: \[\"http\:\/\/localhost\:9200\"\]/elasticsearch.hosts\: \[\"https\:\/\/192.168.90.17\:9200\"\]/g" /etc/kibana/kibana.yml
-sed -i -e "s/\#server.host: \"localhost\"   /   server.host: \"192.168.90.17\"/g" /etc/kibana/kibana.yml
-
-# Смена пароля
-#/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u kibana_system
-
-#========================================================================================================================
-
-rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
-
-
-
-nano /etc/yum.repos.d/logstash.repo
-
-[logstash-8.x]
-name=Elastic repository for 8.x packages
-baseurl=https://artifacts.elastic.co/packages/8.x/yum
-gpgcheck=1
-gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
-enabled=1
-autorefresh=1
-type=rpm-md
-
-
-
 dnf install logstash -y
 
+echo ""
+echo " *** Копируем новые конфиги для logstash ***"
+echo ""
+cp -R /home/vagrant/elk/logstash/conf.d/* /etc/logstash/conf.d
+
+echo ""
+echo " *** Изменяем владельца каталога и файлов ***"
+echo ""
+chown -R root:logstash /etc/logstash/conf.d
+
+echo ""
+echo " *** Создаём каталог certs и копируем certs в logstash ***"
+echo ""
+cp -R /etc/elasticsearch/certs /etc/logstash/certs
+
+echo ""
+echo " *** Изменяем владельца каталога и файлов ***"
+echo ""
+chown -R root:logstash /etc/logstash/certs
+
+echo ""
+echo " *** Включаем автозапуск logstash ***"
+echo ""
+#systemctl daemon-reload
 systemctl enable logstash.service
 
-
-
-#nano /etc/logstash/logstash.yml - не трогаем
-
-
-
-nano /etc/logstash/conf.d/input.conf
-
-input {
-  beats {
-    port => 5044
-  }
-}
-
-
-
-nano /etc/logstash/conf.d/output.conf
-
-output {
-        elasticsearch {
-            hosts    => "https://127.0.0.1:9200"
-            index    => "websrv-%{+YYYY.MM}"
-	    user => "elastic"
-	    password => "123456"
-	    cacert => "/etc/logstash/certs/http_ca.crt"
-        }
-}
-
-
-
-nano /etc/logstash/conf.d/filter.conf
-
-filter {
-
- if [type] == "nginx_access" {
- 
-    grok {
-        match => { "message" => "%{IPORHOST:remote_ip} - %{DATA:user} \[%{HTTPDATE:access_time}\] \"%{WORD:http_method} %{DATA:url} HTTP/%{NUMBER:http_version}\" %{NUMBER:response_code} %{NUMBER:body_sent_bytes} \"%{DATA:referrer}\" \"%{DATA:agent}\"" }
-    }
-  }
-  
-  date {
-        match => [ "timestamp" , "dd/MMM/YYYY:HH:mm:ss Z" ]
-  }
-}
-
-
-
+echo ""
+echo " *** Старт logstash ***"
+echo ""
 systemctl start logstash.service
-#systemctl status logstash.service
-
