@@ -6,7 +6,7 @@
 echo ""
 echo " *** Копируем новые файлы repo ***"
 echo ""
-cp -R /home/vagrant/elk/yum.repos.d/* /etc/yum.repos.d
+cp -R /home/vagrant/logserver/yum.repos.d/* /etc/yum.repos.d
 
 echo ""
 echo " *** Импортируем ключ для установки ***"
@@ -26,7 +26,7 @@ mv /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml_bak
 echo ""
 echo " *** Копируем новый конфиг elasticsearch.yml ***"
 echo ""
-cp /home/vagrant/elk/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
+cp /home/vagrant/logserver/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 
 echo ""
 echo " *** Изменяем владельца файла ***"
@@ -36,7 +36,6 @@ chown root:elasticsearch /etc/elasticsearch/elasticsearch.yml
 echo ""
 echo " *** Включаем автозапуск elasticsearch ***"
 echo ""
-#systemctl daemon-reload
 systemctl enable elasticsearch
 
 echo ""
@@ -55,6 +54,7 @@ systemctl start elasticsearch
 
 # Подключение с помощью сертификата
 #curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
+#curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic 'https://127.0.0.1:9200/_cat/indices?v&pretty'
 # Вводим пароль
 
 #-------------------------------------------------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ mv /etc/kibana/kibana.yml /etc/kibana/kibana.yml_bak
 echo ""
 echo " *** Копируем новый конфиг kibana.yml ***"
 echo ""
-cp /home/vagrant/elk/kibana/kibana.yml /etc/kibana/kibana.yml
+cp /home/vagrant/logserver/kibana/kibana.yml /etc/kibana/kibana.yml
 
 echo ""
 echo " *** Изменяем владельца файла ***"
@@ -106,7 +106,6 @@ chown -R root:kibana /etc/kibana/certs
 echo ""
 echo " *** Включаем автозапуск kibana ***"
 echo ""
-#systemctl daemon-reload
 systemctl enable kibana.service
 
 echo ""
@@ -136,7 +135,7 @@ dnf install logstash -y
 echo ""
 echo " *** Копируем новые конфиги для logstash ***"
 echo ""
-cp -R /home/vagrant/elk/logstash/conf.d/* /etc/logstash/conf.d
+cp -R /home/vagrant/logserver/logstash/conf.d /etc/logstash
 
 echo ""
 echo " *** Изменяем владельца каталога и файлов ***"
@@ -154,9 +153,23 @@ echo ""
 chown -R root:logstash /etc/logstash/certs
 
 echo ""
+echo " *** Переименовываем оригинальный конфиг pipelines.yml ***"
+echo ""
+mv /etc/logstash/pipelines.yml /etc/logstash/pipelines.yml_bak
+
+echo ""
+echo " *** Копируем конфиг pipelines.yml ***"
+echo ""
+cp /home/vagrant/pipelines.yml /etc/logstash/pipelines.yml
+
+echo ""
+echo " *** Изменяем владельца файла ***"
+echo ""
+chown root:logstash /etc/logstash/pipelines.yml
+
+echo ""
 echo " *** Включаем автозапуск logstash ***"
 echo ""
-#systemctl daemon-reload
 systemctl enable logstash.service
 
 echo ""

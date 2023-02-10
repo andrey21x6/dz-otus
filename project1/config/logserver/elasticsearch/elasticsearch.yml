@@ -6,6 +6,9 @@ path.logs: /var/log/elasticsearch
 
 network.host: 192.168.90.17
 
+# Oдноузловой кластер
+#discovery.type: single-node
+
 xpack.security.enabled: true
 
 xpack.security.enrollment.enabled: true

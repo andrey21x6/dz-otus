@@ -1,4 +1,184 @@
 
+   *** elasticsearch ***
+
+#curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
+#curl -X GET --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
+#curl -X PUT --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
+curl -XPUT --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic -H 'Content-Type: application/json' "https://127.0.0.1:9200/blog3/_doc/1?pretty" -d'
+{
+  "title": "Веселые котята",
+  "content": "<p>Смешная история про котят<p>",
+  "tags": [
+    "котята",
+    "смешная история"
+  ],
+  "published_at": "2014-09-12T20:44:42+00:00"
+}'
+
+
+
+curl -XPOST --cacert '/etc/elasticsearch/certs/http_ca.crt' -u 'elastic' -H 'Content-Type: application/json' 'https://127.0.0.1:9200/blog2/_doc/2?pretty' -d'
+{
+  "title": "Веселые котята",
+  "content": "<p>Смешная история про котят<p>",
+  "tags": [
+    "котята",
+    "смешная история"
+  ],
+  "published_at": "2014-09-12T20:44:42+00:00"
+}'
+
+
+
+POST /users/_doc
+{ "first_name": "Rishikesh", "last_name": "Agrawani", "age": 29}
+
+=================================================================================================================================================
+
+   *** Filebeat ***
+
+Проверка конфигурации Filebeat:
+filebeat test config
+
+systemctl restart filebeat
+systemctl status filebeat
+
+----------------------------------------
+
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+      #- /var/log/nginx/*-access.log
+      - /var/log/nginx/access.log
+  fields:
+    type: nginx_access
+    #service: nginx_access
+  fields_under_root: true
+  scan_frequency: 5s
+
+- type: log
+  enabled: true
+  paths:
+      #- /var/log/nginx/*-error.log
+      - /var/log/nginx/error.log
+  fields:
+    type: nginx_error
+    #service: nginx_access
+  fields_under_root: true
+  scan_frequency: 5s
+
+output.logstash:
+  hosts: ["192.168.90.17:5044"]
+
+xpack.monitoring:
+  #enabled: true
+  enabled: false
+  elasticsearch:
+    hosts: ["http://192.168.90.17:9200"]
+
+
+----------------------------------------
+
+filebeat.inputs:
+- input_type:     log
+  enable:         true
+  paths:
+    - /var/log/nginx/*.log
+  exclude_files:  ['\.gz$']
+
+output.logstash:
+  hosts:          ["192.168.11.103:5044"]
+  
+----------------------------------------
+
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /var/log/nginx/access.log*
+    - /var/log/nginx/error.log*
+  exclude_files: [".gz$"]
+  multiline:
+    pattern: "^\\s"
+    match: after
+	
+output.logstash:
+  hosts: ["192.168.168.110:5044"]
+  
+----------------------------------------
+
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /tmp/elk-example.log
+  fields:
+    app_name: elk-sample-app
+  fields_under_root: true
+  multiline.pattern: '^[[:space:]]'
+  multiline.negate: false
+  multiline.match: after
+
+- input_type: log
+  paths:
+    - /tmp/pg.log
+  fields:
+    app_name: postgres
+  fields_under_root: true
+  multiline.pattern: '^[[:space:]]'
+  multiline.negate: false
+  multiline.match: after
+
+output.logstash:
+  hosts: logstash-mutator:5044
+  
+----------------------------------------
+
+filebeat.inputs:
+  - type: docker
+    containers:
+      path: "/usr/share/dockerlogs/data"
+      stream: "stdout"
+      ids:
+        - "*"
+      cri.parse_flags: true
+      combine_partial: true
+      exclude_files: ['\.gz$']
+ 
+processors:
+  - add_docker_metadata:
+      host: "unix:///var/run/docker.sock"
+ 
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+ 
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+ 
+log files:
+logging.level: error
+logging.to_files: false
+logging.to_syslog: false
+loggins.metrice.enabled: false
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat
+  keepfiles: 7
+  permissions: 0644
+ssl.verification_mode: none
+
+----------------------------------------
+
+filebeat:
+  prospectors:
+    - paths:
+        - /var/log/httpd/access_log
+      input_type: log
+      document_type: apache
+      fields:
+        tags: ["mytag"]
+      fields_under_root: true
+
 =================================================================================================================================================
 
    *** nginx ***
@@ -10,6 +190,14 @@ nano /usr/share/nginx/html/index.html
 
 # Проверить разрешение в SELinux на обратное проксирование
 getsebool httpd_can_network_connect
+
+
+
+#echo ""
+#echo " *** Скачивание filebeat ***"
+#echo ""
+#curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.5.2-x86_64.rpm
+#rpm -ivh ~/filebeat-8.6.1-x86_64.rpm
 
 ================================================================================================================================================
 
@@ -181,53 +369,3 @@ mysql -h 192.168.90.15 -u root -p123456 -e 'change master to master_host = "192.
 mysql -h 192.168.90.15 -u root -p123456 -e 'start slave'
 
 ================================================================================================================================================
-
-user nginx;
-worker_processes auto;
-error_log /var/log/nginx/error.log;
-pid /run/nginx.pid;
-
-include /usr/share/nginx/modules/*.conf;
-
-events {
-    worker_connections 1024;
-}
-
-http {
-    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"';
-
-    access_log  /var/log/nginx/access.log  main;
-
-    sendfile            on;
-    tcp_nopush          on;
-    tcp_nodelay         on;
-    keepalive_timeout   65;
-    types_hash_max_size 2048;
-
-    include             /etc/nginx/mime.types;
-    default_type        application/octet-stream;
-
-    include /etc/nginx/conf.d/*.conf;
-
-    server {
-        listen       80 default_server;
-        listen       [::]:80 default_server;
-        server_name  _;
-        root         /usr/share/nginx/html;
-
-        include /etc/nginx/default.d/*.conf;
-
-        location / {
-        }
-
-        error_page 404 /404.html;
-            location = /40x.html {
-        }
-
-        error_page 500 502 503 504 /50x.html;
-            location = /50x.html {
-        }
-    }
-}

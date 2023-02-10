@@ -1,0 +1,21 @@
+# This file is where you define your pipelines. You can define multiple.
+# For more information on multiple pipelines, see the documentation:
+#   https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html
+
+#- pipeline.id: main
+  #path.config: "/etc/logstash/conf.d/*.conf"
+  
+- pipeline.id: nginx
+  path.config: "/etc/logstash/conf.d/nginx/*.conf"
+  
+- pipeline.id: backend1
+  path.config: "/etc/logstash/conf.d/backend1/*.conf"
+  
+  pipeline.id: backend2
+  path.config: "/etc/logstash/conf.d/backend2/*.conf"
+  
+- pipeline.id: database1
+  path.config: "/etc/logstash/conf.d/database1/*.conf"
+  
+  pipeline.id: database2
+  path.config: "/etc/logstash/conf.d/database2/*.conf"

@@ -11,9 +11,9 @@ echo ""
 setsebool -P httpd_can_network_connect 1
 
 echo ""
-echo " *** Удаляем старый конфиг nginx ***"
+echo " *** Переименовываем оригинальный конфиг nginx.conf ***"
 echo ""
-rm -f /etc/nginx/nginx.conf
+mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf_bak
 
 echo ""
 echo " *** Копируем конфиг nginx ***"
@@ -30,27 +30,20 @@ echo " *** Старт nginx ***"
 echo ""
 systemctl start nginx
 
-#echo ""
-#echo " *** Скачивание и установка filebeat ***"
-#echo ""
-#curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.6.1-x86_64.rpm?_gl=1*xsxx36*_ga*NjU4NjU3ODA3LjE2NzU0MjkzNTg.*_ga_Q7TEQDPTH5*MTY3NTQyOTM1OC4xLjEuMTY3NTQyOTU1Ni4wLjAuMA..
-#mv ~/filebeat-8.6.1-x86_64.rpm?_gl=1*xsxx36*_ga*NjU4NjU3ODA3LjE2NzU0MjkzNTg.*_ga_Q7TEQDPTH5*MTY3NTQyOTM1OC4xLjEuMTY3NTQyOTU1Ni4wLjAuMA.. ~/filebeat-8.6.1-x86_64.rpm
-#rpm -ivh ~/filebeat-8.6.1-x86_64.rpm
-
 echo ""
 echo " *** Скачивание filebeat ***"
 echo ""
-curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.5.2-x86_64.rpm
+curl -L -o /root/filebeat-8.6.1-x86_64.rpm https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.6.1-x86_64.rpm?_gl=1*xsxx36*_ga*NjU4NjU3ODA3LjE2NzU0MjkzNTg.*_ga_Q7TEQDPTH5*MTY3NTQyOTM1OC4xLjEuMTY3NTQyOTU1Ni4wLjAuMA..
 
 echo ""
 echo " ***Установка filebeat ***"
 echo ""
-rpm -ivh filebeat-8.5.2-x86_64.rpm
+rpm -ivh ~/filebeat-8.6.1-x86_64.rpm
 
 echo ""
-echo " *** Удаляем старый конфиг filebeat ***"
+echo " *** Переименовываем оригинальный конфиг filebeat.yml ***"
 echo ""
-rm -f /etc/filebeat/filebeat.yml
+mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml_bak
 
 echo ""
 echo " *** Копируем новый конфиг filebeat ***"
