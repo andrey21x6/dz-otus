@@ -14,6 +14,9 @@
 - pipeline.id: backend2
   path.config: "/etc/logstash/conf.d/backend2/*.conf"
   
+- pipeline.id: backupserver
+  path.config: "/etc/logstash/conf.d/backupserver/*.conf"
+  
 - pipeline.id: database1
   path.config: "/etc/logstash/conf.d/database1/*.conf"
   

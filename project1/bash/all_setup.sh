@@ -25,7 +25,17 @@ dnf install langpacks-en glibc-all-langpacks -y
 echo ""
 echo " *** Установка программ ***"
 echo ""
-dnf install mc nano telnet net-tools -y
+dnf install mc nano telnet net-tools tcpdump -y
+
+echo ""
+echo " *** Настройка репозитория для htop ***"
+echo ""
+dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+
+echo ""
+echo " *** Установка htop ***"
+echo ""
+dnf install htop -y
 
 echo ""
 echo " *** Включение SSH по паролю ***"
