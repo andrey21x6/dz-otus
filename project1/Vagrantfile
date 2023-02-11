@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
 		
           when "nginx"
 			box.vm.provider "virtualbox" do |v|
-			  v.memory = 512
+			  v.memory = 256
 			end
 		    box.vm.network "forwarded_port", guest: 80, host: 8181
 			box.vm.network "forwarded_port", guest: 22, host: 2301
@@ -80,8 +80,8 @@ Vagrant.configure("2") do |config|
 		    box.vm.provision "shell", path: "bash/nginx.sh"
 			
 		  when "backend1"
-		    box.vm.provider "virtualbox" do |v|
-			  v.memory = 512
+		    box.vm.provider "virtualbox" do |v| 
+			  v.memory = 256
 			end
 		    box.vm.network "forwarded_port", guest: 80, host: 8282
 			box.vm.network "forwarded_port", guest: 22, host: 2302
@@ -92,7 +92,7 @@ Vagrant.configure("2") do |config|
 			
           when "backend2"
 		    box.vm.provider "virtualbox" do |v|
-			  v.memory = 512
+			  v.memory = 256
 			end
 		    box.vm.network "forwarded_port", guest: 80, host: 8383
 		    box.vm.network "forwarded_port", guest: 22, host: 2303
@@ -103,10 +103,10 @@ Vagrant.configure("2") do |config|
 			
 		  when "backupserver"
 		    box.vm.provider "virtualbox" do |v|
-			  v.memory = 512
+			  v.memory = 256
 			end
 		    box.vm.network "forwarded_port", guest: 22, host: 2304
-			#box.vm.provision "file", source: "config/filebeat/backup/filebeat.yml", destination: "~/filebeat.yml"
+			#box.vm.provision "file", source: "config/filebeat/backupserver/filebeat.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
 		    box.vm.provision "shell", path: "bash/backupserver.sh"
 
@@ -141,11 +141,12 @@ Vagrant.configure("2") do |config|
 		    box.vm.network "forwarded_port", guest: 22, host: 2307
 			box.vm.network "forwarded_port", guest: 9200, host: 9200
 			box.vm.network "forwarded_port", guest: 5601, host: 5601
+			box.vm.network "forwarded_port", guest: 5041, host: 5041
+			box.vm.network "forwarded_port", guest: 5042, host: 5042
+			box.vm.network "forwarded_port", guest: 5043, host: 5043
 			box.vm.network "forwarded_port", guest: 5044, host: 5044
 			box.vm.network "forwarded_port", guest: 5045, host: 5045
 			box.vm.network "forwarded_port", guest: 5046, host: 5046
-			box.vm.network "forwarded_port", guest: 5047, host: 5047
-			box.vm.network "forwarded_port", guest: 5048, host: 5048
 			box.vm.provision :file, source: "config/logserver", destination: "~/logserver"
 			box.vm.provision "file", source: "config/logserver/logstash/pipelines.yml", destination: "~/pipelines.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"

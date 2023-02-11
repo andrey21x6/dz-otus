@@ -1,5 +1,24 @@
 
+   *** Logstash ***
+   
+systemctl restart logstash
+systemctl status logstash
+
+# Проверить конфигурацию logstash
+/usr/share/logstash/bin/logstash --path.settings /etc/logstash -t
+
+	[2023-02-11T12:08:12,887][INFO ][logstash.javapipeline    ] Pipeline `nginx` is configured with `pipeline.ecs_compatibility: v8` setting. All plugins in this pipeline will default to `ecs_compatibility => v8` unless explicitly configured otherwise.
+	[2023-02-11T12:08:13,956][INFO ][logstash.javapipeline    ] Pipeline `backend2` is configured with `pipeline.ecs_compatibility: v8` setting. All plugins in this pipeline will default to `ecs_compatibility => v8` unless explicitly configured otherwise.
+	[2023-02-11T12:08:14,980][INFO ][logstash.javapipeline    ] Pipeline `database2` is configured with `pipeline.ecs_compatibility: v8` setting. All plugins in this pipeline will default to `ecs_compatibility => v8` unless explicitly configured otherwise.
+	Configuration OK
+	[2023-02-11T12:08:14,980][INFO ][logstash.runner          ] Using config.test_and_exit mode. Config Validation Result: OK. Exiting Logstash
+
+==================================================================================================================================================
+
    *** elasticsearch ***
+   
+systemctl restart elasticsearch
+systemctl status elasticsearch
 
 #curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
 #curl -X GET --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
@@ -37,11 +56,11 @@ POST /users/_doc
 
    *** Filebeat ***
 
-Проверка конфигурации Filebeat:
-filebeat test config
-
 systemctl restart filebeat
 systemctl status filebeat
+
+Проверка конфигурации Filebeat:
+filebeat test config
 
 ----------------------------------------
 
@@ -183,6 +202,7 @@ filebeat:
 
    *** nginx ***
 
+systemctl restart nginx
 systemctl status nginx
 
 nano /etc/nginx/nginx.conf
@@ -201,7 +221,7 @@ getsebool httpd_can_network_connect
 
 ================================================================================================================================================
 
-   *** backend1 ***
+   *** backend ***
    
 nano /usr/share/nginx/html/index.php
 
@@ -211,8 +231,8 @@ getsebool httpd_can_network_connect
 
    *** database ***
    
-systemctl status mariadb
 systemctl restart mariadb
+systemctl status mariadb
 
 # Запуск утилиты настройки безопасности mariadb
 /usr/bin/mysql_secure_installation

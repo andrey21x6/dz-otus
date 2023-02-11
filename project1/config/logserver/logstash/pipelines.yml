@@ -11,11 +11,11 @@
 - pipeline.id: backend1
   path.config: "/etc/logstash/conf.d/backend1/*.conf"
   
-  pipeline.id: backend2
+- pipeline.id: backend2
   path.config: "/etc/logstash/conf.d/backend2/*.conf"
   
 - pipeline.id: database1
   path.config: "/etc/logstash/conf.d/database1/*.conf"
   
-  pipeline.id: database2
+- pipeline.id: database2
   path.config: "/etc/logstash/conf.d/database2/*.conf"
