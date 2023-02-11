@@ -103,37 +103,39 @@ echo "00 1 * * * root /home/vagrant/backup.sh" >> /etc/crontab
 #echo "0 * * * * root /home/vagrant/backup.sh" >> /etc/crontab
 #echo "* * * * * root /home/vagrant/backup.sh" >> /etc/crontab
 
-echo ""
-echo " *** Получаем в переменные окружения строки File (имя файла) и Position (номер позиции) из состояния двоичных файлов журнала сервера database1 ***"
-echo ""
-stroka=`mysql -h 192.168.90.15 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $stroka | sed 's:^:V3=":; /File: / s::";V1=": ;s:$:":')
-stroka=`mysql -h 192.168.90.15 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $stroka | sed 's:^:V4=":; /Position: / s::";V2=": ;s:$:":')
+#echo ""
+#echo " *** Получаем в переменные окружения строки File (имя файла) и Position (номер позиции) из состояния двоичных файлов журнала сервера database1 ***"
+#echo ""
+#stroka=`mysql -h 192.168.90.15 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $stroka | sed 's:^:V3=":; /File: / s::";V1=": ;s:$:":')
+#stroka=`mysql -h 192.168.90.15 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $stroka | sed 's:^:V4=":; /Position: / s::";V2=": ;s:$:":')
 
 echo ""
 echo " *** Создаём запись на сервере database2 для настройки репликации в качестве slave (database1 - Master) ***"
 echo ""
-mysql -e 'change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "'$V1'", master_log_pos = '$V2''
+#mysql -e 'change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "'$V1'", master_log_pos = '$V2''
+mysql -e 'change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_use_gtid=slave_pos'
 
 echo ""
 echo " *** Запускаем сервер репликации на сервере database2 ***"
 echo ""
 mysql -e 'start slave'
 
-echo ""
-echo " *** Получаем в переменные окружения строки File (имя файла) и Position (номер позиции) из состояния двоичных файлов журнала сервера database2 ***"
-echo ""
-stroka=`mysql -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $stroka | sed 's:^:V3=":; /File: / s::";V1=": ;s:$:":')
-stroka=`mysql -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $stroka | sed 's:^:V4=":; /Position: / s::";V2=": ;s:$:":')
+#echo ""
+#echo " *** Получаем в переменные окружения строки File (имя файла) и Position (номер позиции) из состояния двоичных файлов журнала сервера database2 ***"
+#echo ""
+#stroka=`mysql -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $stroka | sed 's:^:V3=":; /File: / s::";V1=": ;s:$:":')
+#stroka=`mysql -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $stroka | sed 's:^:V4=":; /Position: / s::";V2=": ;s:$:":')
 
-echo ""
-echo " *** Создаём запись на сервере database1 для настройки репликации в качестве slave (database2 - Master) ***"
-echo ""
-mysql -h 192.168.90.15 -e 'change master to master_host = "192.168.90.16", master_user = "replicatuser", master_password = "passuser", master_log_file = "'$V1'", master_log_pos = '$V2''
+#echo ""
+#echo " *** Создаём запись на сервере database1 для настройки репликации в качестве slave (database2 - Master) ***"
+#echo ""
+#mysql -h 192.168.90.15 -e 'change master to master_host = "192.168.90.16", master_user = "replicatuser", master_password = "passuser", master_log_file = "'$V1'", master_log_pos = '$V2''
+#mysql -h 192.168.90.15 -e 'change master to master_host = "192.168.90.16", master_user = "replicatuser", master_password = "passuser", master_use_gtid=slave_pos'
 
-echo ""
-echo " *** Запускаем сервер репликации на сервере database1 ***"
-echo ""
-mysql -h 192.168.90.15 -e 'start slave'
+#echo ""
+#echo " *** Запускаем сервер репликации на сервере database1 ***"
+#echo ""
+#mysql -h 192.168.90.15 -e 'start slave'
 
 echo ""
 echo " *** Скачивание filebeat ***"

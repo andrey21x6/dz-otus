@@ -234,6 +234,29 @@ getsebool httpd_can_network_connect
 systemctl restart mariadb
 systemctl status mariadb
 
+
+
+stop slave;
+mysql -e 'stop slave'
+SHOW SLAVE STATUS \G;
+
+mysql -h 192.168.90.15 -e 'stop slave'
+mysql -h 192.168.90.16 -e 'stop slave'
+
+mysql -h 192.168.90.15 -e 'start slave'
+mysql -h 192.168.90.16 -e 'start slave'
+
+mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G'
+mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW SLAVE STATUS \G'
+
+mysql -h 192.168.90.16 -u root -p123456 -e 'SHOW MASTER STATUS \G'
+mysql -h 192.168.90.16 -u root -p123456 -e 'SHOW SLAVE STATUS \G'
+
+mysql -e 'SHOW MASTER STATUS \G'
+mysql -e 'SHOW SLAVE STATUS \G'
+
+
+
 # Запуск утилиты настройки безопасности mariadb
 /usr/bin/mysql_secure_installation
 
@@ -324,27 +347,6 @@ SHOW MASTER STATUS \G
 
 change master to master_host = "192.168.90.14", master_user = "replicatuser", master_password = "passuser", master_log_file = "mariadb-bin.000001", master_log_pos = 897;
 start slave;
-
--------------------------------------
-
-stop slave;
-mysql -e 'stop slave'
-SHOW SLAVE STATUS \G;
-
-mysql -h 192.168.90.15 -e 'stop slave'
-mysql -h 192.168.90.16 -e 'stop slave'
-
-mysql -h 192.168.90.15 -e 'start slave'
-mysql -h 192.168.90.16 -e 'start slave'
-
-mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G'
-mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW SLAVE STATUS \G'
-
-mysql -h 192.168.90.16 -u root -p123456 -e 'SHOW MASTER STATUS \G'
-mysql -h 192.168.90.16 -u root -p123456 -e 'SHOW SLAVE STATUS \G'
-
-mysql -e 'SHOW MASTER STATUS \G'
-mysql -e 'SHOW SLAVE STATUS \G'
 
 -------------------------------------------------------------------------------
 
