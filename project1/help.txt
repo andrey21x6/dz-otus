@@ -20,6 +20,14 @@ systemctl status logstash
 systemctl restart elasticsearch
 systemctl status elasticsearch
 
+
+
+/usr/lib/systemd/system/elasticsearch.service
+	TimeoutStartSec=75
+	TimeoutStartSec=150
+
+
+
 #curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
 #curl -X GET --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
 #curl -X PUT --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
@@ -51,6 +59,13 @@ curl -XPOST --cacert '/etc/elasticsearch/certs/http_ca.crt' -u 'elastic' -H 'Con
 
 POST /users/_doc
 { "first_name": "Rishikesh", "last_name": "Agrawani", "age": 29}
+
+=================================================================================================================================================
+
+   *** Kibana ***
+   
+systemctl restart kibana
+systemctl status kibana
 
 =================================================================================================================================================
 
@@ -235,10 +250,11 @@ systemctl restart mariadb
 systemctl status mariadb
 
 
-
-stop slave;
+mysql -e 'start slave'
 mysql -e 'stop slave'
-SHOW SLAVE STATUS \G;
+
+mysql -e 'SHOW MASTER STATUS \G'
+mysql -e 'SHOW SLAVE STATUS \G'
 
 mysql -h 192.168.90.15 -e 'stop slave'
 mysql -h 192.168.90.16 -e 'stop slave'
@@ -246,14 +262,8 @@ mysql -h 192.168.90.16 -e 'stop slave'
 mysql -h 192.168.90.15 -e 'start slave'
 mysql -h 192.168.90.16 -e 'start slave'
 
-mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G'
-mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW SLAVE STATUS \G'
-
-mysql -h 192.168.90.16 -u root -p123456 -e 'SHOW MASTER STATUS \G'
-mysql -h 192.168.90.16 -u root -p123456 -e 'SHOW SLAVE STATUS \G'
-
-mysql -e 'SHOW MASTER STATUS \G'
-mysql -e 'SHOW SLAVE STATUS \G'
+mysql -h 192.168.90.15 -e 'SHOW MASTER STATUS \G'
+mysql -h 192.168.90.15 -e 'SHOW SLAVE STATUS \G'
 
 
 
@@ -391,3 +401,17 @@ mysql -h 192.168.90.15 -u root -p123456 -e 'change master to master_host = "192.
 mysql -h 192.168.90.15 -u root -p123456 -e 'start slave'
 
 ================================================================================================================================================
+
+
+
+#!/bin/bash
+
+#apt install fping
+
+pingOtvet=`fping 192.168.90.16`
+
+if [ "$pingOtvet" = "192.168.90.16 is alive" ]; then
+	echo "OK"
+else
+	echo "ERROR"
+fi

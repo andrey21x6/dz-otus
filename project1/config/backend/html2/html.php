@@ -14,7 +14,14 @@
 
 	<?php
 
-	echo "<h1>2</h1>";
+	if ($ipDbStart == "192.168.90.15")
+	{
+		echo "<h1>Backend 2 ---> <span style='color:green'>Database 1</span></h1>";
+	}
+	else
+	{
+		echo "<h1>Backend 2 ---> <span style='color:red'>Database 2</span></h1>";
+	}
 
 	//---------------------------------------------- Вывод из таблицы ------------------------------------------------------------
 

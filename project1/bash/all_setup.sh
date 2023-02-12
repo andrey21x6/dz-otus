@@ -24,9 +24,34 @@ localectl set-locale LANG=en_US.UTF-8
 dnf install langpacks-en glibc-all-langpacks -y
 
 echo ""
-echo " *** Установка программ ***"
+echo " *** Установка mc ***"
 echo ""
-dnf install mc nano telnet net-tools htop tcpdump -y
+dnf install mc -y
+
+echo ""
+echo " *** Установка nano ***"
+echo ""
+dnf install nano -y
+
+echo ""
+echo " *** Установка telnet ***"
+echo ""
+dnf install telnet -y
+
+echo ""
+echo " *** Установка net-tools ***"
+echo ""
+dnf install net-tools -y
+
+echo ""
+echo " *** Установка htop ***"
+echo ""
+dnf install htop -y
+
+echo ""
+echo " *** Установка tcpdump ***"
+echo ""
+dnf install tcpdump -y
 
 echo ""
 echo " *** Включение SSH по паролю ***"

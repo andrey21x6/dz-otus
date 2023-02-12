@@ -4,37 +4,42 @@
 #java -version
 
 echo ""
-echo " *** Копируем новые файлы repo ***"
+echo " *** Копирование новых файлов repo ***"
 echo ""
 cp -R /home/vagrant/logserver/yum.repos.d/* /etc/yum.repos.d
 
 echo ""
-echo " *** Импортируем ключ для установки ***"
-echo ""
-rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
-
-echo ""
-echo " *** Устанавливаем elasticsearch ***"
+echo " *** Устанавка elasticsearch ***"
 echo ""
 dnf install --enablerepo=elasticsearch elasticsearch -y
 
 echo ""
-echo " *** Переименовываем оригинальный конфиг elasticsearch.yml ***"
+echo " *** Переименование оригинального конфиг файла elasticsearch.yml ***"
 echo ""
 mv /etc/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml_bak
 
 echo ""
-echo " *** Копируем новый конфиг elasticsearch.yml ***"
+echo " *** Копирование нового конфиг файла elasticsearch.yml ***"
 echo ""
 cp /home/vagrant/logserver/elasticsearch/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 
 echo ""
-echo " *** Изменяем владельца файла ***"
+echo " *** Смена владельца файла ***"
 echo ""
 chown root:elasticsearch /etc/elasticsearch/elasticsearch.yml
 
 echo ""
-echo " *** Включаем автозапуск elasticsearch ***"
+echo " *** Увеличение Timeout старта сервиса elasticsearch (иногда не успевает запустится) ***"
+echo ""
+sed -i -e "s/TimeoutStartSec=75/TimeoutStartSec=150/g" /usr/lib/systemd/system/elasticsearch.service
+
+echo ""
+echo " *** Перезагрузка конфигурации сервиса elasticsearch ***"
+echo ""
+systemctl reload elasticsearch.service
+
+echo ""
+echo " *** Включение автозапуска elasticsearch ***"
 echo ""
 systemctl enable elasticsearch
 
@@ -60,7 +65,7 @@ systemctl start elasticsearch
 #-------------------------------------------------------------------------------------------------------------------------
 
 echo ""
-echo " *** Смена пароля elasticsearch с автоответами ***"
+echo " *** Смена пароля в elasticsearch с автоответами ***"
 echo ""
 /usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u elastic <<EOF
 y
@@ -68,43 +73,38 @@ y
 123456
 EOF
 
-#echo ""
-#echo " *** Импортируем ключ для установки ***"
-#echo ""
-#rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
-
 echo ""
-echo " *** Устанавливаем kibana ***"
+echo " *** Устанавка kibana ***"
 echo ""
 dnf install kibana -y
 
 echo ""
-echo " *** Переименовываем оригинальный конфиг kibana.yml ***"
+echo " *** Переименование оригинального конфиг файла kibana.yml ***"
 echo ""
 mv /etc/kibana/kibana.yml /etc/kibana/kibana.yml_bak
 
 echo ""
-echo " *** Копируем новый конфиг kibana.yml ***"
+echo " *** Копирование нового конфиг файла kibana.yml ***"
 echo ""
 cp /home/vagrant/logserver/kibana/kibana.yml /etc/kibana/kibana.yml
 
 echo ""
-echo " *** Изменяем владельца файла ***"
+echo " *** Смена владельца файла ***"
 echo ""
 chown root:kibana /etc/kibana/kibana.yml
 
 echo ""
-echo " *** Создаём каталог certs и копируем certs в kibana ***"
+echo " *** Создание каталога certs и копирование каталога certs в /etc/kibana/ ***"
 echo ""
 cp -R /etc/elasticsearch/certs /etc/kibana/certs
 
 echo ""
-echo " *** Изменяем владельца каталога и файлов ***"
+echo " *** Смена владельца каталога и файлов ***"
 echo ""
 chown -R root:kibana /etc/kibana/certs
 
 echo ""
-echo " *** Включаем автозапуск kibana ***"
+echo " *** Включение автозапуска kibana ***"
 echo ""
 systemctl enable kibana.service
 
@@ -122,53 +122,48 @@ y
 123456
 EOF
 
-#echo ""
-#echo " *** Импортируем ключ для установки ***"
-#echo ""
-#rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
-
 echo ""
-echo " *** Устанавливаем logstash ***"
+echo " *** Установка logstash ***"
 echo ""
 dnf install logstash -y
 
 echo ""
-echo " *** Копируем новые конфиги для logstash ***"
+echo " *** Копирование новых конфиг файлов для logstash ***"
 echo ""
 cp -R /home/vagrant/logserver/logstash/conf.d /etc/logstash
 
 echo ""
-echo " *** Изменяем владельца каталога и файлов ***"
+echo " *** Смена владельца каталога и файлов ***"
 echo ""
 chown -R root:logstash /etc/logstash/conf.d
 
 echo ""
-echo " *** Создаём каталог certs и копируем certs в logstash ***"
+echo " *** Создание каталога certs и копирование каталога certs в /etc/logstash/ ***"
 echo ""
 cp -R /etc/elasticsearch/certs /etc/logstash/certs
 
 echo ""
-echo " *** Изменяем владельца каталога и файлов ***"
+echo " *** Смена владельца каталога и файлов ***"
 echo ""
 chown -R root:logstash /etc/logstash/certs
 
 echo ""
-echo " *** Переименовываем оригинальный конфиг pipelines.yml ***"
+echo " *** Переименовывание оригинального конфиг файла pipelines.yml ***"
 echo ""
 mv /etc/logstash/pipelines.yml /etc/logstash/pipelines.yml_bak
 
 echo ""
-echo " *** Копируем конфиг pipelines.yml ***"
+echo " *** Копирование конфиг файла pipelines.yml ***"
 echo ""
 cp /home/vagrant/pipelines.yml /etc/logstash/pipelines.yml
 
 echo ""
-echo " *** Изменяем владельца файла ***"
+echo " *** Смена владельца файла ***"
 echo ""
 chown root:logstash /etc/logstash/pipelines.yml
 
 echo ""
-echo " *** Включаем автозапуск logstash ***"
+echo " *** Включение автозапуска logstash ***"
 echo ""
 systemctl enable logstash.service
 

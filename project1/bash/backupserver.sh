@@ -11,14 +11,14 @@ echo ""
 chown -R vagrant:vagrant /home/vagrant/BACKUP
 
 echo ""
-echo " *** Скачивание filebeat ***"
+echo " *** Копируем новый файл repo ***"
 echo ""
-curl -L -o /root/filebeat-8.6.1-x86_64.rpm https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.6.1-x86_64.rpm?_gl=1*xsxx36*_ga*NjU4NjU3ODA3LjE2NzU0MjkzNTg.*_ga_Q7TEQDPTH5*MTY3NTQyOTM1OC4xLjEuMTY3NTQyOTU1Ni4wLjAuMA..
+cp /home/vagrant/elasticsearch.repo /etc/yum.repos.d/elasticsearch.repo
 
 echo ""
-echo " ***Установка filebeat ***"
+echo " *** Устанавливаем filebeat ***"
 echo ""
-rpm -ivh ~/filebeat-8.6.1-x86_64.rpm
+dnf install filebeat -y
 
 echo ""
 echo " *** Переименовываем оригинальный конфиг filebeat.yml ***"
