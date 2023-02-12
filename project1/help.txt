@@ -249,6 +249,37 @@ getsebool httpd_can_network_connect
 systemctl restart mariadb
 systemctl status mariadb
 
+mkdir -p /home/vagrant/xtrabackup
+
+CREATE USER 'mariabackup'@'localhost' IDENTIFIED BY '123456';
+GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'mariabackup'@'localhost';
+GRANT CREATE ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
+GRANT INSERT ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
+
+mariabackup --backup \
+   --target-dir=/home/vagrant/xtrabackup/ \
+   --user=mariabackup --password=123456
+
+
+
+
+
+
+
+
+xtrabackup --host=localhost --port=3306 --user=root --password=123456 \
+    --backup --target-dir=/tmp/backups/xtrabackup/base
+
+dnf install -y https://downloads.percona.com/downloads/Percona-XtraBackup-8.0/Percona-XtraBackup-8.0.31-24/binary/redhat/8/x86_64/percona-xtrabackup-80-8.0.31-24.1.el8.x86_64.rpm
+
+CREATE USER 'xtrabackup'@'localhost' IDENTIFIED BY '123456';
+GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'xtrabackup'@'localhost';
+
+xtrabackup --backup \
+   --target-dir=/home/vagrant/xtrabackup/ \
+   --user=xtrabackup --password=123456
+
+
 
 mysql -e 'start slave'
 mysql -e 'stop slave'

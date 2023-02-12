@@ -16,7 +16,7 @@ echo ""
 dnf install wget -y
 
 echo ""
-echo " *** Скачивается sshpass ***"
+echo " *** Скачивается файл sshpass-1.09-4.el8.x86_64.rpm ***"
 echo ""
 wget -O /home/vagrant/sshpass-1.09-4.el8.x86_64.rpm http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/sshpass-1.09-4.el8.x86_64.rpm
 
