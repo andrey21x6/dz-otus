@@ -121,7 +121,6 @@ Vagrant.configure("2") do |config|
 			box.vm.network "forwarded_port", guest: 22, host: 2305
 			box.vm.provision "file", source: "sql/project1.sql", destination: "~/project1.sql"
 			box.vm.provision "file", source: "bash/backup_sql_1.sh", destination: "~/backup.sh"
-			box.vm.provision "file", source: ".vagrant/machines/backupserver/virtualbox/private_key", destination: "~/backup_private_key"
 			box.vm.provision "file", source: "config/logserver/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
 			box.vm.provision "file", source: "config/filebeat/database1/filebeat.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
@@ -133,8 +132,6 @@ Vagrant.configure("2") do |config|
 			end
 		    box.vm.network "forwarded_port", guest: 22, host: 2306
 			box.vm.provision "file", source: "bash/backup_sql_2.sh", destination: "~/backup.sh"
-			box.vm.provision "file", source: ".vagrant/machines/backupserver/virtualbox/private_key", destination: "~/backup_private_key"
-			box.vm.provision "file", source: ".vagrant/machines/database1/virtualbox/private_key", destination: "~/database1_private_key"
 			box.vm.provision "file", source: "config/logserver/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
 			box.vm.provision "file", source: "config/filebeat/database2/filebeat.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"

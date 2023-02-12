@@ -6,6 +6,26 @@ echo ""
 dnf install mariadb mariadb-server -y
 
 echo ""
+echo " *** Установка fping ***"
+echo ""
+dnf install fping -y
+
+echo ""
+echo " *** Установка wget ***"
+echo ""
+dnf install wget -y
+
+echo ""
+echo " *** Скачивается sshpass ***"
+echo ""
+wget -O /home/vagrant/sshpass-1.09-4.el8.x86_64.rpm http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/sshpass-1.09-4.el8.x86_64.rpm
+
+echo ""
+echo " *** Установка sshpass ***"
+echo ""
+rpm -ivh /home/vagrant/sshpass-1.09-4.el8.x86_64.rpm
+
+echo ""
 echo " *** Создаём каталог ***"
 echo ""
 mkdir BACKUP
@@ -67,11 +87,6 @@ echo ""
 systemctl start mariadb
 
 echo ""
-echo " *** Разрешение в SELinux на на удалённое подключение к mariadb ***"
-echo ""
-setsebool -P httpd_can_network_connect_db 1
-
-echo ""
 echo " *** Запуск mysql_secure_installation с подготовленными ответами для автоматизации ***"
 echo ""
 /usr/bin/mysql_secure_installation <<EOF
@@ -86,14 +101,6 @@ y
 EOF
 
 echo ""
-echo " *** Разрешение на удалённое подключение к mariadb (с любого IP) и создаём пользователя с разрешением на репликацию ***"
-echo ""
-mysql <<EOF
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456';
-GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.16" IDENTIFIED BY "passuser";
-EOF
-
-echo ""
 echo " *** Созданём БД project1 ***"
 echo ""
 mysql -e 'CREATE DATABASE project1'
@@ -102,19 +109,25 @@ mysql -e 'CREATE DATABASE project1'
 
 
 
-#---------- Первый запуск или восстановление ------------
 
-#dnf install fping
+#---------- Первый запуск или восстановление ------------
 
 pingOtvet=`fping 192.168.90.16`
 
 if [ "$pingOtvet" = "192.168.90.16 is alive" ]; then
-    echo "OK"
+
+    echo ""
+	echo " *** stop slave на database2, если запустили восстановление сервера database1 ***"
+	echo ""
+	mysql -h 192.168.90.16 -e 'stop slave'
+	
 else
+
     echo ""
 	echo " *** Импорт БД project1 ***"
 	echo ""
 	mysql project1 < project1.sql
+	
 fi
 
 #--------------------------------------------------------
@@ -122,6 +135,24 @@ fi
 
 
 
+
+
+
+
+echo ""
+echo " *** Разрешение в SELinux на на удалённое подключение к mariadb ***"
+echo ""
+setsebool -P httpd_can_network_connect_db 1
+
+
+
+echo ""
+echo " *** Разрешение на удалённое подключение к mariadb (с любого IP) и создаём пользователя с разрешением на репликацию ***"
+echo ""
+mysql <<EOF
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456';
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.16" IDENTIFIED BY "passuser";
+EOF
 
 echo ""
 echo " *** Копируем новый файл repo ***"

@@ -29,7 +29,7 @@ echo ""
 chown root:elasticsearch /etc/elasticsearch/elasticsearch.yml
 
 echo ""
-echo " *** Увеличение Timeout старта сервиса elasticsearch (иногда не успевает запустится) ***"
+echo " *** Увеличение Timeout старта сервиса elasticsearch (иногда не успевает запуститься) ***"
 echo ""
 sed -i -e "s/TimeoutStartSec=75/TimeoutStartSec=150/g" /usr/lib/systemd/system/elasticsearch.service
 

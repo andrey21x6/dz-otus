@@ -6,6 +6,26 @@ echo ""
 dnf install mariadb mariadb-server -y
 
 echo ""
+echo " *** Установка fping ***"
+echo ""
+dnf install fping -y
+
+echo ""
+echo " *** Установка wget ***"
+echo ""
+dnf install wget -y
+
+echo ""
+echo " *** Скачивается sshpass ***"
+echo ""
+wget -O /home/vagrant/sshpass-1.09-4.el8.x86_64.rpm http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/sshpass-1.09-4.el8.x86_64.rpm
+
+echo ""
+echo " *** Установка sshpass ***"
+echo ""
+rpm -ivh /home/vagrant/sshpass-1.09-4.el8.x86_64.rpm
+
+echo ""
 echo " *** Создание каталога ***"
 echo ""
 mkdir BACKUP
@@ -106,18 +126,16 @@ mysql -e 'CREATE DATABASE project1'
 echo ""
 echo " *** Экспортируется БД из database1 ***"
 echo ""
-ssh -o StrictHostKeyChecking=no -i /home/vagrant/database1_private_key vagrant@192.168.90.15 <<EOF
-sudo -i
+sshpass -p 1 ssh -o StrictHostKeyChecking=no root@192.168.90.15 <<EOF
 mysqldump --single-transaction project1 > /home/vagrant/restore_bd.sql
 chown vagrant:vagrant /home/vagrant/restore_bd.sql
-exit
 exit
 EOF
 
 echo ""
 echo " *** Копируется файла дампа с сервера database1 на сервер database2 ***"
 echo ""
-scp -o StrictHostKeyChecking=no -P 22 -i /home/vagrant/database1_private_key vagrant@192.168.90.15:/home/vagrant/restore_bd.sql /home/vagrant/restore_bd.sql
+sshpass -p vagrant scp -o StrictHostKeyChecking=no -P 22 vagrant@192.168.90.15:/home/vagrant/restore_bd.sql /home/vagrant/restore_bd.sql
 
 echo ""
 echo " *** Импортируется БД в database2 ***"
