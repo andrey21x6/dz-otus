@@ -34,11 +34,6 @@ echo ""
 sed -i -e "s/TimeoutStartSec=75/TimeoutStartSec=150/g" /usr/lib/systemd/system/elasticsearch.service
 
 echo ""
-echo " *** Перезагрузка конфигурации сервиса elasticsearch ***"
-echo ""
-systemctl reload elasticsearch.service
-
-echo ""
 echo " *** Включение автозапуска elasticsearch ***"
 echo ""
 systemctl enable elasticsearch
