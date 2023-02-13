@@ -6,6 +6,11 @@ echo ""
 dnf install mariadb mariadb-server -y
 
 echo ""
+echo " *** Установка mariadb-backup ***"
+echo ""
+dnf install mariadb-backup -y
+
+echo ""
 echo " *** Установка fping ***"
 echo ""
 dnf install fping -y
@@ -26,9 +31,14 @@ echo ""
 rpm -ivh /home/vagrant/sshpass-1.09-4.el8.x86_64.rpm
 
 echo ""
-echo " *** Создание каталога ***"
+echo " *** Создаём каталог mariabackup ***"
 echo ""
-mkdir BACKUP
+mkdir -p /home/vagrant/BACKUP/mariabackup
+
+echo ""
+echo " *** Создаём каталог SQL ***"
+echo ""
+mkdir -p BACKUP/SQL
 
 echo ""
 echo " *** Разрешение файла на исполнение ***"
@@ -68,6 +78,10 @@ echo ""
 cat > /root/.my.cnf <<EOF
 [client]
 user=root
+password=123456
+
+[mariabackup]
+user=mariabackup
 password=123456
 EOF
 

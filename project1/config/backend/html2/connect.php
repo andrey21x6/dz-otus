@@ -2,6 +2,8 @@
 
 	session_start();
 	
+	$_SESSION['ipDb'] = "192.168.90.16";
+	
 	if (!isset($_SESSION['ipDb']) || $_SESSION['ipDb'] == "")
 	{
 		$ipDbStart = "192.168.90.15";

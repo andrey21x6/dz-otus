@@ -19,6 +19,27 @@ systemctl status logstash
    
 systemctl restart elasticsearch
 systemctl status elasticsearch
+systemctl stop elasticsearch
+
+
+
+
+
+dnf install curl jq npm -y
+npm install elasticdump --global
+
+curl -X GET "http://127.0.0.1:9200?pretty"
+
+NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump -u elastic --input=http://127.0.0.1:9200/accounts --output=/home/vagrant/backup.json --type=data
+elasticdump --input=http://127.0.0.1:9200/accounts --output=/home/vagrant/backup.json --type=data
+elasticdump --input=http://127.0.0.1:9200/accounts --output=/home/vagrant/backup.json --type=mapping
+
+npm config set cafile /etc/pki/tls/cert.pem --global
+
+
+
+
+
 
 
 
@@ -249,35 +270,22 @@ getsebool httpd_can_network_connect
 systemctl restart mariadb
 systemctl status mariadb
 
-mkdir -p /home/vagrant/xtrabackup
+
+
+dnf install mariadb-backup
+
+mkdir -p /home/vagrant/BACKUP/mariabackup
 
 CREATE USER 'mariabackup'@'localhost' IDENTIFIED BY '123456';
 GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'mariabackup'@'localhost';
 GRANT CREATE ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
 GRANT INSERT ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
 
+mariabackup --backup --target-dir=/home/vagrant/BACKUP/mariabackup
+
 mariabackup --backup \
-   --target-dir=/home/vagrant/xtrabackup/ \
+   --target-dir=/home/vagrant/mariabackup/ \
    --user=mariabackup --password=123456
-
-
-
-
-
-
-
-
-xtrabackup --host=localhost --port=3306 --user=root --password=123456 \
-    --backup --target-dir=/tmp/backups/xtrabackup/base
-
-dnf install -y https://downloads.percona.com/downloads/Percona-XtraBackup-8.0/Percona-XtraBackup-8.0.31-24/binary/redhat/8/x86_64/percona-xtrabackup-80-8.0.31-24.1.el8.x86_64.rpm
-
-CREATE USER 'xtrabackup'@'localhost' IDENTIFIED BY '123456';
-GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'xtrabackup'@'localhost';
-
-xtrabackup --backup \
-   --target-dir=/home/vagrant/xtrabackup/ \
-   --user=xtrabackup --password=123456
 
 
 

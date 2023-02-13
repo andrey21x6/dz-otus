@@ -13,8 +13,9 @@ xpack.security.enabled: true
 
 xpack.security.enrollment.enabled: true
 
+# Доступ по http или https
 xpack.security.http.ssl:
-  enabled: true
+  enabled: false
   keystore.path: certs/http.p12
 
 xpack.security.transport.ssl:

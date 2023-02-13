@@ -3,7 +3,7 @@
 echo ""
 echo " *** Создаём каталоги ***"
 echo ""
-mkdir -p /home/vagrant/BACKUP/SQL /home/vagrant/BACKUP/LOG
+mkdir -p /home/vagrant/BACKUP/SQL /home/vagrant/BACKUP/LOG /home/vagrant/BACKUP/mariabackup
 
 echo ""
 echo " *** Изменяем владельца каталогов ***"

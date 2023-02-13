@@ -1,12 +1,20 @@
 #!/bin/bash
 
-FOLDERBACKUP=/home/vagrant/BACKUP
+FOLDERBACKUP=/home/vagrant/BACKUP/SQL
+FOLDERBACKUP2=/home/vagrant/BACKUP/mariabackup
 #FILE=SQL_2_Backup_$(date +"%d")
-FILE=SQL_2_Backup_$(date +"%F_%T")
+FILE=SQL_2_Backup_$(date "+%d-%m-%Y-%H-%M-%S")
+FILE2=SQL_mariabackup_2_$(date "+%d-%m-%Y-%H-%M-%S")
 
 rm -rf $FOLDERBACKUP/*
-mysqldump --single-transaction project1 text_entries > $FOLDERBACKUP/$FILE.sql
-tar -cvf $FOLDERBACKUP/$FILE.tar.gz -P $FOLDERBACKUP/$FILE.sql
+rm -rf $FOLDERBACKUP2/*
 
-sshpass -p vagrant scp -o StrictHostKeyChecking=no -P 22 $FOLDERBACKUP/$FILE.tar.gz vagrant@192.168.90.14:~/BACKUP/SQL/$FILE.tar.gz
+mysqldump --single-transaction project1 text_entries > $FOLDERBACKUP/$FILE.sql
+mariabackup --backup --target-dir=$FOLDERBACKUP2
+
+tar -cvf $FOLDERBACKUP/$FILE.tar.gz -P $FOLDERBACKUP/$FILE.sql
+tar -cvf $FOLDERBACKUP/$FILE2.tar.gz -P $FOLDERBACKUP2
+
+sshpass -p 1 scp -o StrictHostKeyChecking=no -P 22 $FOLDERBACKUP/$FILE.tar.gz root@192.168.90.14:$FOLDERBACKUP/$FILE.tar.gz
+sshpass -p 1 scp -o StrictHostKeyChecking=no -P 22 $FOLDERBACKUP/$FILE2.tar.gz root@192.168.90.14:$FOLDERBACKUP2/$FILE2.tar.gz
 # -o StrictHostKeyChecking=no ---> не спрашивать о принятии сертификата сервера при первом подключении
