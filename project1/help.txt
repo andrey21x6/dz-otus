@@ -25,10 +25,60 @@ systemctl stop elasticsearch
 
 
 
+
+
+echo ""
+echo " *** Смена пароля в elasticsearch с автоответами ***"
+echo ""
+/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u elastic <<EOF
+y
+123456
+123456
+EOF
+
+echo ""
+echo " *** Смена пароля для kibana в elasticsearch с автоответами ***"
+echo ""
+/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u kibana_system <<EOF
+y
+123456
+123456
+EOF
+
+
+
+
+echo ""
+echo " *** Отключение security в файле elasticsearch.yml ***"
+echo ""
+sed -i -e "s/xpack.security.enabled: true/xpack.security.enabled: false/g" /etc/elasticsearch/elasticsearch.yml
+sed -i -e "s/xpack.security.enrollment.enabled: true/xpack.security.enrollment.enabled: false/g" /etc/elasticsearch/elasticsearch.yml
+sed -i -e "s/  enabled: true/  enabled: false/g" /etc/elasticsearch/elasticsearch.yml
+
+sed -i -e "s/\#cluster.name/cluster.name/g" /etc/elasticsearch/elasticsearch.yml
+sed -i -e "s/\#node.roles/node.roles/g" /etc/elasticsearch/elasticsearch.yml
+sed -i -e "s/\#discovery.seed_hosts/discovery.seed_hosts/g" /etc/elasticsearch/elasticsearch.yml
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+# https://127.0.0.1:9200
+# Логин: elastic
+# Пароль: При установке генерится: ... The generated password for the elastic built-in superuser is : mAaEdv=RXc0ZT=nA=HZP
+
+# Смена пароля
+#/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u elastic
+
+# Подключение с помощью сертификата
+#curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
+#curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic 'https://127.0.0.1:9200/_cat/indices?v&pretty'
+# Вводим пароль
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+
+
 dnf install curl jq npm -y
 npm install elasticdump --global
-
-curl -X GET "http://127.0.0.1:9200?pretty"
 
 NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump -u elastic --input=http://127.0.0.1:9200/accounts --output=/home/vagrant/backup.json --type=data
 elasticdump --input=http://127.0.0.1:9200/accounts --output=/home/vagrant/backup.json --type=data
@@ -38,20 +88,26 @@ npm config set cafile /etc/pki/tls/cert.pem --global
 
 
 
+curl -X GET "http://127.0.0.1:9200/_cluster/health?pretty"
 
+curl -X GET "http://127.0.0.1:9200/_cluster/settings?pretty"
+curl -X GET 'http://localhost:9200/_cluster/state?pretty'
 
-
-
-
-/usr/lib/systemd/system/elasticsearch.service
-	TimeoutStartSec=75
-	TimeoutStartSec=150
+curl -X GET "http://127.0.0.1:9200?pretty"
+curl -X PUT "http://127.0.0.1:9200/accounts?pretty"
+curl -X PUT "http://127.0.0.1:9200/backend1?pretty"
+curl GET -v 'localhost:9200'
+curl GET 'localhost:9200/backupserver?pretty'
+curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic 'https://127.0.0.1:9200/_cat/indices?v&pretty'
 
 
 
 #curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
 #curl -X GET --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
 #curl -X PUT --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
+
+
+
 curl -XPUT --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic -H 'Content-Type: application/json' "https://127.0.0.1:9200/blog3/_doc/1?pretty" -d'
 {
   "title": "Веселые котята",
@@ -87,6 +143,13 @@ POST /users/_doc
    
 systemctl restart kibana
 systemctl status kibana
+
+
+
+wget https://artifacts.elastic.co/downloads/kibana/kibana-8.6.1-x86_64.rpm
+wget https://artifacts.elastic.co/downloads/kibana/kibana-8.6.1-x86_64.rpm.sha512
+shasum -a 512 -c kibana-8.6.1-x86_64.rpm 
+rpm --install kibana-8.6.1-x86_64.rpm
 
 =================================================================================================================================================
 
@@ -240,6 +303,33 @@ filebeat:
 
 systemctl restart nginx
 systemctl status nginx
+
+
+
+yum install mod_ssl openssl -y
+
+
+
+openssl dhparam -out /etc/pki/tls/certs/dhparam.pem 2048
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/pki/tls/private/nginx-selfsigned.key -out /etc/pki/tls/certs/nginx-selfsigned.crt <<EOF
+RU
+URAL
+CHELYABINSK
+OTUS_Project1
+Project1
+Nginx
+andrey@7kas.ru
+EOF
+
+
+
+openssl req -new -key ca.key -out /root/ca.csr
+
+
+
+
+
 
 nano /etc/nginx/nginx.conf
 nano /usr/share/nginx/html/index.html

@@ -38,10 +38,28 @@ MACHINES = {
 			   {ip: '192.168.90.16', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
             ]
   },
-  :logserver => {
+  :elasticsearch1 => {
     :box_name => "centos/8",
     :net => [
 			   {ip: '192.168.90.17', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            ]
+  },
+  :elasticsearch2 => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.90.18', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            ]
+  },
+  :kibana => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.90.19', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
+            ]
+  },
+  :logstash => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.90.20', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-net"}
             ]
   }
 }
@@ -73,9 +91,10 @@ Vagrant.configure("2") do |config|
 			  v.memory = 256
 			end
 		    box.vm.network "forwarded_port", guest: 80, host: 8181
+			box.vm.network "forwarded_port", guest: 443, host: 4343
 			box.vm.network "forwarded_port", guest: 22, host: 2301
 			box.vm.provision "file", source: "config/nginx/nginx.conf", destination: "~/nginx.conf"
-			box.vm.provision "file", source: "config/logserver/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
+			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
 			box.vm.provision "file", source: "config/filebeat/nginx/filebeat.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
 		    box.vm.provision "shell", path: "bash/nginx.sh"
@@ -87,7 +106,7 @@ Vagrant.configure("2") do |config|
 		    box.vm.network "forwarded_port", guest: 80, host: 8282
 			box.vm.network "forwarded_port", guest: 22, host: 2302
 			box.vm.provision :file, source: "config/backend/html", destination: "~/html"
-			box.vm.provision "file", source: "config/logserver/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
+			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
 			box.vm.provision "file", source: "config/filebeat/backend1/filebeat.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
 		    box.vm.provision "shell", path: "bash/backend.sh"
@@ -99,7 +118,7 @@ Vagrant.configure("2") do |config|
 		    box.vm.network "forwarded_port", guest: 80, host: 8383
 		    box.vm.network "forwarded_port", guest: 22, host: 2303
 			box.vm.provision :file, source: "config/backend/html2", destination: "~/html"
-			box.vm.provision "file", source: "config/logserver/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
+			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
 			box.vm.provision "file", source: "config/filebeat/backend2/filebeat.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
 		    box.vm.provision "shell", path: "bash/backend.sh"
@@ -109,7 +128,7 @@ Vagrant.configure("2") do |config|
 			  v.memory = 256
 			end
 		    box.vm.network "forwarded_port", guest: 22, host: 2304
-			box.vm.provision "file", source: "config/logserver/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
+			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
 			box.vm.provision "file", source: "config/filebeat/backupserver/filebeat.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
 		    box.vm.provision "shell", path: "bash/backupserver.sh"
@@ -121,7 +140,7 @@ Vagrant.configure("2") do |config|
 			box.vm.network "forwarded_port", guest: 22, host: 2305
 			box.vm.provision "file", source: "sql/project1.sql", destination: "~/project1.sql"
 			box.vm.provision "file", source: "bash/backup_sql_1.sh", destination: "~/backup.sh"
-			box.vm.provision "file", source: "config/logserver/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
+			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
 			box.vm.provision "file", source: "config/filebeat/database1/filebeat.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
 		    box.vm.provision "shell", path: "bash/database1.sh"
@@ -132,22 +151,58 @@ Vagrant.configure("2") do |config|
 			end
 		    box.vm.network "forwarded_port", guest: 22, host: 2306
 			box.vm.provision "file", source: "bash/backup_sql_2.sh", destination: "~/backup.sh"
-			box.vm.provision "file", source: "config/logserver/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
+			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
 			box.vm.provision "file", source: "config/filebeat/database2/filebeat.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
 		    box.vm.provision "shell", path: "bash/database2.sh"	  
 
-		  when "logserver"
+		  when "elasticsearch1"
 		    box.vm.provider "virtualbox" do |v| 
 			  v.memory = 3072
 			end
 		    box.vm.network "forwarded_port", guest: 22, host: 2307
 			box.vm.network "forwarded_port", guest: 9200, host: 9200   # Порт для Elasticsearch
-			box.vm.network "forwarded_port", guest: 5601, host: 5601   # Порт для Kibana
-			box.vm.provision :file, source: "config/logserver", destination: "~/logserver"
-			box.vm.provision "file", source: "config/logserver/logstash/pipelines.yml", destination: "~/pipelines.yml"
+			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
+			box.vm.provision "file", source: "config/elasticsearch/elasticsearch1.yml", destination: "~/elasticsearch.yml"
+			box.vm.provision "file", source: "config/filebeat/elasticsearch1/filebeat.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
-		    box.vm.provision "shell", path: "bash/logserver.sh"
+		    box.vm.provision "shell", path: "bash/elasticsearch1.sh"
+			
+			when "elasticsearch2"
+		    box.vm.provider "virtualbox" do |v| 
+			  v.memory = 3072
+			end
+		    box.vm.network "forwarded_port", guest: 22, host: 2308
+			box.vm.network "forwarded_port", guest: 9200, host: 9201   # Порт для Elasticsearch
+			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
+			box.vm.provision "file", source: "config/elasticsearch/elasticsearch2.yml", destination: "~/elasticsearch.yml"
+			box.vm.provision "file", source: "config/filebeat/elasticsearch2/filebeat.yml", destination: "~/filebeat.yml"
+			box.vm.provision "shell", path: "bash/all_setup.sh"
+		    box.vm.provision "shell", path: "bash/elasticsearch2.sh"
+			
+			when "kibana"
+		    box.vm.provider "virtualbox" do |v| 
+			  v.memory = 1024
+			end
+		    box.vm.network "forwarded_port", guest: 22, host: 2309
+			box.vm.network "forwarded_port", guest: 5601, host: 5601   # Порт для Kibana
+			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
+			box.vm.provision "file", source: "config/kibana/kibana.yml", destination: "~/kibana.yml"
+			box.vm.provision "file", source: "config/filebeat/kibana/filebeat.yml", destination: "~/filebeat.yml"
+			box.vm.provision "shell", path: "bash/all_setup.sh"
+		    box.vm.provision "shell", path: "bash/kibana.sh"
+			
+			when "logstash"
+		    box.vm.provider "virtualbox" do |v| 
+			  v.memory = 1024
+			end
+		    box.vm.network "forwarded_port", guest: 22, host: 2310
+			box.vm.provision :file, source: "config/logstash/conf.d", destination: "~/conf.d"
+			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
+			box.vm.provision "file", source: "config/logstash/pipelines.yml", destination: "~/pipelines.yml"
+			box.vm.provision "file", source: "config/filebeat/logstash/filebeat.yml", destination: "~/filebeat.yml"
+			box.vm.provision "shell", path: "bash/all_setup.sh"
+		    box.vm.provision "shell", path: "bash/logstash.sh"
 			
         end
       end

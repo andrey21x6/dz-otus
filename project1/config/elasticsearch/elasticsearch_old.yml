@@ -1,0 +1,27 @@
+node.name: ${HOSTNAME}
+
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+
+# Чтобы не использовать подкачку, использовать bootstrap.memory_lock для блокировки оперативной памяти процесса Elasticsearch
+#bootstrap.memory_lock: true
+
+network.host: 192.168.90.17
+http.port: 9200
+http.host: 0.0.0.0
+
+xpack.security.enabled: true
+xpack.security.enrollment.enabled: true
+
+# Доступ по http или https
+xpack.security.http.ssl:
+  enabled: false
+  keystore.path: certs/http.p12
+
+xpack.security.transport.ssl:
+  enabled: true
+  verification_mode: certificate
+  keystore.path: certs/transport.p12
+  truststore.path: certs/transport.p12
+
+cluster.initial_master_nodes: ["logserver"]
