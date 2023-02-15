@@ -6,10 +6,20 @@
 
 # **Prerequisite**
 
-- Host OS: Ubuntu Desktop 20.04.5
-- Guest OS: CentOS 8.3.2011
+### Host ###
+- Ubuntu Desktop 20.04.5
 - VirtualBox: 6.1.40
 - Vagrant: 2.3.2
+
+### Guest ###
+- CentOS 8.3.2011
+- Filebeat 8.6.1
+- Nginx 1.14.1
+- PHP 7.2.24
+- MariaDB 10.3.2
+- Elasticsearch 8.6.1
+- Kibana 8.6.1
+- Logstash 8.6.1
 
 # **Содержание ДЗ**
 
