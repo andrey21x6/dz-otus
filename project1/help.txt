@@ -311,9 +311,20 @@ systemctl status nginx
 
 
 
-yum install mod_ssl openssl -y
 
 
+
+--------------------------------------------------------
+
+#dnf install mod_ssl openssl -y
+dnf install openssl -y
+
+
+
+openssl genpkey algorithm rsa -pkeyopt rsa_ketgen_bits_2048 -out nginx.key
+
+
+---------------------------------------------------
 
 openssl dhparam -out /etc/pki/tls/certs/dhparam.pem 2048
 
@@ -323,7 +334,7 @@ URAL
 CHELYABINSK
 OTUS_Project1
 Project1
-Nginx
+nginx
 andrey@7kas.ru
 EOF
 
@@ -331,10 +342,23 @@ EOF
 
 openssl req -new -key ca.key -out /root/ca.csr
 
+---------------------------------------------------!
 
+# Generate private key 
+openssl genrsa -out nginx.key 2048
 
+# Generate CSR 
+openssl req -new -key nginx.key -out nginx.csr
 
+# Generate Self Signed Key
+openssl x509 -req -days 365 -in nginx.csr -signkey nginx.key -out nginx.crt
 
+# Copy the files to the correct locations
+cp nginx.crt /etc/pki/tls/certs
+cp nginx.key /etc/pki/tls/private/nginx.key
+cp nginx.csr /etc/pki/tls/private/nginx.csr
+
+---------------------------------------------------!
 
 nano /etc/nginx/nginx.conf
 nano /usr/share/nginx/html/index.html
