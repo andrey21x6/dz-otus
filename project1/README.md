@@ -41,6 +41,7 @@
 
 # **Выполнение проектной работы**
 
+![111 drawio](https://user-images.githubusercontent.com/91377497/219396508-d7f43b02-ceb0-4c7f-94ad-071e69c31bf8.svg)
 
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
