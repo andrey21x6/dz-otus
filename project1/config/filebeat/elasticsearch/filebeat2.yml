@@ -3,12 +3,33 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/audit/audit.log
+    - /var/log/elasticsearch/elk-cluster.log
   exclude_files: [".gz$"]
   
   fields:
-    type: audit_elasticsearch2
-    #service: nginx_access
+    type: elasticsearch2
+  fields_under_root: true
+  scan_frequency: 5s
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/elasticsearch/elk-cluster_deprecation.json
+  exclude_files: [".gz$"]
+  
+  fields:
+    type: elasticsearch2
+  fields_under_root: true
+  scan_frequency: 5s
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/elasticsearch/elk-cluster_server.json
+  exclude_files: [".gz$"]
+  
+  fields:
+    type: elasticsearch2
   fields_under_root: true
   scan_frequency: 5s
 

@@ -3,12 +3,11 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/audit/audit.log
+    - /var/log/kibana/kibana.log
   exclude_files: [".gz$"]
   
   fields:
-    type: audit_kibana
-    #service: nginx_access
+    type: kibana
   fields_under_root: true
   scan_frequency: 5s
 

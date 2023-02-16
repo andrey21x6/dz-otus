@@ -218,7 +218,7 @@ Vagrant.configure("2") do |config|
 			
 			when "logstash1"
 		    box.vm.provider "virtualbox" do |v| 
-			  v.memory = 1024
+			  v.memory = 2048
 			end
 		    box.vm.network "forwarded_port", guest: 22, host: 2311
 			box.vm.provision :file, source: "config/logstash/conf.d", destination: "~/conf.d"
@@ -230,7 +230,7 @@ Vagrant.configure("2") do |config|
 			
 			when "logstash2"
 		    box.vm.provider "virtualbox" do |v| 
-			  v.memory = 1024
+			  v.memory = 2048
 			end
 		    box.vm.network "forwarded_port", guest: 22, host: 2312
 			box.vm.provision :file, source: "config/logstash/conf.d", destination: "~/conf.d"

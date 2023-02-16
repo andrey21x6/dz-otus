@@ -24,6 +24,17 @@ filebeat.inputs:
   fields_under_root: true
   scan_frequency: 5s
 
+- type: log
+  enabled: true
+  paths:
+    - /var/log/php-fpm/*.log
+  exclude_files: [".gz$"]
+      
+  fields:
+    type: php_fpm
+  fields_under_root: true
+  scan_frequency: 5s
+
 #-----------------------------------
 
 output.logstash:

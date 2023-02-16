@@ -3,12 +3,11 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/audit/audit.log
+    - /var/log/logstash/logstash-plain.log
   exclude_files: [".gz$"]
   
   fields:
-    type: audit_logstash1
-    #service: nginx_access
+    type: logstash1
   fields_under_root: true
   scan_frequency: 5s
 
