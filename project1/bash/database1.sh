@@ -125,7 +125,7 @@ y
 EOF
 
 echo ""
-echo " *** Созданём БД project1 ***"
+echo " *** Создаётся БД project1 ***"
 echo ""
 mysql -e 'CREATE DATABASE project1'
 
@@ -139,6 +139,9 @@ EOF
 
 #------------------------------------------------------ Условие первый запуск или восстановление -----------------------------------------------------------------
 
+echo ""
+echo " *** fping 192.168.90.16 database2 ***"
+echo ""
 pingOtvet=`fping 192.168.90.16`
 
 if [ "$pingOtvet" = "192.168.90.16 is alive" ]; then
@@ -172,9 +175,6 @@ echo ""
 echo " *** Создаётся запись на сервере database1 для настройки репликации в качестве slave (database2 - Master) ***"
 echo ""
 mysql -e 'change master to master_host = "192.168.90.16", master_user = "replicatuser", master_password = "passuser", master_log_file = "'$V1'", master_log_pos = '$V2''
-#mysql -e 'change master to master_host = "192.168.90.16", master_user = "replicatuser", master_password = "passuser", master_log_file = "mariadb-bin.000002", master_log_pos = 3963'
-#mysql -e 'change master to master_host = "192.168.90.16", master_user = "replicatuser", master_password = "passuser", master_use_gtid=current_pos'
-#mysql -e 'change master to master_host = "192.168.90.16", master_user = "replicatuser", master_password = "passuser", master_use_gtid=slave_pos'
 
 echo ""
 echo " *** Запускается репликация на сервере database1 ***"
@@ -209,28 +209,3 @@ mysql project1 < project1.sql
 fi
 
 #----------------------------------------------------- Конец условия первый запуск или восстановление -----------------------------------------------------
-
-echo ""
-echo " *** Копируем новый файл repo ***"
-echo ""
-cp /home/vagrant/elasticsearch.repo /etc/yum.repos.d/elasticsearch.repo
-
-echo ""
-echo " *** Устанавливаем filebeat ***"
-echo ""
-dnf install filebeat -y
-
-echo ""
-echo " *** Переименовываем оригинальный конфиг filebeat.yml ***"
-echo ""
-mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml_bak
-
-echo ""
-echo " *** Копируем новый конфиг filebeat ***"
-echo ""
-cp /home/vagrant/filebeat.yml /etc/filebeat/filebeat.yml
-
-echo ""
-echo " *** Запускаем filebeat и добавляем в автозагрузку ***"
-echo ""
-systemctl enable --now filebeat

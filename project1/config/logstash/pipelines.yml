@@ -29,8 +29,14 @@
 - pipeline.id: elasticsearch2
   path.config: "/etc/logstash/conf.d/elasticsearch2/*.conf"
   
+- pipeline.id: elasticsearch3
+  path.config: "/etc/logstash/conf.d/elasticsearch3/*.conf"
+  
 - pipeline.id: kibana
   path.config: "/etc/logstash/conf.d/kibana/*.conf"
   
-- pipeline.id: logstash
-  path.config: "/etc/logstash/conf.d/logstash/*.conf"
+- pipeline.id: logstash1
+  path.config: "/etc/logstash/conf.d/logstash1/*.conf"
+  
+- pipeline.id: logstash2
+  path.config: "/etc/logstash/conf.d/logstash2/*.conf"

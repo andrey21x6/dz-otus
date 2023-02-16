@@ -3,16 +3,17 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/audit/audit.log
+    - /var/log/mariadb/mariadb.log
   exclude_files: [".gz$"]
   
   fields:
-    type: audit_elasticsearch2
-    #service: nginx_access
+    type: mariadb
+    app_name: mariadb
+    tags: ["mariadb"]
   fields_under_root: true
   scan_frequency: 5s
 
 #-----------------------------------
 
 output.logstash:
-  hosts: ["192.168.90.20:5048"]
+  hosts: ["192.168.90.21:5045", "192.168.90.22:5045"]

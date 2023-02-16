@@ -7,7 +7,7 @@ filebeat.inputs:
   exclude_files: [".gz$"]
   
   fields:
-    type: audit_backupserver
+    type: audit_elasticsearch2
     #service: nginx_access
   fields_under_root: true
   scan_frequency: 5s
@@ -15,4 +15,4 @@ filebeat.inputs:
 #-----------------------------------
 
 output.logstash:
-  hosts: ["192.168.90.21:5044", "192.168.90.22:5044"]
+  hosts: ["192.168.90.21:5048", "192.168.90.22:5048"]

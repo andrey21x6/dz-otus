@@ -34,11 +34,6 @@ echo ""
 dnf install nano -y
 
 echo ""
-echo " *** Установка telnet ***"
-echo ""
-dnf install telnet -y
-
-echo ""
 echo " *** Установка net-tools ***"
 echo ""
 dnf install net-tools -y
@@ -49,9 +44,29 @@ echo ""
 dnf install htop -y
 
 echo ""
-echo " *** Установка tcpdump ***"
+echo " *** Копируем новый файл repo ***"
 echo ""
-dnf install tcpdump -y
+cp /home/vagrant/elasticsearch.repo /etc/yum.repos.d/elasticsearch.repo
+
+echo ""
+echo " *** Устанавливаем filebeat ***"
+echo ""
+dnf install filebeat -y
+
+echo ""
+echo " *** Переименовываем оригинальный конфиг filebeat.yml ***"
+echo ""
+mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml_bak
+
+echo ""
+echo " *** Копируем новый конфиг filebeat ***"
+echo ""
+cp /home/vagrant/filebeat.yml /etc/filebeat/filebeat.yml
+
+echo ""
+echo " *** Запускаем filebeat и добавляем в автозагрузку ***"
+echo ""
+systemctl enable --now filebeat
 
 echo ""
 echo " *** Включение SSH по паролю ***"

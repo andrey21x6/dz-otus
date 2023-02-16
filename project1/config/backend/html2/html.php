@@ -14,13 +14,13 @@
 
 	<?php
 
-	if ($ipDbStart == "192.168.90.15")
+	if ($switchDb == "192.168.90.15")
 	{
-		echo "<h1>Backend 2 ---> <span style='color:green'>Database 1</span></h1>";
+		echo "<h1 style='color:red'>2 - <span style='color:green'>1</span></h1>";
 	}
 	else
 	{
-		echo "<h1>Backend 2 ---> <span style='color:red'>Database 2</span></h1>";
+		echo "<h1 style='color:red'>2 - <span style='color:red'>2</span></h1>";
 	}
 
 	//---------------------------------------------- Вывод из таблицы ------------------------------------------------------------

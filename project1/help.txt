@@ -88,12 +88,17 @@ npm config set cafile /etc/pki/tls/cert.pem --global
 
 
 
+curl -X GET "http://127.0.0.1:9200?pretty"
 curl -X GET "http://127.0.0.1:9200/_cluster/health?pretty"
+curl -X GET 'http://localhost:9200/_cluster/state/master_node?pretty'
+curl -X GET 'http://localhost:9200/_cluster/state?filter_path=metadata'
+curl -X GET "http://127.0.0.1:9200/_cat/master?pretty"
+curl -X GET "localhost:9200/_cluster/state?filter_path=metadata.cluster_coordination.last_committed_config&pretty"
+
+
 
 curl -X GET "http://127.0.0.1:9200/_cluster/settings?pretty"
-curl -X GET 'http://localhost:9200/_cluster/state?pretty'
 
-curl -X GET "http://127.0.0.1:9200?pretty"
 curl -X PUT "http://127.0.0.1:9200/accounts?pretty"
 curl -X PUT "http://127.0.0.1:9200/backend1?pretty"
 curl GET -v 'localhost:9200'
