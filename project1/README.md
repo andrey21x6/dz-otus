@@ -41,7 +41,7 @@
 
 # **Выполнение проектной работы**
 
-
+![Shema](https://user-images.githubusercontent.com/91377497/219578523-8a705a0d-9f3e-4bfd-9581-2b5b30dd58e3.svg)
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!
