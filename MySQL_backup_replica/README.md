@@ -45,7 +45,11 @@ vagrant up
 
 ![replica_db](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/replica_db.jpg)
 
-**Демонстрация работы Backup на скриншотах**
+**Демонстрация работы Backup на скриншотах, для проверки, можно запустить команду ниже**
+
+```
+/home/vagrant/backup.sh
+```
 
 ![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/backup_2.jpg)
 
