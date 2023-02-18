@@ -45,6 +45,15 @@ vagrant up
 
 ![replica_db](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/replica_db.jpg)
 
+**Демонстрация состояния slave репликации на скриншотах**
+```
+mysql -e 'SHOW SLAVE STATUS \G'
+```
+
+![replica_slave_1](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/replica_slave_1.jpg)
+
+![replica_slave_2](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/replica_slave_2.jpg)
+
 **Демонстрация работы Backup на скриншотах, для проверки, можно запустить команду ниже**
 
 ```
@@ -55,7 +64,7 @@ vagrant up
 
 ![backup_2](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/backup_2.jpg)
 
-![replica_slave_1](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/replica_slave_1.jpg)
+
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!
