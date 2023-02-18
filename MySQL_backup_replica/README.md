@@ -41,11 +41,11 @@ vagrant up
 то при запуске (vagrant up database1 или database2), развернётся виртуалка с актуально БД, 
 даже если во время развёртывания удалённой, производили какие-либо манипуляции с БД
 
-**Демонстрация работы репликации на скпиншоте**
+**Демонстрация работы репликации на скриншоте**
 
 ![replica_db](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/replica_db.jpg)
 
-**Демонстрация работы Backup на скпиншотах**
+**Демонстрация работы Backup на скриншотах**
 
 ![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/backup_2.jpg)
 
