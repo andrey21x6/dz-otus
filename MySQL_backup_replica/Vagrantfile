@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
 			end
 			box.vm.network "forwarded_port", guest: 22, host: 2001
 			box.vm.provision "file", source: "sql/bet_odds.dmp", destination: "~/bet_odds.dmp"
-			box.vm.provision "file", source: "bash/backup_sql_1.sh", destination: "~/backup.sh"
+			box.vm.provision "file", source: "bash/backup_sql.sh", destination: "~/backup.sh"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
 		    box.vm.provision "shell", path: "bash/database1.sh"
 			
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
 			end
 		    box.vm.network "forwarded_port", guest: 22, host: 2002
 			box.vm.provision "file", source: "sql/bet_odds.dmp", destination: "~/bet_odds.dmp"
-			box.vm.provision "file", source: "bash/backup_sql_2.sh", destination: "~/backup.sh"
+			box.vm.provision "file", source: "bash/backup_sql.sh", destination: "~/backup.sh"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
 		    box.vm.provision "shell", path: "bash/database2.sh"	  
 
