@@ -51,7 +51,7 @@ vagrant up
 /home/vagrant/backup.sh
 ```
 
-![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/backup_2.jpg)
+![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/backup_1.jpg)
 
 ![backup_2](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/backup_2.jpg)
 
