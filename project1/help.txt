@@ -669,7 +669,21 @@ mysqldump -u root -p123456 project1 text_entries > project1_2.sql
 USE project1;
 show tables;
 
-text_entries
+
+
+mysql -e 'show databases'
+mysql bet_odds -e "show tables;"
+mysql bet_odds -e "select * from bookmaker order by id;"
+mysql bet_odds -e "insert into bookmaker values (7, 'Andrey_Islamov_1');"
+mysql bet_odds -e "insert into bookmaker values (8, 'Andrey_Islamov_2');"
+
+mysql bet_odds -e "delete from bookmaker where bookmaker_name = 'Andrey_Islamov';"
+
+DELETE FROM somelog WHERE user = 'jcole'
+
+mysqlbinlog -v --base64-output=DECODE-ROWS /var/log/mariadb/mariadb-bin.000002
+
+mariabackup -u mariabackup --backup --target-dir=/home/vagrant/BACKUP/mariabackup
 
 ---------------------------------------------------------------------------
 
