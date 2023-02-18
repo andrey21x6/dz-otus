@@ -36,13 +36,20 @@ vagrant up
 
 Настроен Backup логический (mysqldump) и физический (mariabackup) с помощью cron
 
-Запуск в Vagrant построен так, что если удалить одну из виртуалок (vagrant halt database1 или database2; vagrant destroy database1 или database2), 
+Запуск в Vagrant построен так, что если удалить одну из виртуалок 
+(vagrant halt database1 или database2; vagrant destroy database1 или database2), 
 то при запуске (vagrant up database1 или database2), развернётся виртуалка с актуально БД, 
 даже если во время развёртывания удалённой, производили какие-либо манипуляции с БД
 
+**Демонстрация работы репликации на скпиншоте**
 
+replica_db.jpg
 
-![Shema](https://github.com/andrey21x6/dz-otus/blob/main/project1/scrin/Shema.svg)
+**Демонстрация работы Backup на скпиншотах**
+
+backup_1.jpg
+
+backup_2.jpg
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!
