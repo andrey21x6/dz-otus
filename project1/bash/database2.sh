@@ -149,17 +149,27 @@ y
 EOF
 
 echo ""
-echo " *** Разрешение на удалённое подключение к mariadb (с любого IP) и создаётся пользователь с разрешением на репликацию ***"
+echo " *** Создаётся пользователь БД и устанавливаются права для работы с mariabackup ***"
 echo ""
 mysql <<EOF
-GRANT ALL PRIVILEGES ON *.* TO '${loginDb}'@'%' IDENTIFIED BY '${passDb}';
-GRANT replication slave ON *.* TO "replicatuser"@"${ipDb1}" IDENTIFIED BY "passuser";
+CREATE USER 'mariabackup'@'localhost' IDENTIFIED BY '123456';
+GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'mariabackup'@'localhost';
+GRANT CREATE ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
+GRANT INSERT ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
 EOF
 
 echo ""
 echo " *** Создаётся БД ${nameDb} ***"
 echo ""
 mysql -e 'CREATE DATABASE '"${nameDb}"''
+
+echo ""
+echo " *** Разрешение на удалённое подключение к mariadb (с любого IP) и создаётся пользователь с разрешением на репликацию ***"
+echo ""
+mysql <<EOF
+GRANT ALL PRIVILEGES ON *.* TO '${loginDb}'@'%' IDENTIFIED BY '${passDb}';
+GRANT replication slave ON *.* TO "replicatuser"@"${ipDb1}" IDENTIFIED BY "passuser";
+EOF
 
 echo ""
 echo " *** Получаем в переменные окружения строки File (имя файла) и Position (номер позиции) из состояния двоичных файлов журнала сервера database1 ***"

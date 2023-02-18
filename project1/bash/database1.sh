@@ -144,6 +144,16 @@ y
 EOF
 
 echo ""
+echo " *** Создаётся пользователь БД и устанавливаются права для работы с mariabackup ***"
+echo ""
+mysql <<EOF
+CREATE USER 'mariabackup'@'localhost' IDENTIFIED BY '123456';
+GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'mariabackup'@'localhost';
+GRANT CREATE ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
+GRANT INSERT ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
+EOF
+
+echo ""
 echo " *** Создаётся БД ${nameDb} ***"
 echo ""
 mysql -e 'CREATE DATABASE '"${nameDb}"''

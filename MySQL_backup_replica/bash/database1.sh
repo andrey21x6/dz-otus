@@ -8,6 +8,16 @@ nameDb=bet_odds
 fileDb=bet_odds.dmp
 
 echo ""
+echo " *** Установка mariadb ***"
+echo ""
+dnf install mariadb mariadb-server -y
+
+echo ""
+echo " *** Установка mariadb-backup ***"
+echo ""
+dnf install mariadb-backup -y
+
+echo ""
 echo " *** Установка fping ***"
 echo ""
 dnf install fping -y
@@ -38,6 +48,28 @@ echo " *** Изменение логики использования файла
 echo ""
 sysctl -w vm.swappiness=1
 echo vm.swappiness = 1 >> /etc/sysctl.conf
+
+echo ""
+echo " *** Создаём каталог mariabackup ***"
+echo ""
+mkdir -p /home/vagrant/BACKUP/mariabackup
+
+echo ""
+echo " *** Создаём каталог SQL ***"
+echo ""
+mkdir -p BACKUP/SQL
+
+echo ""
+echo " *** Разрешаем файл на исполнение ***"
+echo ""
+chmod +x backup.sh
+
+echo ""
+echo " *** Добавляем в cron задание (каждый день в 1 час ночи) ***"
+echo ""
+echo "00 1 * * * root /home/vagrant/backup.sh" >> /etc/crontab
+#echo "0 * * * * root /home/vagrant/backup.sh" >> /etc/crontab
+#echo "* * * * * root /home/vagrant/backup.sh" >> /etc/crontab
 
 echo ""
 echo " *** Разрешить доступ к БД с любого IP по порту 3306 ***"
@@ -109,6 +141,16 @@ y
 n
 y
 y
+EOF
+
+echo ""
+echo " *** Создаётся пользователь БД и устанавливаются права для работы с mariabackup ***"
+echo ""
+mysql <<EOF
+CREATE USER 'mariabackup'@'localhost' IDENTIFIED BY '123456';
+GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'mariabackup'@'localhost';
+GRANT CREATE ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
+GRANT INSERT ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
 EOF
 
 echo ""
