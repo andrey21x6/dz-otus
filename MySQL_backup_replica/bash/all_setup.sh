@@ -44,31 +44,6 @@ echo ""
 dnf install htop -y
 
 echo ""
-echo " *** Копирование нового файла repo elasticsearch.repo ***"
-echo ""
-cp /home/vagrant/elasticsearch.repo /etc/yum.repos.d/elasticsearch.repo
-
-echo ""
-echo " *** Устанавка filebeat ***"
-echo ""
-dnf install filebeat -y
-
-echo ""
-echo " *** Переименование оригинального конфиг файла filebeat.yml ***"
-echo ""
-mv /etc/filebeat/filebeat.yml /etc/filebeat/filebeat.yml_bak
-
-echo ""
-echo " *** Копирование нового конфиг файла filebeat.yml ***"
-echo ""
-cp /home/vagrant/filebeat.yml /etc/filebeat/filebeat.yml
-
-echo ""
-echo " *** Старт filebeat и добавление в автозагрузку ***"
-echo ""
-systemctl enable --now filebeat
-
-echo ""
 echo " *** Включение SSH по паролю ***"
 echo ""
 sed -i -e "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config

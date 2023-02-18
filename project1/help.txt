@@ -1,4 +1,34 @@
 
+
+
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+
+*** Metricbeat ***
+
+curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.6.2-x86_64.rpm
+rpm -vi metricbeat-8.6.2-x86_64.rpm
+
+metricbeat modules enable elasticsearch-xpack
+metricbeat setup -e
+systemctl start metricbeat
+
+elasticsearch.yml
+  node.roles: [ master, data, remote_cluster_client ]
+
+systemctl restart elasticsearch
+
+
+#metricbeat modules list
+
+#metricbeat modules enable elasticsearch-xpack
+#metricbeat modules enable nginx
+
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+
    *** Logstash ***
    
 systemctl restart logstash
@@ -12,8 +42,29 @@ systemctl status logstash
 	[2023-02-11T12:08:14,980][INFO ][logstash.javapipeline    ] Pipeline `database2` is configured with `pipeline.ecs_compatibility: v8` setting. All plugins in this pipeline will default to `ecs_compatibility => v8` unless explicitly configured otherwise.
 	Configuration OK
 	[2023-02-11T12:08:14,980][INFO ][logstash.runner          ] Using config.test_and_exit mode. Config Validation Result: OK. Exiting Logstash
+	
+#-------------------------------------------------------------------------------------------------------------------------
+	
+%{IP:client_ip} %{NUMBER:code_otveta} <%{DATA:user_agent_nash}>
+10.0.2.2 200 <Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36>
 
-==================================================================================================================================================
+[
+  {
+    "client_ip": "10.0.2.2",
+    "code_otveta": 200,
+    "user_agent_nash": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+  }
+]
+
+
+
+10.0.2.2 - - [18/Feb/2023:14:15:51 +0500] "GET /XXXXXXXXXXX HTTP/2.0" 404 571 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" "-"
+
+%{IPORHOST:remote_ip} - %{DATA:user_name} \[%{HTTPDATE:access_time}\] \"%{WORD:http_method} %{DATA:url} HTTP/%{NUMBER:http_version}\" %{NUMBER:response_code} %{NUMBER:body_sent_bytes} \"%{DATA:referrer}\" \"%{DATA:agent}\"
+
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
 
    *** elasticsearch ***
    
@@ -21,11 +72,15 @@ systemctl restart elasticsearch
 systemctl status elasticsearch
 systemctl stop elasticsearch
 
+#-------------------------------------------------------------------------------------------------------------------------
 
+sysctl vm.swappiness
 
+sysctl -w vm.swappiness=1
 
+echo vm.swappiness = 1 >> /etc/sysctl.conf
 
-
+#-------------------------------------------------------------------------------------------------------------------------
 
 echo ""
 echo " *** Смена пароля в elasticsearch с автоответами ***"
@@ -75,24 +130,24 @@ sed -i -e "s/\#discovery.seed_hosts/discovery.seed_hosts/g" /etc/elasticsearch/e
 
 #-------------------------------------------------------------------------------------------------------------------------
 
-
-
 dnf install curl jq npm -y
 npm install elasticdump --global
 
-NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump -u elastic --input=http://127.0.0.1:9200/accounts --output=/home/vagrant/backup.json --type=data
-elasticdump --input=http://127.0.0.1:9200/accounts --output=/home/vagrant/backup.json --type=data
-elasticdump --input=http://127.0.0.1:9200/accounts --output=/home/vagrant/backup.json --type=mapping
+elasticdump --input=http://127.0.0.1:9200/backend1 --output=/home/vagrant/backup.json --type=data
+elasticdump --input=/home/vagrant/backup.json --output=http://127.0.0.1:9200/backend1 --type=data
 
-npm config set cafile /etc/pki/tls/cert.pem --global
+#NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump -u elastic --input=http://127.0.0.1:9200/backend1 --output=/home/vagrant/backup.json --type=data
+#elasticdump --input=http://127.0.0.1:9200/backend1 --output=/home/vagrant/backup.json --type=mapping
+#npm config set cafile /etc/pki/tls/cert.pem --global
 
-
+#-------------------------------------------------------------------------------------------------------------------------
 
 curl -X GET "http://127.0.0.1:9200?pretty"
 curl -X GET "http://127.0.0.1:9200/_cluster/health?pretty"
 curl -X GET 'http://localhost:9200/_cluster/state/master_node?pretty'
-curl -X GET 'http://localhost:9200/_cluster/state?filter_path=metadata'
+curl -X GET "http://127.0.0.1:9200/_cat/master?v=true"
 curl -X GET "http://127.0.0.1:9200/_cat/master?pretty"
+curl -X GET 'http://localhost:9200/_cluster/state?filter_path=metadata'
 curl -X GET "localhost:9200/_cluster/state?filter_path=metadata.cluster_coordination.last_committed_config&pretty"
 
 
@@ -142,7 +197,9 @@ curl -XPOST --cacert '/etc/elasticsearch/certs/http_ca.crt' -u 'elastic' -H 'Con
 POST /users/_doc
 { "first_name": "Rishikesh", "last_name": "Agrawani", "age": 29}
 
-=================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
 
    *** Kibana ***
    
@@ -156,7 +213,15 @@ wget https://artifacts.elastic.co/downloads/kibana/kibana-8.6.1-x86_64.rpm.sha51
 shasum -a 512 -c kibana-8.6.1-x86_64.rpm 
 rpm --install kibana-8.6.1-x86_64.rpm
 
-=================================================================================================================================================
+
+
+xpack.encryptedSavedObjects.encryptionKey: ae77d4fcd3f598a339aa31806df0c6c0
+xpack.reporting.encryptionKey: b98e2e6dc44705dda2b08d7c9f1a325e
+xpack.security.encryptionKey: eaebde254d4d93df375fb4ba440f7160
+
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
 
    *** Filebeat ***
 
@@ -165,6 +230,24 @@ systemctl status filebeat
 
 Проверка конфигурации Filebeat:
 filebeat test config
+
+
+
+filebeat modules list
+filebeat modules enable nginx
+filebeat setup -e
+
+systemctl restart filebeat
+
+
+
+- module: apache
+  access:
+    enabled: true
+    var.paths: [/var/log/apache2/access.log*]
+  error:
+    enabled: true
+    var.paths: [/var/log/apache2/error.log*]
 
 ----------------------------------------
 
@@ -302,7 +385,99 @@ filebeat:
         tags: ["mytag"]
       fields_under_root: true
 
-=================================================================================================================================================
+
+
+----------------------------------------
+
+
+
+=== ПРИМЕР 1 ===
+
+
+
+filebeat.inputs:
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/access.log
+  exclude_files: [".gz$"]
+  
+  fields:
+    type: nginx_access
+    #service: nginx_access
+  fields_under_root: true
+  scan_frequency: 5s
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/error.log
+  exclude_files: [".gz$"]
+      
+  fields:
+    type: nginx_error
+    #service: nginx_access
+  fields_under_root: true
+  scan_frequency: 5s
+
+#------------------
+
+output.logstash:
+  hosts: ["192.168.90.17:5044"]
+
+
+
+=== ПРИМЕР 2 ===
+
+
+  
+#----- Filebeat modules ------
+
+filebeat.config.modules:
+  # Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  reload.enabled: false
+
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
+
+filebeat.modules:
+# - module: nginx
+#   access:
+#   error:
+# - module: mysql
+#   slowlog:
+# - module: system
+#   auth:
+
+- module: nginx
+  access:
+    enabled: true
+    var.paths: [/var/log/nginx/access.log]
+  error:
+    enabled: true
+    var.paths: [/var/log/nginx/error.log]
+- module: system
+  auth:
+
+#---------------------
+
+output.logstash:
+  hosts: ["192.168.90.21:5041", "192.168.90.22:5041"]
+
+#---------------------
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+
+
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
 
    *** nginx ***
 
@@ -390,7 +565,9 @@ getsebool httpd_can_network_connect
 #curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.5.2-x86_64.rpm
 #rpm -ivh ~/filebeat-8.6.1-x86_64.rpm
 
-================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
 
    *** backend ***
    
@@ -398,7 +575,9 @@ nano /usr/share/nginx/html/index.php
 
 getsebool httpd_can_network_connect
 
-================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
 
    *** database ***
    
@@ -574,9 +753,9 @@ mysql -h 192.168.90.15 -u root -p123456 -e 'GRANT replication slave ON *.* TO "r
 mysql -h 192.168.90.15 -u root -p123456 -e 'change master to master_host = "192.168.90.14", master_user = "replicatuser", master_password = "passuser", master_log_file = "$V4", master_log_pos = '$V2''
 mysql -h 192.168.90.15 -u root -p123456 -e 'start slave'
 
-================================================================================================================================================
-
-
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
 
 #!/bin/bash
 

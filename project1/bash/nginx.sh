@@ -11,42 +11,27 @@ echo ""
 dnf install openssl -y
 
 echo ""
-echo " *** Установка iptables-services ***"
-echo ""
-dnf install iptables-services -y
-
-echo ""
-echo " *** Включаем автозапуск iptables ***"
-echo ""
-systemctl enable iptables
-
-echo ""
-echo " *** Старт iptables ***"
-echo ""
-systemctl start iptables
-
-echo ""
 echo " *** Разрешение в SELinux на обратное проксирование ***"
 echo ""
 setsebool -P httpd_can_network_connect 1
 
 echo ""
-echo " *** Переименовываем оригинальный конфиг nginx.conf ***"
+echo " *** Переименовывание оригинального конфиг файла nginx.conf ***"
 echo ""
 mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf_bak
 
 echo ""
-echo " *** Копируем конфиг nginx ***"
+echo " *** Копирование конфиг файла nginx.conf ***"
 echo ""
 cp /home/vagrant/nginx.conf /etc/nginx/nginx.conf
 
 echo ""
-echo " *** Сгенерировать закрытый ключ ***"
+echo " *** Сгенерировать закрытый ключ nginx.key ***"
 echo ""
 openssl genrsa -out /root/nginx.key 2048
 
 echo ""
-echo " *** Создать CSR с автоответами ***"
+echo " *** Создать файл CSR nginx.csr с автоответами ***"
 echo ""
 openssl req -new -key /root/nginx.key -out /root/nginx.csr <<EOF
 RU
@@ -61,19 +46,19 @@ OTUS_Project1
 EOF
 
 echo ""
-echo " *** Сгенерировать самоподписанный ключ ***"
+echo " *** Сгенерировать самоподписанный ключ nginx.crt ***"
 echo ""
 openssl x509 -req -days 365 -in /root/nginx.csr -signkey /root/nginx.key -out /root/nginx.crt
 
 echo ""
-echo " *** Копируются ключи ***"
+echo " *** Копируются файлы nginx.crt nginx.key nginx.csr ***"
 echo ""
 cp /root/nginx.crt /etc/pki/tls/certs/nginx.crt
 cp /root/nginx.key /etc/pki/tls/private/nginx.key
 cp /root/nginx.csr /etc/pki/tls/private/nginx.csr
 
 echo ""
-echo " *** Включаем автозапуск nginx ***"
+echo " *** Включение автозапуска nginx ***"
 echo ""
 systemctl enable nginx
 
@@ -93,6 +78,10 @@ systemctl start iptables
 echo ""
 echo " *** Настройка IPTABLES ***"
 echo ""
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -F
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -p icmp -j ACCEPT
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT

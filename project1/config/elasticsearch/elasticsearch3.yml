@@ -29,7 +29,7 @@ cluster.initial_master_nodes: ["192.168.90.17", "192.168.90.18", "192.168.90.19"
 # Имя кластера
 cluster.name: elk-cluster
 
-node.roles: [ master, data ]
+node.roles: [ master, data, remote_cluster_client ]
 
 # IP узлов для сборки кластера
 discovery.seed_hosts: ["192.168.90.17", "192.168.90.18", "192.168.90.19"]

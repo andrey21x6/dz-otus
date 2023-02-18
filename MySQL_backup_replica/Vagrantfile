@@ -1,0 +1,57 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+MACHINES = {
+  :database1 => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.80.11', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "db-net"}
+            ]
+  },
+  :database2 => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.80.12', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "db-net"}
+            ]
+  }
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+      
+	config.vm.box_check_update = false
+	
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.host_name = boxname.to_s
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", ipconf
+        end
+        
+        case boxname.to_s
+		
+          when "database1"
+		    box.vm.provider "virtualbox" do |v|
+			  v.memory = 512
+			end
+			box.vm.network "forwarded_port", guest: 22, host: 2001
+			box.vm.provision "file", source: "sql/bet_odds.dmp", destination: "~/bet_odds.dmp"
+			box.vm.provision "shell", path: "bash/all_setup.sh"
+		    box.vm.provision "shell", path: "bash/database1.sh"
+			
+	      when "database2"
+		    box.vm.provider "virtualbox" do |v|
+			  v.memory = 512
+			end
+		    box.vm.network "forwarded_port", guest: 22, host: 2002
+			box.vm.provision "file", source: "sql/bet_odds.dmp", destination: "~/bet_odds.dmp"
+			box.vm.provision "shell", path: "bash/all_setup.sh"
+		    box.vm.provision "shell", path: "bash/database2.sh"	  
+
+        end
+      end
+  end
+end

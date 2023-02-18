@@ -16,3 +16,7 @@ logging:
       - file
 
 pid.file: /run/kibana/kibana.pid
+
+xpack.encryptedSavedObjects.encryptionKey: ae77d4fcd3f598a339aa31806df0c6c0
+xpack.reporting.encryptionKey: b98e2e6dc44705dda2b08d7c9f1a325e
+xpack.security.encryptionKey: eaebde254d4d93df375fb4ba440f7160

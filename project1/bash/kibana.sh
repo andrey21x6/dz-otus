@@ -19,7 +19,7 @@ echo ""
 cp /home/vagrant/kibana.yml /etc/kibana/kibana.yml
 
 echo ""
-echo " *** Смена владельца файла ***"
+echo " *** Смена владельца файла kibana.yml ***"
 echo ""
 chown root:kibana /etc/kibana/kibana.yml
 

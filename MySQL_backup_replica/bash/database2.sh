@@ -1,21 +1,11 @@
 #!/bin/bash
 
-ipDb1=192.168.90.15
-ipDb2=192.168.90.16
+ipDb1=192.168.80.11
+ipDb2=192.168.80.12
 passDb=123456
 loginDb=root
-nameDb=project1
-fileDb=restore_bd.sql
-
-echo ""
-echo " *** Установка mariadb ***"
-echo ""
-dnf install mariadb mariadb-server -y
-
-echo ""
-echo " *** Установка mariadb-backup ***"
-echo ""
-dnf install mariadb-backup -y
+nameDb=bet_odds
+fileDb=bet_odds.dmp
 
 echo ""
 echo " *** Установка fping ***"
@@ -48,28 +38,6 @@ echo " *** Изменение логики использования файла
 echo ""
 sysctl -w vm.swappiness=1
 echo vm.swappiness = 1 >> /etc/sysctl.conf
-
-echo ""
-echo " *** Создаём каталог mariabackup ***"
-echo ""
-mkdir -p /home/vagrant/BACKUP/mariabackup
-
-echo ""
-echo " *** Создаём каталог SQL ***"
-echo ""
-mkdir -p BACKUP/SQL
-
-echo ""
-echo " *** Разрешение файла на исполнение ***"
-echo ""
-chmod +x backup.sh
-
-echo ""
-echo " *** Добавляется задание в cron (каждый день в 1 час ночи) ***"
-echo ""
-echo "00 1 * * * root /home/vagrant/backup.sh" >> /etc/crontab
-#echo "0 * * * * root /home/vagrant/backup.sh" >> /etc/crontab
-#echo "* * * * * root /home/vagrant/backup.sh" >> /etc/crontab
 
 echo ""
 echo " *** Разрешается доступ к БД с любого IP по порту 3306 ***"

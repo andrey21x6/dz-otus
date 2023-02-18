@@ -14,7 +14,7 @@ echo ""
 cp -R /home/vagrant/conf.d /etc/logstash
 
 echo ""
-echo " *** Смена владельца каталога и файлов ***"
+echo " *** Смена владельца каталога и файлов /etc/logstash/conf.d ***"
 echo ""
 chown -R root:logstash /etc/logstash/conf.d
 
@@ -29,7 +29,7 @@ echo ""
 cp /home/vagrant/pipelines.yml /etc/logstash/pipelines.yml
 
 echo ""
-echo " *** Смена владельца файла ***"
+echo " *** Смена владельца файла pipelines.yml ***"
 echo ""
 chown root:logstash /etc/logstash/pipelines.yml
 
