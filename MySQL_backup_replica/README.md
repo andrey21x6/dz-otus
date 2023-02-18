@@ -43,13 +43,13 @@ vagrant up
 
 **Демонстрация работы репликации на скпиншоте**
 
-![replica_db](https://user-images.githubusercontent.com/91377497/219869945-0e06df98-1a59-437f-abce-2bea0013f382.jpg)
+![replica_db](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/replica_db.jpg)
 
 **Демонстрация работы Backup на скпиншотах**
 
-![backup_1](https://user-images.githubusercontent.com/91377497/219869949-573fbc63-2859-48a1-960f-34ac48ac9537.jpg)
+![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/backup_2.jpg)
 
-![backup_2](https://user-images.githubusercontent.com/91377497/219869954-4f9a4f7a-7752-4ac9-9eb9-17d18655483b.jpg)
+![backup_2](https://github.com/andrey21x6/dz-otus/blob/main/MySQL_backup_replica/scrin/backup_2.jpg)
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!
