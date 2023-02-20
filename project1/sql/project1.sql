@@ -36,7 +36,7 @@ CREATE TABLE `text_entries` (
 
 LOCK TABLES `text_entries` WRITE;
 /*!40000 ALTER TABLE `text_entries` DISABLE KEYS */;
-INSERT INTO `text_entries` VALUES (1,'Заголовок 1','Текстовая запись 1');
+INSERT INTO `text_entries` VALUES (1,'OTUS Проект','Выбрать и обсудить тему проектной работы, спланировать работу над проектом, ознакомиться с регламентом работы над проектом.');
 /*!40000 ALTER TABLE `text_entries` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

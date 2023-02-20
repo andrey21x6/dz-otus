@@ -91,11 +91,10 @@ Vagrant.configure("2") do |config|
           box.vm.network "private_network", ipconf
         end
 
-        box.vm.provision "shell", inline: <<-SHELL
+        #box.vm.provision "shell", inline: <<-SHELL
 	      #mkdir -p ~root/.ssh
 		  #cp ~vagrant/.ssh/auth* ~root/.ssh
-		  #cp config/yum.repos.d/elasticsearch.repo ~/elasticsearch.repo
-        SHELL
+        #SHELL
         
         case boxname.to_s
 		
@@ -152,22 +151,22 @@ Vagrant.configure("2") do |config|
 			end
 			box.vm.network "forwarded_port", guest: 22, host: 2305
 			box.vm.provision "file", source: "sql/project1.sql", destination: "~/project1.sql"
-			box.vm.provision "file", source: "bash/backup_sql_1.sh", destination: "~/backup.sh"
+			box.vm.provision "file", source: "bash/backup.sh", destination: "~/backup.sh"
 			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
 			box.vm.provision "file", source: "config/filebeat/database/filebeat1.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
-		    box.vm.provision "shell", path: "bash/database1.sh"
+		    box.vm.provision "shell", path: "bash/database.sh"
 			
 	      when "database2"
 		    box.vm.provider "virtualbox" do |v|
 			  v.memory = 512
 			end
 		    box.vm.network "forwarded_port", guest: 22, host: 2306
-			box.vm.provision "file", source: "bash/backup_sql_2.sh", destination: "~/backup.sh"
+			box.vm.provision "file", source: "bash/backup.sh", destination: "~/backup.sh"
 			box.vm.provision "file", source: "config/yum.repos.d/elasticsearch.repo", destination: "~/elasticsearch.repo"
 			box.vm.provision "file", source: "config/filebeat/database/filebeat2.yml", destination: "~/filebeat.yml"
 			box.vm.provision "shell", path: "bash/all_setup.sh"
-		    box.vm.provision "shell", path: "bash/database2.sh"	  
+		    box.vm.provision "shell", path: "bash/database.sh"	  
 
 		  when "elasticsearch1"
 		    box.vm.provider "virtualbox" do |v| 

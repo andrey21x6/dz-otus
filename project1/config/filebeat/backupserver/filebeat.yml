@@ -1,18 +1,47 @@
-filebeat.inputs:
+# filebeat.inputs:
 
-- type: log
-  enabled: true
-  paths:
-    - /var/log/audit/audit.log
-  exclude_files: [".gz$"]
+# - type: log
+#   enabled: true
+#   paths:
+#     - /var/log/audit/audit.log
+#   exclude_files: [".gz$"]
   
-  fields:
-    type: audit_backupserver
-    #service: nginx_access
-  fields_under_root: true
-  scan_frequency: 5s
+#   fields:
+#     type: audit_backupserver
+#     #service: nginx_access
+#   fields_under_root: true
+#   scan_frequency: 5s
 
-#-----------------------------------
+# #-----------------------------------
+
+# output.logstash:
+#   hosts: ["192.168.90.21:5044", "192.168.90.22:5044"]
+
+
+#---------------- Filebeat modules --------------
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+  #reload.period: 10s
+
+filebeat.modules:
+
+- module: system
+  syslog:
+    enabled: true
+    var.paths: ["/var/log/messages"]
+  auth:
+    enabled: true
+    var.paths: ["/var/log/audit/audit.log"]
+
+#---------------------------------------------
 
 output.logstash:
   hosts: ["192.168.90.21:5044", "192.168.90.22:5044"]
+
+#---------------------------------------------
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded

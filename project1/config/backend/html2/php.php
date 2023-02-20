@@ -18,7 +18,7 @@
 		} 
 		else 
 		{
-			$sms = "Отправлено в базу!";
+			//$sms = "Отправлено в базу!";
 			$text_header_in = "";
 			$text_out_in = "";
 		}
@@ -29,7 +29,7 @@
 		$sql = $db->exec("TRUNCATE `text_entries`");
 		if (is_integer($sql))
 		{
-			$sms = "Таблица очищена!";
+			//$sms = "Таблица очищена!";
 		}
 	}
 

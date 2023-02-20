@@ -29,20 +29,9 @@ filebeat.config.modules:
 filebeat.modules:
 
 - module: mysql
-  access:
-    enabled: true
-    var.paths: [/var/log/mariadb/access.log]
   error:
     enabled: true
-    var.paths: [/var/log/mariadb/error.log]
-
-- module: system
-  syslog:
-    enabled: true
-    var.paths: ["/var/log/syslog*"]
-  auth:
-    enabled: true
-    var.paths: ["/var/log/auth.log*"]
+    var.paths: [/var/log/mariadb/mariadb.log]
 
 #---------------------------------------------
 

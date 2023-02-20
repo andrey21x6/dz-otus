@@ -1,17 +1,47 @@
-filebeat.inputs:
+# filebeat.inputs:
 
-- type: log
-  enabled: true
-  paths:
-    - /var/log/logstash/logstash-plain.log
-  exclude_files: [".gz$"]
+# - type: log
+#   enabled: true
+#   paths:
+#     - /var/log/logstash/logstash-plain.log
+#   exclude_files: [".gz$"]
   
-  fields:
-    type: logstash2
-  fields_under_root: true
-  scan_frequency: 5s
+#   fields:
+#     type: logstash2
+#   fields_under_root: true
+#   scan_frequency: 5s
 
-#-----------------------------------
+# #-----------------------------------
+
+# output.logstash:
+#   hosts: ["192.168.90.21:5052", "192.168.90.22:5052"]
+
+
+
+#---------------- Filebeat modules --------------
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+  #reload.period: 10s
+
+filebeat.modules:
+
+- module: logstash
+  log:
+    enabled: true
+    var.paths: ["/var/log/logstash/logstash-plain.log"]
+  slowlog:
+    enabled: true
+    var.paths: ["/var/log/logstash/logstash-slowlog*.log"]
+
+#---------------------------------------------
 
 output.logstash:
   hosts: ["192.168.90.21:5052", "192.168.90.22:5052"]
+
+#---------------------------------------------
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded

@@ -3,12 +3,21 @@ body{
 	font: 16px 'Trebuchet MS', Arial, Calibri, sans-serif, 'Trebuchet MS', Helvetica, 'Comic Sans MS';
 }
 
+.wrapper{
+	border: 2px solid rgba(200, 200, 200, 0.8);
+	border-radius: 5px;
+	margin: 0 auto;
+	width: 420px;
+	padding: 0px 30px 10px 30px;
+}
+
 h3{
-	margin: 2px 2px 0px 2px;
+	text-align: center;
+	margin: 2px 0px 0px 0px;
 }
 
 .input-submit {
-	margin: 10px 0 0px 0;
+	margin: 30px 0 0px 0;
 }
 
 .text-header{
@@ -68,11 +77,34 @@ textarea:focus {
 }
 
 .out-div{
-	border-bottom: 1px solid rgba(200, 200, 200, 0.9);
+	border: 1px solid rgba(200, 200, 200, 0.6);
+	margin-top: 8px;
+	padding: 4px 4px 0px 4px;
+	border-radius: 5px;
 	width: 400px;
 }
 
 .sms{
 	color: red;
 	font-weight: 500;
+}
+
+.green{
+	color: green;
+	text-align: center;
+}
+
+.red{
+	color: red;
+	text-align: center;
+}
+
+.submit-a{
+	color: rgba(200, 200, 200, 1);
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.submit-a:hover{
+	color: red;
 }
