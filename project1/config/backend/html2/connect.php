@@ -20,7 +20,7 @@
 
 	//-------------------------------------------- Проверка доступности БД --------------------------------------------
 
-	function _pingDomain_($domain){
+	function _testHostDbPort_($domain){
 
 		$starttime = microtime(true);
 		$file      = @fsockopen($domain, 3306, $errno, $errstr, 0.2);   // 3306 - порт подключения ||| 0.2 - TimeOut подключения
@@ -43,7 +43,7 @@
 
 	//-------------------------------------------- Работа с переменными сессии --------------------------------------------
 
-	if (_pingDomain_($switchDb) == -1)
+	if (_testHostDbPort_($switchDb) == -1)
 	{
 		if ($switchDb == $ipDb1)
 		{
@@ -64,7 +64,7 @@
 		{
 			$switchDb = $ipDb2;
 			
-			if (_pingDomain_($switchDb) != -1)
+			if (_testHostDbPort_($switchDb) != -1)
 			{
 				$_SESSION['switchDb'] = $ipDb2;
 			}
@@ -73,7 +73,7 @@
 		{
 			$switchDb = $ipDb1;
 			
-			if (_pingDomain_($switchDb) != -1)
+			if (_testHostDbPort_($switchDb) != -1)
 			{
 				$_SESSION['switchDb'] = $ipDb1;
 			}
@@ -87,7 +87,7 @@
 	
 	//-------------------------------------------- Подключение к БД --------------------------------------------
 
-	$CONNECT_BD = "mysql:host={$switchDb}; dbname=project1";
+	define("CONNECT_BD", "mysql:host={$switchDb}; dbname=project1");
 	define("LOGIN_BD", "root");
 	define("PASS_BD", "123456");
 	
@@ -95,7 +95,7 @@
 
 	try
 	{
-		$db = new PDO($CONNECT_BD, LOGIN_BD, PASS_BD, array( PDO:: MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO:: ATTR_TIMEOUT => 2));
+		$db = new PDO(CONNECT_BD, LOGIN_BD, PASS_BD, array( PDO:: MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO:: ATTR_TIMEOUT => 2));
 	}
 	catch(PDOException $e)
 	{

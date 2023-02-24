@@ -90,9 +90,9 @@ iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
-iptables-save > fwoff
+iptables-save > /etc/sysconfig/iptables
 
 echo ""
 echo " *** Добавляется задание в cron, при старте восстанавливает правила IPTABLES ***"
 echo ""
-echo "@reboot root iptables-restore < fwoff" >> /etc/crontab
+echo "@reboot root iptables-restore < /etc/sysconfig/iptables" >> /etc/crontab
