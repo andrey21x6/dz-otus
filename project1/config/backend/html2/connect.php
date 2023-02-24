@@ -1,5 +1,4 @@
 <?php
-
 	//-------------------------------------------- Переменные --------------------------------------------
 	
 	$ipDb1 = "192.168.90.16";
@@ -95,7 +94,7 @@
 
 	try
 	{
-		$db = new PDO(CONNECT_BD, LOGIN_BD, PASS_BD, array( PDO:: MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO:: ATTR_TIMEOUT => 2));
+		$db = new PDO(CONNECT_BD, LOGIN_BD, PASS_BD, array(PDO:: MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8', PDO:: ATTR_TIMEOUT => 2));
 	}
 	catch(PDOException $e)
 	{
