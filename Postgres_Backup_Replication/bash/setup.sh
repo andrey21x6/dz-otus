@@ -90,18 +90,6 @@ echo ""
 systemctl enable postgresql --now
 
 echo ""
-echo " *** Разрешение на выполнение backup.sh u+x ***"
-echo ""
-chmod u+x /home/vagrant/backup.sh
-
-echo ""
-echo " *** Добавляется в cron задание (каждый день в 1 час ночи backup) ***"
-echo ""
-echo "00 1 * * * root /home/vagrant/backup.sh" >> /etc/crontab
-#echo "0 * * * * root /home/vagrant/backup.sh" >> /etc/crontab
-#echo "* * * * * root /home/vagrant/backup.sh" >> /etc/crontab
-
-echo ""
 echo " *** Включение SSH по паролю ***"
 echo ""
 sed -i -e "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
@@ -120,6 +108,18 @@ systemctl restart sshd
 #============================================================= УСЛОВИЯ IF ELSE ===============================================================================================
 
 if [ "${HOSTNAME}" = "${hostNameDb1}" ]; then   #-------------------------------------------- Если hostNameDb1 ---------------------------------------------------------------
+
+echo ""
+echo " *** Разрешение на выполнение backup.sh u+x ***"
+echo ""
+chmod u+x /home/vagrant/backup.sh
+
+echo ""
+echo " *** Добавляется в cron задание (каждый день в 1 час ночи backup) ***"
+echo ""
+echo "00 1 * * * root /home/vagrant/backup.sh" >> /etc/crontab
+#echo "0 * * * * root /home/vagrant/backup.sh" >> /etc/crontab
+#echo "* * * * * root /home/vagrant/backup.sh" >> /etc/crontab
 
 echo ""
 echo " *** Изменение в конфиг файле postgresql.conf значения listen_addresses ***"

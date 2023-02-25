@@ -56,6 +56,10 @@ vagrant up
 
 ![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/backup.jpg)
 
+**Содержимое автоматически созданного файла recovery.conf на Database 2 (реплика slave)**
+
+![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/recovery.conf.jpg)
+
 **Корректность скрипта bash проверено на сайте shellcheck.net**
 
 ![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/shellcheck.net.jpg)
