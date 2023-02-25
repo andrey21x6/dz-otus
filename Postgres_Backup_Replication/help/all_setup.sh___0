@@ -1,5 +1,21 @@
 #!/bin/bash
 
+#systemctl status postgresql
+#psql
+###\l - список БД
+###create database demodb;
+###\c demodb - подключение к БД demodb
+###\db - список табличных пространств
+###\dt - список таблиц
+###\d tab01 - содержимое таблицы tab01
+###\du - вывод пользователей
+###select * from tab01;
+###su - postgres -c "psql -c '\c demodb' -c 'select * from tab01'"
+# Когда импорт, то сначало нужно создать пустую БД (create database demodb;), запускаем с ключом -1 для предотвращение импорта, если есть ошибки в файле дампа
+###psql -1 demodb < backups/demodb.dump
+###\q выход
+#nano /var/lib/pgsql/data/postgresql.conf
+
 echo ""
 echo " *** Установка временной зоны Asia/Yekaterinburg ***"
 echo ""
@@ -64,35 +80,16 @@ echo " *** Рестарт службы SSH ***"
 echo ""
 systemctl restart sshd
 
-
-
-#systemctl status postgresql
-#psql
-###\l - список БД
-###create database demodb;
-###\c demodb - подключение к БД demodb
-###\db - список табличных пространств
-###\dt - список таблиц
-###\d tab01 - содержимое таблицы tab01
-###\du - вывод пользователей
-###\q выход
-#nano /var/lib/pgsql/data/postgresql.conf
-
-
-
 dnf install postgresql-server -y
 
 postgresql-setup --initdb
-
-# Включить автозапуск и запустить (--now) postgresql
-systemctl enable postgresql --now
-
-
 
 mkdir archive_{c,b}
 
 cp /var/lib/pgsql/data/postgresql.conf /var/lib/pgsql/data/postgresql.conf_bak
 cp /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.conf_bak
+
+
 
 sed -i -e "s/#listen_addresses = 'localhost'/listen_addresses = '192.168.80.11'/g" /var/lib/pgsql/data/postgresql.conf
 
@@ -106,51 +103,36 @@ sed -i -e "s/#archive_command = ''/archive_command = 'test ! -f \/var\/lib\/pgsq
 
 sed -i -e "s/#hot_standby_feedback = off/hot_standby_feedback = on/g" /var/lib/pgsql/data/postgresql.conf
 
-systemctl restart postgresql
-
-
+# Включить автозапуск и запустить (--now) postgresql
+systemctl enable postgresql --now
 
 # Переход в пользователя postgres
 su - postgres
 
-createuser --replication -P repluser
+createuser --replication -P repluser <<EOF
 123456
 123456
+EOF
 
 pg_basebackup -D archive_b/ -Ft -z
 
-psql
 
-create database demodb;
+su - postgres -c "psql -c 'create database demodb'"
 
-create table tab01 (col01 int, col02 varchar(20));
+su - postgres -c "psql -c 'create table tab01 (col01 int, col02 varchar(20))'"
 
-insert into tab01 values (1, 'MariaDB'), (2, 'PostgreSQL');
-
-select * from tab01;
-
-\q
-
-
-
-exit
+#psql -c 'insert into tab01 values (1, 'MariaDB'), (2, 'PostgreSQL')'
+su - postgres -c "psql -c 'insert into tab01 values (3, 'MariaDB_2'), (4, 'PostgreSQL_2')'"
 
 pg_dump demodb > backups/demodb.dump
-# Когда импорт, то сначало нужно создать пустую БД (create database demodb;), запускаем с ключом -1 для предотвращение импорта, если есть ошибки в файле дампа
-psql -1 demodb < backups/demodb.dump
-
-
 
 ========================================== slave =======================================
-
-
 
 systemctl stop postgresql
 
 rm -rf /var/lib/pgsql/data/*
 
-pg_basebackup -P --host=192.168.80.11 --username=repluser --pgdata=/var/lib/pgsql/data/ --progress --checkpoint=fast --wal-method=stream --write-recovery-conf
-#su - postgres -c "pg_basebackup -P --host=192.168.80.11 --username=repluser --pgdata=/var/lib/pgsql/data/ --progress --checkpoint=fast --wal-method=stream --write-recovery-conf"
+su - postgres -c "pg_basebackup -P --host=192.168.80.11 --username=repluser --pgdata=/var/lib/pgsql/data/ --progress --checkpoint=fast --wal-method=stream --write-recovery-conf"
 
 chown -R postgres:postgres /var/lib/pgsql/data/
 
@@ -159,10 +141,47 @@ sed -i -e "s/listen_addresses = '192.168.80.11'/listen_addresses = '192.168.80.1
 systemctl start postgresql
 
 # На мастере
-#select * from pg_stat_replication;
+#su - postgres -c "psql -c '\c demodb' -c 'select * from pg_stat_replication'"
 
 # На slave
-#select * from pg_stat_wal_receiver;
+#su - postgres -c "psql -c '\c demodb' -c 'select * from pg_stat_wal_receiver'"
 
-# На мастере
-su - postgres -c "psql"
+su - postgres /usr/bin/pg_ctl promote -D /var/lib/pgsql/data/
+
+
+
+
+
+
+
+
+
+
+#============================================================= УСЛОВИЯ IF ELSE ===============================================================================================
+
+if [ "${HOSTNAME}" = "${hostNameDb1}" ]; then   #--------------------------------- Условие hostNameDb1 или hostNameDb2 -------------------------------------------------------
+
+echo ""
+echo " *** fping ${ipDb2} ${hostNameDb2} ***"
+echo ""
+pingOtvet=`fping ${ipDb2}`
+
+    # mysqladmin --connect-timeout=1 ping --host=127.0.0.1
+
+    if [ "$pingOtvet" = "${ipDb2} is alive" ]; then   #------------------------------- Условие первый запуск или восстановление ----------------------------------------------
+
+
+	
+    else   #----------------------------------------------- Иначе условия первый запуск или восстановление -------------------------------------------------------------------
+
+
+	
+    fi
+
+else   #--------------------------------------------------------- Иначе условия hostNameDb1 или hostNameDb2 ----------------------------------------------------------------------
+
+
+
+fi
+
+#============================================================= КОНЕЦ УСЛОВИЯ IF ELSE =========================================================================================

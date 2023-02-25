@@ -1,0 +1,28 @@
+#systemctl status postgresql
+#psql
+
+###\l - список БД
+###su - postgres -c "psql -c '\l'"
+###create database demodb;
+###\c demodb - подключение к БД demodb
+###\db - список табличных пространств
+###\dt - список таблиц
+###\d tab01 - содержимое таблицы tab01
+###\du - вывод пользователей
+###select * from tab01;
+###su - postgres -c "psql -c '\c demodb' -c 'select * from tab01'"
+# Когда импорт, то сначало нужно создать пустую БД (create database demodb;), запускаем с ключом -1 для предотвращение импорта, если есть ошибки в файле дампа
+###psql -1 demodb < backups/demodb.dump
+
+# На мастере
+#su - postgres -c "psql -c '\c demodb' -c 'select * from pg_stat_replication'"
+
+# На slave
+#su - postgres -c "psql -c '\c demodb' -c 'select * from pg_stat_wal_receiver'"
+
+su - postgres -c "/usr/bin/pg_ctl promote -D /var/lib/pgsql/data/"
+su - postgres -c "psql -c 'create database demodb___2'"
+
+###\q выход
+
+#nano /var/lib/pgsql/data/postgresql.conf
