@@ -60,6 +60,12 @@ vagrant up
 
 ![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/recovery.conf.jpg)
 
+В конфигурационных файлах postgresql.conf и pg_hba.conf вносятся изменения в процессе выполнения команды vagrant up
+
+В файле каждая команда описана, можно посмотреть тут
+
+https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/bash/setup.sh
+
 **Корректность скрипта bash проверено на сайте shellcheck.net**
 
 ![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/shellcheck.net.jpg)
