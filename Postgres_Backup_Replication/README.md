@@ -48,7 +48,7 @@ vagrant up
 
 ![replica_db](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/create_db.jpg)
 
-**Демонстрация работы Backup на скриншотах, для проверки, можно запустить команду ниже**
+**Демонстрация работы Backup на скриншоте, для проверки, можно запустить команду ниже**
 
 ```
 /home/vagrant/backup.sh
