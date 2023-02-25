@@ -1,4 +1,4 @@
-# MySQL: Backup + Репликация
+# Postgres: Backup + Репликация
 
 ## **Prerequisite**
 
