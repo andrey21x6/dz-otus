@@ -10,6 +10,7 @@
 ### Guest ###
 - CentOS 8.3.2011
 - PostgreSQL 10.17
+- Django 2.2.3
 
 ## **Содержание ДЗ**
 

@@ -724,6 +724,16 @@ start slave;
 
 -------------------------------------------------------------------------------
 
+strFileName=$(mysql -e 'SHOW MASTER STATUS \G' | grep 'File';) ; arrayFileName=(${strFileName//: / }) ; fileName="${arrayFileName[1]}"
+echo $fileName
+
+strSostoyanieSlave=$(mysql -h 192.168.90.15 -e 'SHOW SLAVE STATUS \G' | grep 'Slave_SQL_Running';) ; arraySostoyanieSlave=(${strSostoyanieSlave//: / }) ; sostoyanieSlave="${arraySostoyanieSlave[1]}"
+echo $sostoyanieSlave
+
+mysql -e 'change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "mariadb-bin.000003", master_log_pos = 935'
+
+
+
 mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position:';
 mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File:';
 

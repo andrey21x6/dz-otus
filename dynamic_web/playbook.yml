@@ -1,0 +1,138 @@
+---
+- name: Install and configure
+  hosts: websites
+  become: yes
+
+  tasks:
+    - name: Add epel-release repo
+      dnf:
+        name: epel-release
+        state: present
+        
+    - name: disable ssl for repo epel
+      lineinfile: 
+        dest: /etc/yum.repos.d/epel.repo
+        insertafter: 'enabled=1' 
+        line: 'sslverify=0'
+
+    - name: Install a list of packages
+      dnf:
+        name:
+          - nginx
+          - python3-devel
+          - python3-pip
+          - python3-virtualenv
+          - sqlite-devel
+          - npm
+          - net-tools
+        state: present
+        
+    - name: Put SELinux in permissive mode, logging actions that would be blocked
+      selinux:
+        policy: targeted
+        state: permissive
+
+    - name: Копирование каталога django-helloworld
+      synchronize:
+        src: applications/django-helloworld
+        dest: /root
+
+    - pip:
+        name: django==2.2.3
+        executable: pip3
+
+    - file:
+        dest: '/root/django-helloworld/manage.py'
+        mode: 'a+x'
+        
+    - django_manage:
+        command: migrate
+        app_path: '/root/django-helloworld'
+
+    - name: Копирование каталога go-http-hello-world
+      synchronize:
+        src: applications/go-http-hello-world
+        dest: /root
+
+    - name: Копирование файла hello_world
+      copy:
+        src: applications/hello_world
+        dest: /root/go-http-hello-world/hello_world/hello_world
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Копирование каталога react-helloworld 
+      synchronize:
+        src: applications/react-helloworld
+        dest: /root
+      #command: cp -r /home/vagrant/react-helloworld /root/react-helloworld
+      notify:
+      - setup npm
+        
+    - name: copy config
+      copy: 
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0644'
+      with_items:
+        - { src: 'files/django.service', dest: '/etc/systemd/system/' }
+        - { src: 'files/go.service', dest: '/etc/systemd/system/' }
+        - { src: 'files/react.service', dest: '/etc/systemd/system/' }
+        - { src: 'files/nginx/nginx.conf', dest: '/etc/nginx/' }
+        - { src: 'files/nginx/conf.d/go.conf', dest: '/etc/nginx/conf.d/' }
+        - { src: 'files/nginx/conf.d/react.conf', dest: '/etc/nginx/conf.d/' }
+        - { src: 'files/nginx/conf.d/django.conf', dest: '/etc/nginx/conf.d/' }
+      notify:
+      - restart all services
+
+    - name: daemon started
+      systemd:
+        name: django
+        state: started
+        enabled: yes
+
+    - name: daemon started
+      systemd:
+        name: go
+        state: started
+        enabled: yes
+        
+    - name: daemon started
+      systemd:
+        name: react
+        state: started
+        enabled: yes
+      
+    - name: daemon started
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+      
+  handlers:
+
+  - name: setup npm
+    shell: |
+      cd /root/react-helloworld/
+      echo "" | npm init
+      npm config set strict-ssl false
+      npm install webpack webpack-dev-server --save
+      npm install react react-dom --save
+      npm install babel-core babel-loader babel-preset-react babel-preset-es2015 --save
+      exit 0
+    args:
+      executable: /bin/bash
+
+  - name: restart all services
+    service:
+      name: "{{ item }}"
+      state: restarted
+    with_items:
+      - django
+      - go
+      - react
+      - nginx
+...

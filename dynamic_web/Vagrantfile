@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/8"
+  config.vm.box_check_update = false
+
+  config.vm.define "websites", primary: true do |web|
+    web.vm.hostname = 'websites'
+    web.vm.network "private_network", ip: "192.168.70.10"
+    web.vm.network "forwarded_port", guest: 22, host: 3201
+    web.vm.network "forwarded_port", guest: 8100, host: 8100   # Go
+    web.vm.network "forwarded_port", guest: 8200, host: 8200   # React
+    web.vm.network "forwarded_port", guest: 8300, host: 8300   # Django
+    web.vm.provision "shell", inline: <<-SHELL
+      timedatectl set-timezone Asia/Yekaterinburg
+      sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
+      sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
+      dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+      localectl set-locale LANG=en_US.UTF-8
+      dnf install langpacks-en glibc-all-langpacks -y
+    SHELL
+
+    web.vm.provider "virtualbox" do |v|
+      v.memory = 512
+    end
+
+    web.vm.provision "ansible" do |ansible|
+      ansible.playbook = "playbook.yml"
+    end
+	
+  end
+
+end

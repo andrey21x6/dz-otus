@@ -183,7 +183,7 @@ EOF
 
 #============================================================= УСЛОВИЯ IF ELSE ===============================================================================================
 
-if [ "${HOSTNAME}" = "${hostNameDb1}" ]; then   #--------------------------------- Условие hostNameDb1 или hostNameDb2 -------------------------------------------------------
+if [ "${HOSTNAME}" = "${hostNameDb1}" ]; then   #-------------------------------------------- Если hostNameDb1 ---------------------------------------------------------------
 
 echo ""
 echo " *** fping ${ipDb2} ${hostNameDb2} ***"
@@ -192,7 +192,7 @@ pingOtvet=`fping ${ipDb2}`
 
     # mysqladmin --connect-timeout=1 ping --host=127.0.0.1
 
-    if [ "$pingOtvet" = "${ipDb2} is alive" ]; then   #------------------------------- Условие первый запуск или восстановление ----------------------------------------------
+    if [ "$pingOtvet" = "${ipDb2} is alive" ]; then   #------------------------------- Если восстановление hostNameDb1 -------------------------------------------------------
 
 echo ""
 echo " *** stop slave репликации на ${hostNameDb2}, если запустили восстановление сервера ${hostNameDb1} ***"
@@ -263,7 +263,7 @@ echo " *** start slave репликации на сервере ${hostNameDb2} *
 echo ""
 mysql -h ${ipDb2} -e 'start slave'
 	
-    else   #----------------------------------------------- Иначе условия первый запуск или восстановление -------------------------------------------------------------------
+    else   #-------------------------------------------------------------------- Иначе если первый запуск hostNameDb1 --------------------------------------------------------
 
 echo ""
 echo " *** Импорт БД ${nameDb} ***"
@@ -277,7 +277,26 @@ iptables -D INPUT -i ${interfaceLan} -m tcp -p tcp --dport 3306 -j DROP
 	
     fi
 
-else   #--------------------------------------------------------- Иначе условия hostNameDb1 или hostNameDb2 ----------------------------------------------------------------------
+else   #----------------------------------------------------------------- Иначе если hostNameDb2 -----------------------------------------------------------------------------
+
+echo ""
+echo " *** Получение состояния SLAVE на ${hostNameDb1} ***"
+echo ""
+strSostoyanieSlave=$(mysql -h ${ipDb1} -e 'SHOW SLAVE STATUS \G' | grep 'Slave_SQL_Running';) ; arraySostoyanieSlave=(${strSostoyanieSlave//: / }) ; sostoyanieSlave="${arraySostoyanieSlave[1]}"
+
+    if [ "${sostoyanieSlave}" = "Yes" ]; then   #------------------------ Если slave репликация была запущена ранее на hostNameDb1 -------------------------------------------
+
+echo ""
+echo " *** stop slave репликации на ${hostNameDb1}, если запустили восстановление сервера ${hostNameDb1} ***"
+echo ""
+mysql -h ${ipDb1} -e 'stop slave'
+
+echo ""
+echo " *** ПАУЗА 1 ............................ ***"
+echo ""
+sleep 20
+
+    fi     #------------------------------------------------------------------ Конец условия IF ------------------------------------------------------------------------------
 
 echo ""
 echo " *** Получаем в переменные окружения строки File (имя файла) и Position (номер позиции) из состояния двоичных файлов журнала сервера ${hostNameDb1} ***"
@@ -305,12 +324,17 @@ echo ""
 mysql ${nameDb} < /home/vagrant/${fileDb}
 
 echo ""
+echo " *** ПАУЗА 2 ............................ ***"
+echo ""
+sleep 20
+
+echo ""
 echo " *** Создаётся запись на сервере ${hostNameDb2} для настройки репликации в качестве slave (${hostNameDb1} - Master) ***"
 echo ""
 mysql -e 'change master to master_host = "'${ipDb1}'", master_user = "'${loginReplicatuser}'", master_password = "'${passReplicatuser}'", master_log_file = "'${fileName}'", master_log_pos = '${logPos}''
 
 echo ""
-echo " *** start slave репликации на сервере ${hostNameDb2} ***"
+echo " *** start slave репликации на ${hostNameDb2} ***"
 echo ""
 mysql -e 'start slave'
 
@@ -328,7 +352,7 @@ strFileName=$(mysql -e 'SHOW MASTER STATUS \G' | grep 'File';) ; arrayFileName=(
 strLogPos=$(mysql -e 'SHOW MASTER STATUS \G' | grep 'Position';) ; arrayLogPos=(${strLogPos//: / }) ; logPos="${arrayLogPos[1]}"
 
 echo ""
-echo " *** Создаётся запись на сервере ${hostNameDb1} для настройки репликации в качестве slave ***"
+echo " *** Создаётся запись на сервере ${hostNameDb1} для настройки репликации в качестве slave(${hostNameDb2} - Master) ***"
 echo ""
 mysql -h ${ipDb1} -e 'change master to master_host = "'${ipDb2}'", master_user = "'${loginReplicatuser}'", master_password = "'${passReplicatuser}'", master_log_file = "'${fileName}'", master_log_pos = '${logPos}''
 
