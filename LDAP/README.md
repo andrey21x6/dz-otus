@@ -51,7 +51,7 @@ vagrant up
 
 ![ldap_4](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_4.jpg)
 
-***Для проверки, авторизовался по ключу с хостовой машины***
+***Для проверки, авторизовался к серверу client1.test.local по ключу с хостовой машины***
 
 ![ldap_5](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_5.jpg)
 
