@@ -52,19 +52,19 @@ vagrant up
 
 http://ip-host-machine:8100
 
-![Go](https://user-images.githubusercontent.com/91377497/221405332-68277359-9747-4c9b-8671-4b34a5a8ecc8.jpg)
+![Go](https://github.com/andrey21x6/dz-otus/blob/main/dynamic_web/scrin/Go.jpg)
 
 ***React:***
 
 http://ip-host-machine:8200
 
-
+![React](https://github.com/andrey21x6/dz-otus/blob/main/dynamic_web/scrin/React.jpg)
 
 ***Django:***
 
 http://ip-host-machine:8300
 
-
+![Django](https://github.com/andrey21x6/dz-otus/blob/main/dynamic_web/scrin/Django.jpg)
 
 
 
