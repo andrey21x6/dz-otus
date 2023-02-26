@@ -42,7 +42,29 @@
 vagrant up
 ```
 
-Запускаются три процесса django react go
+Запускаются виртуалка, выполняетя playbook.yml
+
+На виртуалке стартуют три процесса django react go
+
+В результате работают три независимых веб сервиса, к которым можно получить доступ:
+
+***GO:***
+
+http://ip-host-machine:8100
+
+
+
+***React:***
+
+http://ip-host-machine:8200
+
+
+
+***Django:***
+
+http://ip-host-machine:8300
+
+
 
 
 
