@@ -8,8 +8,6 @@ Vagrant.configure(2) do |config|
   config.vm.define "server.test.local" do |s|
     s.vm.hostname = 'server.test.local'
     s.vm.network "private_network", ip: "192.168.50.10"
-	s.vm.network "public_network", ip: "192.168.100.241", bridge: "enp3s0"
-	s.vm.network "forwarded_port", guest: 443, host: 4949
 	s.vm.provider :virtualbox do |v|
 		v.name = "server.test.local"
 		v.memory = 4096

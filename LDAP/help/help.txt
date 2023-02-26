@@ -3,3 +3,6 @@ chmod 600 ./id_rsa
 ssh-add id_rsa
 ssh -p 22 -o StrictHostKeyChecking=no andy@127.0.0.1
 ssh -o StrictHostKeyChecking=no andy@192.168.50.11
+
+s.vm.network "public_network", ip: "192.168.100.241", bridge: "enp3s0"
+s.vm.network "forwarded_port", guest: 443, host: 4949
