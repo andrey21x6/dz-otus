@@ -45,6 +45,18 @@ vagrant up
 ![ldap_1](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_1.jpg)
 
 
+![ldap_2](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_2.jpg)
+
+
+![ldap_3](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_3.jpg)
+
+
+![ldap_4](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_4.jpg)
+
+
+![ldap_5](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_5.jpg)
+
+
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!
