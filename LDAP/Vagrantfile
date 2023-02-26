@@ -1,31 +1,40 @@
 # -*- mode: ruby -*-
-# vi: set ft=ruby :
+# vim: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "centos/8"
-  
-  config.vm.define "server" do |server|
-    server.vm.hostname = "server.freeipa.loc"
-	server.vm.network "private_network", ip: "192.168.10.10"
-	server.vm.network "public_network", ip: "192.168.100.210", bridge: "enp3s0"
-    #server.vm.provision "shell", path: "server.sh"
-	
-	server.vm.provider "virtualbox" do |vb|
-		vb.cpus = 1
-		vb.memory = "4096"
+  config.vm.box = "centos/7"
+  config.vm.box_check_update = false
+
+  config.vm.define "server.test.local" do |s|
+    s.vm.hostname = 'server.test.local'
+    s.vm.network "private_network", ip: "192.168.50.10"
+	s.vm.network "public_network", ip: "192.168.100.241", bridge: "enp3s0"
+	s.vm.network "forwarded_port", guest: 443, host: 4949
+	s.vm.provider :virtualbox do |v|
+		v.name = "server.test.local"
+		v.memory = 4096
+    end
+
+	s.vm.provision "ansible" do |ansible|
+        ansible.playbook = "server.yml"
 	end
+	
   end
   
-  config.vm.define "client" do |client|
-    client.vm.hostname = "client.freeipa.loc"
-	client.vm.network "private_network", ip: "192.168.10.20"
-	client.vm.network "public_network", ip: "192.168.100.211", bridge: "enp3s0"
-	#client.vm.provision "shell", path: "client.sh"
-	
-	client.vm.provider "virtualbox" do |vb|
-		vb.memory = "512"
+  config.vm.define "client1.test.local", primary: true do |c|
+    c.vm.hostname = 'client1.test.local'
+    c.vm.network "private_network", ip: "192.168.50.11"
+	c.vm.provider :virtualbox do |v|
+		v.name = "client1.test.local"
+		v.memory = 512
+
+    end
+
+	c.vm.provision "ansible" do |ansible|
+        ansible.playbook = "client1.yml"
 	end
 	
   end
 
+  
 end
