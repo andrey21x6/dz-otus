@@ -42,7 +42,7 @@ vagrant up
 
 
 
-![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/shellcheck.net.jpg)
+![ldap_1](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_1.jpg)
 
 
 
