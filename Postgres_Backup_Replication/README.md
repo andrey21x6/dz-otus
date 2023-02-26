@@ -45,9 +45,9 @@ vagrant up
 
 **Демонстрация работы репликации на скриншотах**
 
-![replica_db](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/master_slave.jpg)
+![master_slave](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/master_slave.jpg)
 
-![replica_db](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/create_db.jpg)
+![create_db](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/create_db.jpg)
 
 **Демонстрация работы Backup на скриншоте, для проверки, можно запустить команду ниже**
 
@@ -55,11 +55,11 @@ vagrant up
 /home/vagrant/backup.sh
 ```
 
-![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/backup.jpg)
+![backup](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/backup.jpg)
 
 **Содержимое автоматически созданного файла recovery.conf на Database 2 (реплика slave)**
 
-![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/recovery.conf.jpg)
+![recovery.conf](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/recovery.conf.jpg)
 
 В конфигурационных файлах postgresql.conf и pg_hba.conf вносятся изменения в процессе выполнения команды vagrant up
 
@@ -69,7 +69,7 @@ https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/bash
 
 **Корректность скрипта bash проверено на сайте shellcheck.net**
 
-![backup_1](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/shellcheck.net.jpg)
+![shellcheck.net](https://github.com/andrey21x6/dz-otus/blob/main/Postgres_Backup_Replication/scrin/shellcheck.net.jpg)
 
 
 
