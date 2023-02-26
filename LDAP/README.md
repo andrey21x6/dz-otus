@@ -40,8 +40,6 @@ vagrant up
 
 Пароль: qwe!23asd
 
-
-
 ![ldap_1](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_1.jpg)
 
 
@@ -53,9 +51,9 @@ vagrant up
 
 ![ldap_4](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_4.jpg)
 
+***Для проверки, авторизовался по ключу с хостовой машины***
 
 ![ldap_5](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_5.jpg)
-
 
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
