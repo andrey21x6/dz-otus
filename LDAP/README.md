@@ -55,6 +55,9 @@ vagrant up
 
 ![ldap_5](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_5.jpg)
 
+***Проверим работу сервера FreeIPA***
+
+![ldap_6](https://github.com/andrey21x6/dz-otus/blob/main/LDAP/screenshots/ldap_6.jpg)
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!
