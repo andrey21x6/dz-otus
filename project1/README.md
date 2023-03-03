@@ -41,7 +41,7 @@
 
 ## **Состав проекта:**
 
-***Всего виртуальных серверов 12***
+**Всего виртуальных серверов 12**
 
 ![Shema](https://github.com/andrey21x6/dz-otus/blob/main/project1/scrin/Shema.svg)
 
