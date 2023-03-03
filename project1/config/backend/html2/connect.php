@@ -1,10 +1,10 @@
 <?php
-	//-------------------------------------------- Переменные --------------------------------------------
+	//-------------------------------------------- Переменные -----------------------------------------------------------
 	
 	$ipDb1 = "192.168.90.16";
 	$ipDb2 = "192.168.90.15";
 
-	//-------------------------------------------- Старт сессии --------------------------------------------
+	//-------------------------------------------- Старт сессии ---------------------------------------------------------
 
 	session_start();
 	
@@ -17,32 +17,25 @@
 		$switchDb = $ipDb1;
 	}
 
-	//-------------------------------------------- Проверка доступности БД --------------------------------------------
+	//-------------------------------------------- Проверка доступности БД ----------------------------------------------
 
-	function _testHostDbPort_($domain){
-
-		$starttime = microtime(true);
-		$file      = @fsockopen($domain, 3306, $errno, $errstr, 0.2);   // 3306 - порт подключения ||| 0.2 - TimeOut подключения
-		$stoptime  = microtime(true);
-		$status    = 0;
+	function _testHostDbPort_($domain)
+	{
+		$file = @fsockopen($domain, 3306, $errno, $errstr, 0.2);   // 3306 - порт подключения ||| 0.2 - TimeOut подключения
 
 		if (!$file) 
 		{ 
-			$status = -1;  // Не доступна!
+			return FALSE;  // Не доступна!
 		} 
 		else 
 		{
-			fclose($file);
-			$status = ($stoptime - $starttime) * 1000;
-			$status = floor($status);
+			return TRUE;  // Доступна!
 		}
-		
-		return $status;
 	}
 
 	//-------------------------------------------- Работа с переменными сессии --------------------------------------------
 
-	if (_testHostDbPort_($switchDb) == -1)
+	if (_testHostDbPort_($switchDb) == FALSE)
 	{
 		if ($switchDb == $ipDb1)
 		{
@@ -63,7 +56,7 @@
 		{
 			$switchDb = $ipDb2;
 			
-			if (_testHostDbPort_($switchDb) != -1)
+			if (_testHostDbPort_($switchDb) == TRUE)
 			{
 				$_SESSION['switchDb'] = $ipDb2;
 			}
@@ -72,7 +65,7 @@
 		{
 			$switchDb = $ipDb1;
 			
-			if (_testHostDbPort_($switchDb) != -1)
+			if (_testHostDbPort_($switchDb) == TRUE)
 			{
 				$_SESSION['switchDb'] = $ipDb1;
 			}
@@ -84,13 +77,13 @@
 		$switchDb = $_SESSION['switchDb'];
 	}
 	
-	//-------------------------------------------- Подключение к БД --------------------------------------------
+	//-------------------------------------------- Подключение к БД --------------------------------------------------------
 
 	define("CONNECT_BD", "mysql:host={$switchDb}; dbname=project1");
 	define("LOGIN_BD", "root");
 	define("PASS_BD", "123456");
 	
-	// PDO:: ATTR_TIMEOUT => 2 - это атрибут TIMEOUT соединения с БД
+	// PDO:: ATTR_TIMEOUT => 2 - это атрибут TIMEOUT соединения с БД в секундах
 
 	try
 	{

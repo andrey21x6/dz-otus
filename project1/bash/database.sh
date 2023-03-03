@@ -207,6 +207,11 @@ strFileName=$(mysql -h ${ipDb2} -e 'SHOW MASTER STATUS \G' | grep 'File';) ; arr
 strLogPos=$(mysql -h ${ipDb2} -e 'SHOW MASTER STATUS \G' | grep 'Position';) ; arrayLogPos=(${strLogPos//: / }) ; logPos="${arrayLogPos[1]}"
 	
 echo ""
+echo " *** Создаётся запись на сервере ${hostNameDb1} для настройки репликации в качестве slave ***"
+echo ""
+mysql -e 'change master to master_host = "'${ipDb2}'", master_user = "'${loginReplicatuser}'", master_password = "'${passReplicatuser}'", master_log_file = "'${fileName}'", master_log_pos = '${logPos}''
+	
+echo ""
 echo " *** Экспортируется БД из ${hostNameDb2} ***"
 echo ""
 sshpass -p 1 ssh -o StrictHostKeyChecking=no root@${ipDb2} <<EOF
@@ -224,11 +229,6 @@ echo ""
 echo " *** Импортируется БД в ${hostNameDb1} ***"
 echo ""
 mysql ${nameDb} < /home/vagrant/${fileDb}
-
-echo ""
-echo " *** Создаётся запись на сервере ${hostNameDb1} для настройки репликации в качестве slave ***"
-echo ""
-mysql -e 'change master to master_host = "'${ipDb2}'", master_user = "'${loginReplicatuser}'", master_password = "'${passReplicatuser}'", master_log_file = "'${fileName}'", master_log_pos = '${logPos}''
 
 echo ""
 echo " *** start slave репликации на сервере ${hostNameDb1} ***"
@@ -287,14 +287,9 @@ strSostoyanieSlave=$(mysql -h ${ipDb1} -e 'SHOW SLAVE STATUS \G' | grep 'Slave_S
     if [ "${sostoyanieSlave}" = "Yes" ]; then   #------------------------ Если slave репликация была запущена ранее на hostNameDb1 -------------------------------------------
 
 echo ""
-echo " *** stop slave репликации на ${hostNameDb1}, если запустили восстановление сервера ${hostNameDb1} ***"
+echo " *** stop slave репликации на ${hostNameDb1}, если запустили восстановление сервера ${hostNameDb2} ***"
 echo ""
 mysql -h ${ipDb1} -e 'stop slave'
-
-echo ""
-echo " *** ПАУЗА 1 ............................ ***"
-echo ""
-sleep 20
 
     fi     #------------------------------------------------------------------ Конец условия IF ------------------------------------------------------------------------------
 
@@ -303,6 +298,11 @@ echo " *** Получаем в переменные окружения стро�
 echo ""
 strFileName=$(mysql -h ${ipDb1} -e 'SHOW MASTER STATUS \G' | grep 'File';) ; arrayFileName=(${strFileName//: / }) ; fileName="${arrayFileName[1]}"
 strLogPos=$(mysql -h ${ipDb1} -e 'SHOW MASTER STATUS \G' | grep 'Position';) ; arrayLogPos=(${strLogPos//: / }) ; logPos="${arrayLogPos[1]}"
+
+echo ""
+echo " *** Создаётся запись на сервере ${hostNameDb2} для настройки репликации в качестве slave (${hostNameDb1} - Master) ***"
+echo ""
+mysql -e 'change master to master_host = "'${ipDb1}'", master_user = "'${loginReplicatuser}'", master_password = "'${passReplicatuser}'", master_log_file = "'${fileName}'", master_log_pos = '${logPos}''
 
 echo ""
 echo " *** Экспортируется БД из ${hostNameDb1} ***"
@@ -322,16 +322,6 @@ echo ""
 echo " *** Импортируется БД в ${hostNameDb2} ***"
 echo ""
 mysql ${nameDb} < /home/vagrant/${fileDb}
-
-echo ""
-echo " *** ПАУЗА 2 ............................ ***"
-echo ""
-sleep 20
-
-echo ""
-echo " *** Создаётся запись на сервере ${hostNameDb2} для настройки репликации в качестве slave (${hostNameDb1} - Master) ***"
-echo ""
-mysql -e 'change master to master_host = "'${ipDb1}'", master_user = "'${loginReplicatuser}'", master_password = "'${passReplicatuser}'", master_log_file = "'${fileName}'", master_log_pos = '${logPos}''
 
 echo ""
 echo " *** start slave репликации на ${hostNameDb2} ***"
