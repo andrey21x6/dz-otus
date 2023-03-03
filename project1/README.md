@@ -13,13 +13,14 @@
 
 ### Guest ###
 - CentOS 8.3.2011
-- Filebeat 8.6.1
 - Nginx 1.14.1
 - PHP 7.2.24
 - MariaDB 10.3.2
+- Filebeat 8.6.1
 - Elasticsearch 8.6.1
 - Kibana 8.6.1
 - Logstash 8.6.1
+- Metricbeat 8.6.2
 
 ## **Содержание Проектной работы**
 
