@@ -43,8 +43,6 @@
 
 ***Всего виртуальных серверов 12***
 
-![Shema](https://github.com/andrey21x6/dz-otus/blob/main/project1/scrin/Shema.jpg)
-
 ![Shema](https://github.com/andrey21x6/dz-otus/blob/main/project1/scrin/Shema.svg)
 
 1 Nginx вебсервер frontend, настроен HTTPS, настроен iptables, разрешены входящие соединения по портам 22, 80, 443
@@ -52,7 +50,7 @@
 
 ****Правила iptables***
 
-iptables.jpg
+![iptables](https://github.com/andrey21x6/dz-otus/blob/main/project1/scrin/iptables.jpg)
 
 2 и 3 Nginx вебсервер + PHP-fpm, backend 1 и backend 2, отправляют свои запросы в базу данных по очереди
 
@@ -91,9 +89,6 @@ vagrant up database1
 Виртуальный сервер поднимется с актуальной БД, даже, если в то время, когда он был удалён, велась какая-то запись в БД database2
 
 В случае с Elasticsearch, если "пристрелить" master, то мастером автоматически становиться один из ведомых
-
-
-![Shema](https://github.com/andrey21x6/dz-otus/blob/main/project1/scrin/Shema.svg)
 
 ### ![#008000](https://placehold.co/15x15/008000/008000.png) ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png)
 ### Благодарю за проверку!
