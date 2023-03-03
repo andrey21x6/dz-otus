@@ -50,7 +50,7 @@
 
 **Правила iptables**
 
-![iptables](https://github.com/andrey21x6/dz-otus/blob/main/project1/scrin/iptables.jpg)
+![iptables_](https://github.com/andrey21x6/dz-otus/blob/main/project1/scrin/iptables_.jpg)
 
 **2 и 3** Nginx вебсервер + PHP-fpm, backend 1 и backend 2, отправляют свои запросы в базу данных по очереди, если одна из БД не доступна, 
 то backend работает с одной БД, но проверяет доступность отвалившейся и как только БД становится доступной, 
