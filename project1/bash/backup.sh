@@ -17,4 +17,5 @@ tar -cvf $FOLDERBACKUP/$FILE2.tar.gz -P $FOLDERBACKUP2
 
 sshpass -p 1 scp -o StrictHostKeyChecking=no -P 22 $FOLDERBACKUP/$FILE.tar.gz root@192.168.90.14:$FOLDERBACKUP/$FILE.tar.gz
 sshpass -p 1 scp -o StrictHostKeyChecking=no -P 22 $FOLDERBACKUP/$FILE2.tar.gz root@192.168.90.14:$FOLDERBACKUP2/$FILE2.tar.gz
+
 # -o StrictHostKeyChecking=no ---> не спрашивать о принятии сертификата сервера при первом подключении

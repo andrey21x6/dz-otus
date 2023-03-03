@@ -52,7 +52,8 @@
 
 ![iptables](https://github.com/andrey21x6/dz-otus/blob/main/project1/scrin/iptables.jpg)
 
-**2 и 3** Nginx вебсервер + PHP-fpm, backend 1 и backend 2, отправляют свои запросы в базу данных по очереди
+**2 и 3** Nginx вебсервер + PHP-fpm, backend 1 и backend 2, отправляют свои запросы в базу данных по очереди, если одна из БД не доступна, 
+то backend работает с одной БД, но проверяет доступность отвалившейся и как только БД становится доступной, то начинает работать с обеими
 
 **4 и 5** База данных MariaDB, Database 1 и Database 2, настроена репликация master - master и backup логический и физический с обеих БД
 

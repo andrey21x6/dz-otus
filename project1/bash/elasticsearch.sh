@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#dnf install java-11-openjdk-devel
-#java -version
-
 echo ""
 echo " *** Устанавка elasticsearch ***"
 echo ""
