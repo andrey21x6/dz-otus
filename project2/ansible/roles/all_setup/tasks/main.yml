@@ -1,0 +1,75 @@
+---
+
+- name: Set timezone
+  command: timedatectl set-timezone Asia/Yekaterinburg
+  
+- name: Restart crond
+  systemd:
+    name: crond
+    state: restarted
+    daemon_reload: true
+    
+- name: Sed mirrorlist repos
+  shell: sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
+  
+- name: Sed baseurl repos
+  shell: 'sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*'
+
+- name: Install epel-release
+  shell: dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+
+- name: Set-locale
+  command: localectl set-locale LANG=en_US.UTF-8
+
+- name: Copy elasticsearch.repo
+  copy:
+    src: elasticsearch.repo
+    dest: /etc/yum.repos.d/elasticsearch.repo
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install packages
+  dnf:
+    name:
+      - mc
+      - nano
+      - net-tools
+      - htop
+      - filebeat
+    state: latest
+
+- name: Checking if a file exists filebeat.yml
+  stat:
+    path: /etc/filebeat/filebeat.yml
+  register: info
+
+- name: Copy filebeat.yml_bak
+  copy:
+    remote_src: true
+    src: /etc/filebeat/filebeat.yml
+    dest: /etc/filebeat/filebeat.yml_bak
+  when: info.stat.exists
+
+- name: Copy filebeat.yml
+  copy:
+    src: filebeat/{{ ansible_hostname }}/filebeat.yml
+    dest: /etc/filebeat/filebeat.yml
+  notify:
+  - Restart filebeat
+
+- name: Enable SSH password
+  shell: sed -i -e "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+
+- name: Restart sshd
+  systemd:
+    name: sshd
+    state: restarted
+
+- name: Change root password
+  user:
+    name: "{{ ansible_user }}"
+    state: present
+    password: "{{ ansible_password | password_hash('sha512') }}"
+
+...

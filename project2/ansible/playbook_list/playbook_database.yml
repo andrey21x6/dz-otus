@@ -1,0 +1,11 @@
+---
+
+- name: Setting database servers
+  hosts: database
+  become: true
+
+  roles:
+  - all_setup
+  - database
+
+...

@@ -1,0 +1,63 @@
+  
+  - name: Создать пустой файл
+    file:
+      path: /tmp/file.txt
+      state: touch
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: Удалить файл
+    file:
+      path: /tmp/file.txt
+      state: absent
+
+  - name: Довить строку в файл
+    lineinfile:
+      path: /tmp/file.txt
+      line: This is a test line by lineinfile module
+      state: present
+
+  - name: Довить несколько строк в файл
+    blockinfile:
+      path: /tmp/file.txt
+      block: |
+        This is a test statement1 added by blockinfile module
+        This is a test statement2 added by blockinfile module
+      state: present
+
+  - name: Создать файл с содержимым
+    copy:
+    dest: /tmp/file.txt
+    content: |
+        Copied data using the ansible file module
+        Another copied data using ansible file module
+
+  - name: Изменить права на файл
+    file:
+      path: /tmp/file.txt
+      owner: foo
+      group: foo
+      mode: 0644
+
+  - name: Создать папку
+    file:
+      path: /tmp/directory_1
+      state: directory
+      owner: foo
+      group: foo
+      mode: 0755
+
+  - name: Поменять владельца каталога и файлов в нём
+    file:
+      path: /tmp/directory_1
+      state: directory
+      recurse: yes
+      owner: foo
+      group: foo
+
+  - name: Удалить папку и все файлы в нём
+    file:
+      path: /tmp/directory_1
+      state: absent
+	  

@@ -1,0 +1,40 @@
+#---------------- Filebeat modules --------------
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+  #reload.period: 10s
+
+filebeat.modules:
+
+- module: elasticsearch
+  server:
+    enabled: true
+    var.paths:
+      - /var/log/elasticsearch/*.log
+      - /var/log/elasticsearch/*_server.json
+  gc:
+    var.paths:
+      - /var/log/elasticsearch/gc.log.[0-9]*
+      - /var/log/elasticsearch/gc.log
+  slowlog:
+    var.paths:
+      - /var/log/elasticsearch/*_index_search_slowlog.log
+      - /var/log/elasticsearch/*_index_indexing_slowlog.log
+      - /var/log/elasticsearch/*_index_search_slowlog.json
+      - /var/log/elasticsearch/*_index_indexing_slowlog.json
+  deprecation:
+    var.paths:
+      - /var/log/elasticsearch/*_deprecation.log
+      - /var/log/elasticsearch/*_deprecation.json
+
+#---------------------------------------------
+
+output.logstash:
+  hosts: ["192.168.90.21:5048", "192.168.90.22:5048"]
+
+#---------------------------------------------
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded

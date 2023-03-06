@@ -1,0 +1,22 @@
+
+server.host: "0.0.0.0"
+server.publicBaseUrl: "http://192.168.90.20:5601"
+elasticsearch.hosts: ["http://192.168.90.17:9200", "http://192.168.90.18:9200", "http://192.168.90.19:9200"]
+
+logging:
+  appenders:
+    file:
+      type: file
+      fileName: /var/log/kibana/kibana.log
+      layout:
+        type: json
+  root:
+    appenders:
+      - default
+      - file
+
+pid.file: /run/kibana/kibana.pid
+
+xpack.encryptedSavedObjects.encryptionKey: ae77d4fcd3f598a339aa31806df0c6c0
+xpack.reporting.encryptionKey: b98e2e6dc44705dda2b08d7c9f1a325e
+xpack.security.encryptionKey: eaebde254d4d93df375fb4ba440f7160

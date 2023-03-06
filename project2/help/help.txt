@@ -1,0 +1,781 @@
+
+==============================================================================================================================================================================
+=============================================================== *** Metricbeat *** ===========================================================================================
+==============================================================================================================================================================================
+
+curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-8.6.2-x86_64.rpm
+rpm -vi metricbeat-8.6.2-x86_64.rpm
+
+metricbeat modules enable elasticsearch-xpack
+metricbeat setup -e
+systemctl start metricbeat
+
+elasticsearch.yml
+  node.roles: [ master, data, remote_cluster_client ]
+
+systemctl restart elasticsearch
+
+
+#metricbeat modules list
+
+#metricbeat modules enable elasticsearch-xpack
+#metricbeat modules enable nginx
+
+==============================================================================================================================================================================
+============================================================== *** Logstash *** ==============================================================================================
+==============================================================================================================================================================================
+   
+systemctl restart logstash
+systemctl status logstash
+
+# Проверить конфигурацию logstash
+/usr/share/logstash/bin/logstash --path.settings /etc/logstash -t
+
+	[2023-02-11T12:08:12,887][INFO ][logstash.javapipeline    ] Pipeline `nginx` is configured with `pipeline.ecs_compatibility: v8` setting. All plugins in this pipeline will default to `ecs_compatibility => v8` unless explicitly configured otherwise.
+	[2023-02-11T12:08:13,956][INFO ][logstash.javapipeline    ] Pipeline `backend2` is configured with `pipeline.ecs_compatibility: v8` setting. All plugins in this pipeline will default to `ecs_compatibility => v8` unless explicitly configured otherwise.
+	[2023-02-11T12:08:14,980][INFO ][logstash.javapipeline    ] Pipeline `database2` is configured with `pipeline.ecs_compatibility: v8` setting. All plugins in this pipeline will default to `ecs_compatibility => v8` unless explicitly configured otherwise.
+	Configuration OK
+	[2023-02-11T12:08:14,980][INFO ][logstash.runner          ] Using config.test_and_exit mode. Config Validation Result: OK. Exiting Logstash
+	
+#-------------------------------------------------------------------------------------------------------------------------
+	
+%{IP:client_ip} %{NUMBER:code_otveta} <%{DATA:user_agent_nash}>
+10.0.2.2 200 <Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36>
+
+[
+  {
+    "client_ip": "10.0.2.2",
+    "code_otveta": 200,
+    "user_agent_nash": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36"
+  }
+]
+
+
+
+10.0.2.2 - - [18/Feb/2023:14:15:51 +0500] "GET /XXXXXXXXXXX HTTP/2.0" 404 571 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36" "-"
+
+%{IPORHOST:remote_ip} - %{DATA:user_name} \[%{HTTPDATE:access_time}\] \"%{WORD:http_method} %{DATA:url} HTTP/%{NUMBER:http_version}\" %{NUMBER:response_code} %{NUMBER:body_sent_bytes} \"%{DATA:referrer}\" \"%{DATA:agent}\"
+
+==============================================================================================================================================================================
+============================================================== *** Elasticsearch *** =========================================================================================
+==============================================================================================================================================================================
+   
+systemctl restart elasticsearch
+systemctl status elasticsearch
+systemctl stop elasticsearch
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+sysctl vm.swappiness
+
+sysctl -w vm.swappiness=1
+
+echo vm.swappiness = 1 >> /etc/sysctl.conf
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+echo ""
+echo " *** Смена пароля в elasticsearch с автоответами ***"
+echo ""
+/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u elastic <<EOF
+y
+123456
+123456
+EOF
+
+echo ""
+echo " *** Смена пароля для kibana в elasticsearch с автоответами ***"
+echo ""
+/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u kibana_system <<EOF
+y
+123456
+123456
+EOF
+
+
+
+
+echo ""
+echo " *** Отключение security в файле elasticsearch.yml ***"
+echo ""
+sed -i -e "s/xpack.security.enabled: true/xpack.security.enabled: false/g" /etc/elasticsearch/elasticsearch.yml
+sed -i -e "s/xpack.security.enrollment.enabled: true/xpack.security.enrollment.enabled: false/g" /etc/elasticsearch/elasticsearch.yml
+sed -i -e "s/  enabled: true/  enabled: false/g" /etc/elasticsearch/elasticsearch.yml
+
+sed -i -e "s/\#cluster.name/cluster.name/g" /etc/elasticsearch/elasticsearch.yml
+sed -i -e "s/\#node.roles/node.roles/g" /etc/elasticsearch/elasticsearch.yml
+sed -i -e "s/\#discovery.seed_hosts/discovery.seed_hosts/g" /etc/elasticsearch/elasticsearch.yml
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+# https://127.0.0.1:9200
+# Логин: elastic
+# Пароль: При установке генерится: ... The generated password for the elastic built-in superuser is : mAaEdv=RXc0ZT=nA=HZP
+
+# Смена пароля
+#/usr/share/elasticsearch/bin/elasticsearch-reset-password -i -u elastic
+
+# Подключение с помощью сертификата
+#curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
+#curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic 'https://127.0.0.1:9200/_cat/indices?v&pretty'
+# Вводим пароль
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+dnf install curl jq npm -y
+npm install elasticdump --global
+
+elasticdump --input=http://127.0.0.1:9200/backend1 --output=/home/vagrant/backup.json --type=data
+elasticdump --input=/home/vagrant/backup.json --output=http://127.0.0.1:9200/backend1 --type=data
+
+#NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump -u elastic --input=http://127.0.0.1:9200/backend1 --output=/home/vagrant/backup.json --type=data
+#elasticdump --input=http://127.0.0.1:9200/backend1 --output=/home/vagrant/backup.json --type=mapping
+#npm config set cafile /etc/pki/tls/cert.pem --global
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+curl -X GET "http://127.0.0.1:9200?pretty"
+curl -X GET "http://127.0.0.1:9200/_cluster/health?pretty"
+curl -X GET 'http://localhost:9200/_cluster/state/master_node?pretty'
+curl -X GET "http://127.0.0.1:9200/_cat/master?v=true"
+curl -X GET "http://127.0.0.1:9200/_cat/master?pretty"
+curl -X GET 'http://localhost:9200/_cluster/state?filter_path=metadata'
+curl -X GET "localhost:9200/_cluster/state?filter_path=metadata.cluster_coordination.last_committed_config&pretty"
+
+
+
+curl -X GET "http://127.0.0.1:9200/_cluster/settings?pretty"
+
+curl -X PUT "http://127.0.0.1:9200/accounts?pretty"
+curl -X PUT "http://127.0.0.1:9200/backend1?pretty"
+curl GET -v 'localhost:9200'
+curl GET 'localhost:9200/backupserver?pretty'
+curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic 'https://127.0.0.1:9200/_cat/indices?v&pretty'
+
+
+
+#curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
+#curl -X GET --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
+#curl -X PUT --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://127.0.0.1:9200
+
+
+
+curl -XPUT --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic -H 'Content-Type: application/json' "https://127.0.0.1:9200/blog3/_doc/1?pretty" -d'
+{
+  "title": "Веселые котята",
+  "content": "<p>Смешная история про котят<p>",
+  "tags": [
+    "котята",
+    "смешная история"
+  ],
+  "published_at": "2014-09-12T20:44:42+00:00"
+}'
+
+
+
+curl -XPOST --cacert '/etc/elasticsearch/certs/http_ca.crt' -u 'elastic' -H 'Content-Type: application/json' 'https://127.0.0.1:9200/blog2/_doc/2?pretty' -d'
+{
+  "title": "Веселые котята",
+  "content": "<p>Смешная история про котят<p>",
+  "tags": [
+    "котята",
+    "смешная история"
+  ],
+  "published_at": "2014-09-12T20:44:42+00:00"
+}'
+
+
+
+POST /users/_doc
+{ "first_name": "Rishikesh", "last_name": "Agrawani", "age": 29}
+
+==============================================================================================================================================================================
+================================================================ *** Kibana *** ==============================================================================================
+==============================================================================================================================================================================
+  
+systemctl restart kibana
+systemctl status kibana
+
+
+
+wget https://artifacts.elastic.co/downloads/kibana/kibana-8.6.1-x86_64.rpm
+wget https://artifacts.elastic.co/downloads/kibana/kibana-8.6.1-x86_64.rpm.sha512
+shasum -a 512 -c kibana-8.6.1-x86_64.rpm 
+rpm --install kibana-8.6.1-x86_64.rpm
+
+
+
+xpack.encryptedSavedObjects.encryptionKey: ae77d4fcd3f598a339aa31806df0c6c0
+xpack.reporting.encryptionKey: b98e2e6dc44705dda2b08d7c9f1a325e
+xpack.security.encryptionKey: eaebde254d4d93df375fb4ba440f7160
+
+==============================================================================================================================================================================
+=============================================================== *** Filebeat *** =============================================================================================
+==============================================================================================================================================================================
+
+systemctl restart filebeat
+systemctl status filebeat
+
+Проверка конфигурации Filebeat:
+filebeat test config
+
+
+
+filebeat modules list
+filebeat modules enable nginx
+filebeat setup -e
+
+systemctl restart filebeat
+
+
+
+- module: apache
+  access:
+    enabled: true
+    var.paths: [/var/log/apache2/access.log*]
+  error:
+    enabled: true
+    var.paths: [/var/log/apache2/error.log*]
+
+----------------------------------------
+
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+      #- /var/log/nginx/*-access.log
+      - /var/log/nginx/access.log
+  fields:
+    type: nginx_access
+    #service: nginx_access
+  fields_under_root: true
+  scan_frequency: 5s
+
+- type: log
+  enabled: true
+  paths:
+      #- /var/log/nginx/*-error.log
+      - /var/log/nginx/error.log
+  fields:
+    type: nginx_error
+    #service: nginx_access
+  fields_under_root: true
+  scan_frequency: 5s
+
+output.logstash:
+  hosts: ["192.168.90.17:5044"]
+
+xpack.monitoring:
+  #enabled: true
+  enabled: false
+  elasticsearch:
+    hosts: ["http://192.168.90.17:9200"]
+
+
+----------------------------------------
+
+filebeat.inputs:
+- input_type:     log
+  enable:         true
+  paths:
+    - /var/log/nginx/*.log
+  exclude_files:  ['\.gz$']
+
+output.logstash:
+  hosts:          ["192.168.11.103:5044"]
+  
+----------------------------------------
+
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /var/log/nginx/access.log*
+    - /var/log/nginx/error.log*
+  exclude_files: [".gz$"]
+  multiline:
+    pattern: "^\\s"
+    match: after
+	
+output.logstash:
+  hosts: ["192.168.168.110:5044"]
+  
+----------------------------------------
+
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /tmp/elk-example.log
+  fields:
+    app_name: elk-sample-app
+  fields_under_root: true
+  multiline.pattern: '^[[:space:]]'
+  multiline.negate: false
+  multiline.match: after
+
+- input_type: log
+  paths:
+    - /tmp/pg.log
+  fields:
+    app_name: postgres
+  fields_under_root: true
+  multiline.pattern: '^[[:space:]]'
+  multiline.negate: false
+  multiline.match: after
+
+output.logstash:
+  hosts: logstash-mutator:5044
+  
+----------------------------------------
+
+filebeat.inputs:
+  - type: docker
+    containers:
+      path: "/usr/share/dockerlogs/data"
+      stream: "stdout"
+      ids:
+        - "*"
+      cri.parse_flags: true
+      combine_partial: true
+      exclude_files: ['\.gz$']
+ 
+processors:
+  - add_docker_metadata:
+      host: "unix:///var/run/docker.sock"
+ 
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+ 
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
+ 
+log files:
+logging.level: error
+logging.to_files: false
+logging.to_syslog: false
+loggins.metrice.enabled: false
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat
+  keepfiles: 7
+  permissions: 0644
+ssl.verification_mode: none
+
+----------------------------------------
+
+filebeat:
+  prospectors:
+    - paths:
+        - /var/log/httpd/access_log
+      input_type: log
+      document_type: apache
+      fields:
+        tags: ["mytag"]
+      fields_under_root: true
+
+
+
+----------------------------------------
+
+
+
+=== ПРИМЕР 1 ===
+
+
+
+filebeat.inputs:
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/access.log
+  exclude_files: [".gz$"]
+  
+  fields:
+    type: nginx_access
+    #service: nginx_access
+  fields_under_root: true
+  scan_frequency: 5s
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/nginx/error.log
+  exclude_files: [".gz$"]
+      
+  fields:
+    type: nginx_error
+    #service: nginx_access
+  fields_under_root: true
+  scan_frequency: 5s
+
+#------------------
+
+output.logstash:
+  hosts: ["192.168.90.17:5044"]
+
+
+
+=== ПРИМЕР 2 ===
+
+
+  
+#----- Filebeat modules ------
+
+filebeat.config.modules:
+  # Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  reload.enabled: false
+
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
+
+filebeat.modules:
+# - module: nginx
+#   access:
+#   error:
+# - module: mysql
+#   slowlog:
+# - module: system
+#   auth:
+
+- module: nginx
+  access:
+    enabled: true
+    var.paths: [/var/log/nginx/access.log]
+  error:
+    enabled: true
+    var.paths: [/var/log/nginx/error.log]
+- module: system
+  auth:
+
+#---------------------
+
+output.logstash:
+  hosts: ["192.168.90.21:5041", "192.168.90.22:5041"]
+
+#---------------------
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+
+
+==============================================================================================================================================================================
+=============================================================== *** Nginx *** ================================================================================================
+==============================================================================================================================================================================
+
+systemctl restart nginx
+systemctl status nginx
+
+--------------------------------------------------------
+
+dnf remove nftables -y
+dnf install iptables-services -y
+systemctl enable iptables
+systemctl start iptables
+
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -p icmp -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+
+iptables-save > fwon
+iptables-restore < fwoff
+
+#echo "@reboot root iptables-restore < fwoff" >> /etc/crontab
+
+--------------------------------------------------------
+
+#dnf install mod_ssl openssl -y
+dnf install openssl -y
+
+
+
+openssl genpkey algorithm rsa -pkeyopt rsa_ketgen_bits_2048 -out nginx.key
+
+
+---------------------------------------------------
+
+openssl dhparam -out /etc/pki/tls/certs/dhparam.pem 2048
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/pki/tls/private/nginx-selfsigned.key -out /etc/pki/tls/certs/nginx-selfsigned.crt <<EOF
+RU
+URAL
+CHELYABINSK
+OTUS_Project1
+Project1
+nginx
+andrey@7kas.ru
+EOF
+
+
+
+openssl req -new -key ca.key -out /root/ca.csr
+
+---------------------------------------------------!
+
+# Generate private key 
+openssl genrsa -out nginx.key 2048
+
+# Generate CSR 
+openssl req -new -key nginx.key -out nginx.csr
+
+# Generate Self Signed Key
+openssl x509 -req -days 365 -in nginx.csr -signkey nginx.key -out nginx.crt
+
+# Copy the files to the correct locations
+cp nginx.crt /etc/pki/tls/certs
+cp nginx.key /etc/pki/tls/private/nginx.key
+cp nginx.csr /etc/pki/tls/private/nginx.csr
+
+---------------------------------------------------!
+
+nano /etc/nginx/nginx.conf
+nano /usr/share/nginx/html/index.html
+
+# Проверить разрешение в SELinux на обратное проксирование
+getsebool httpd_can_network_connect
+
+
+
+#echo ""
+#echo " *** Скачивание filebeat ***"
+#echo ""
+#curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.5.2-x86_64.rpm
+#rpm -ivh ~/filebeat-8.6.1-x86_64.rpm
+
+==============================================================================================================================================================================
+=========================================================== *** Backend *** ==================================================================================================
+==============================================================================================================================================================================
+
+nano /usr/share/nginx/html/index.php
+
+getsebool httpd_can_network_connect
+
+==============================================================================================================================================================================
+============================================================ *** Database *** ================================================================================================
+==============================================================================================================================================================================
+
+systemctl restart mariadb
+systemctl status mariadb
+
+-------------------------------------------------------------------------------------------------
+
+mysqladmin --connect-timeout=1 ping --host=199.0.0.1
+
+-------------------------------------------------------------------------------------------------
+
+dnf install mariadb-backup
+
+mkdir -p /home/vagrant/BACKUP/mariabackup
+
+
+
+mysql <<EOF
+CREATE USER 'mariabackup'@'localhost' IDENTIFIED BY '123456';
+GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'mariabackup'@'localhost';
+GRANT CREATE ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
+GRANT INSERT ON PERCONA_SCHEMA.* TO 'mariabackup'@'localhost';
+EOF
+
+
+loginReplicatuser=replicatuser
+replicatuserIp=192.168.91.15
+passReplicatuser=passuser
+mysql -e 'GRANT replication slave ON *.* TO '${loginReplicatuser}'@'${replicatuserIp}' IDENTIFIED BY '${passReplicatuser}''
+
+
+
+mariabackup --backup --target-dir=/home/vagrant/BACKUP/mariabackup
+
+mariabackup --backup \
+   --target-dir=/home/vagrant/mariabackup/ \
+   --user=mariabackup --password=123456
+
+
+mysql -e 'stop slave'
+mysql -e 'start slave'
+
+mysql -e 'SHOW MASTER STATUS \G'
+mysql -e 'SHOW SLAVE STATUS \G'
+
+mysql -h 192.168.90.15 -e 'stop slave'
+mysql -h 192.168.90.16 -e 'stop slave'
+
+mysql -h 192.168.90.15 -e 'start slave'
+mysql -h 192.168.90.16 -e 'start slave'
+
+mysql -h 192.168.90.15 -e 'SHOW MASTER STATUS \G'
+mysql -h 192.168.90.15 -e 'SHOW SLAVE STATUS \G'
+
+
+
+# Запуск утилиты настройки безопасности mariadb
+/usr/bin/mysql_secure_installation
+
+# Включить доступ к MariaDB с любых хостов (root)
+mysql -uroot -p
+	GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '12345678';
+	
+mysql -h 127.0.0.1 -uroot -p123456 \
+  "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '12345678';" \
+  exit
+
+
+
+mysql -u root -p123456
+
+show databases;
+use mysql;
+show tables;
+
+Database changed
+
+CREATE TABLE table1
+(
+    id INT,
+    name VARCHAR(255)
+);
+
+
+
+CREATE DATABASE project1;
+mysql -u root -p123456 project1 < /home/vagrant/project1_2.sql
+mysqldump -u root -p123456 project1 text_entries > project1_2.sql
+
+USE project1;
+show tables;
+
+
+
+mysql -e 'show databases'
+mysql bet_odds -e "show tables;"
+mysql bet_odds -e "select * from bookmaker order by id;"
+mysql bet_odds -e "insert into bookmaker values (7, 'Andrey_Islamov_1');"
+mysql bet_odds -e "insert into bookmaker values (8, 'Andrey_Islamov_2');"
+
+mysql bet_odds -e "delete from bookmaker where bookmaker_name = 'Andrey_Islamov';"
+
+DELETE FROM somelog WHERE user = 'jcole'
+
+mysqlbinlog -v --base64-output=DECODE-ROWS /var/log/mariadb/mariadb-bin.000002
+
+mariabackup -u mariabackup --backup --target-dir=/home/vagrant/BACKUP/mariabackup
+
+---------------------------------------------------------------------------
+
+crontab <<EOF
+00 1 * * * /home/vagrant/backup.sh
+EOF
+
+echo "00 1 * * * /home/vagrant/backup.sh" |sudo tee /etc/crond.d/backup
+
+(crontab -l; echo "00 1 * * * /home/vagrant/backup.sh") | sort -u | crontab -
+
+# Ежедневно в 07:00 перезагрузка сервера !!!
+00 1 * * * /home/vagrant/backup.sh
+
+---------------------------------------------------------------------------
+
+1.
+
+nano /etc/my.cnf.d/mariadb-server.cnf
+	server-id = 1
+	log_bin = /var/log/mariadb/mariadb-bin.log
+
+systemctl restart mariadb
+systemctl status mariadb
+
+mysql -u root -p123456
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.15" IDENTIFIED BY "passuser";
+
+SHOW MASTER STATUS \G
+	File: mariadb-bin.000001
+    Position: 897
+	
+change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "mariadb-bin.000001", master_log_pos = 1825;
+start slave;
+	
+2.
+
+nano /etc/my.cnf.d/mariadb-server.cnf
+	server-id = 2
+	log_bin = /var/log/mariadb/mariadb-bin.log
+
+systemctl restart mariadb
+systemctl status mariadb
+
+mysql -u root -p123456
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.14" IDENTIFIED BY "passuser";
+
+SHOW MASTER STATUS \G
+	File: mariadb-bin.000001
+    Position: 1825
+
+change master to master_host = "192.168.90.14", master_user = "replicatuser", master_password = "passuser", master_log_file = "mariadb-bin.000001", master_log_pos = 897;
+start slave;
+
+-------------------------------------------------------------------------------
+
+strFileName=$(mysql -e 'SHOW MASTER STATUS \G' | grep 'File';) ; arrayFileName=(${strFileName//: / }) ; fileName="${arrayFileName[1]}"
+echo $fileName
+
+strSostoyanieSlave=$(mysql -h 192.168.90.15 -e 'SHOW SLAVE STATUS \G' | grep 'Slave_SQL_Running';) ; arraySostoyanieSlave=(${strSostoyanieSlave//: / }) ; sostoyanieSlave="${arraySostoyanieSlave[1]}"
+echo $sostoyanieSlave
+
+mysql -e 'change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "mariadb-bin.000003", master_log_pos = 935'
+
+
+
+mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position:';
+mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File:';
+
+STR=`mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $STR | sed 's:^:V1=":; /Position: / s::";V2=": ;s:$:":') ; echo $V2
+STR=`mysql -h 127.0.0.1 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $STR | sed 's:^:V1=":; /File: / s::";V2=": ;s:$:":') ; echo $V2
+
+
+
+bind-address=0.0.0.0
+server-id = 1
+log_bin = /var/log/mariadb/mariadb-bin.log
+
+
+
+
+# Для настройки репликации master-master, логин: replicatuser, пароль: passuser (IP 192.168.90.14 второй БД)
+mysql -h 127.0.0.1 -uroot -p123456 <<EOF
+GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.15" IDENTIFIED BY "passuser";
+change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "${V4}", master_log_pos = ${V2};
+start slave;
+EOF
+
+------------------------------------------------------------------------
+
+1.
+
+STR=`mysql -h 192.168.90.15 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $STR | sed 's:^:V1=":; /Position: / s::";V2=": ;s:$:":')
+STR=`mysql -h 192.168.90.15 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $STR | sed 's:^:V3=":; /File: / s::";V4=": ;s:$:":')
+mysql -h 192.168.90.14 -u root -p123456 -e 'GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.15" IDENTIFIED BY "passuser"'
+mysql -h 192.168.90.14 -u root -p123456 -e 'change master to master_host = "192.168.90.15", master_user = "replicatuser", master_password = "passuser", master_log_file = "$V4", master_log_pos = '$V2''
+mysql -h 192.168.90.14 -u root -p123456 -e 'start slave'
+
+2.
+
+STR=`mysql -h 192.168.90.14 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'Position';` ; eval $(echo $STR | sed 's:^:V1=":; /Position: / s::";V2=": ;s:$:":')
+STR=`mysql -h 192.168.90.14 -u root -p123456 -e 'SHOW MASTER STATUS \G' | grep 'File';` ; eval $(echo $STR | sed 's:^:V3=":; /File: / s::";V4=": ;s:$:":')
+mysql -h 192.168.90.15 -u root -p123456 -e 'GRANT replication slave ON *.* TO "replicatuser"@"192.168.90.14" IDENTIFIED BY "passuser"'
+mysql -h 192.168.90.15 -u root -p123456 -e 'change master to master_host = "192.168.90.14", master_user = "replicatuser", master_password = "passuser", master_log_file = "$V4", master_log_pos = '$V2''
+mysql -h 192.168.90.15 -u root -p123456 -e 'start slave'
+
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+==============================================================================================================================================================================
+
+

@@ -1,0 +1,182 @@
+# -*- mode: ruby -*-
+# vim: set ft=ruby :
+
+MACHINES = {
+  :nginx => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.90.11', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+            ]
+  },
+#   :backend1 => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.12', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   },
+#   :backend2 => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.13', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   },
+#   :backupserver => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.14', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   },
+#   :database1 => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.15', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   },
+#   :database2 => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.16', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   },
+#   :elasticsearch1 => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.17', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   },
+#   :elasticsearch2 => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.18', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   },
+#   :elasticsearch3 => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.19', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   },
+#   :kibana => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.20', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   },
+#   :logstash1 => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.21', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   },
+#   :logstash2 => {
+#     :box_name => "centos/8",
+#     :net => [
+# 			   {ip: '192.168.90.22', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+#             ]
+#   }
+}
+
+Vagrant.configure("2") do |config|
+
+  MACHINES.each do |boxname, boxconfig|
+      
+	config.vm.box_check_update = false
+	
+    config.vm.define boxname do |box|
+
+        box.vm.box = boxconfig[:box_name]
+        box.vm.host_name = boxname.to_s
+
+        boxconfig[:net].each do |ipconf|
+          box.vm.network "private_network", ipconf
+        end
+        
+        case boxname.to_s
+		
+          when "nginx"
+			box.vm.provider "virtualbox" do |v|
+			  v.memory = 256
+			end
+		    box.vm.network "forwarded_port", guest: 80, host: 8181
+			box.vm.network "forwarded_port", guest: 443, host: 4343
+			box.vm.network "forwarded_port", guest: 22, host: 2301
+			box.vm.provision "ansible" do |ansible|
+			  ansible.playbook = "ansible/playbook_list/playbook_nginx.yml"
+			end
+			
+		#   when "backend1"
+		#     box.vm.provider "virtualbox" do |v| 
+		# 	  v.memory = 256
+		# 	end
+		#     box.vm.network "forwarded_port", guest: 80, host: 8282
+		# 	box.vm.network "forwarded_port", guest: 22, host: 2302
+			
+        #   when "backend2"
+		#     box.vm.provider "virtualbox" do |v|
+		# 	  v.memory = 256
+		# 	end
+		#     box.vm.network "forwarded_port", guest: 80, host: 8383
+		#     box.vm.network "forwarded_port", guest: 22, host: 2303
+			
+		#   when "backupserver"
+		#     box.vm.provider "virtualbox" do |v|
+		# 	  v.memory = 256
+		# 	end
+		#     box.vm.network "forwarded_port", guest: 22, host: 2304
+
+        #   when "database1"
+		#     box.vm.provider "virtualbox" do |v|
+		# 	  v.memory = 512
+		# 	end
+		# 	box.vm.network "forwarded_port", guest: 22, host: 2305
+			
+	    #   when "database2"
+		#     box.vm.provider "virtualbox" do |v|
+		# 	  v.memory = 512
+		# 	end
+		#     box.vm.network "forwarded_port", guest: 22, host: 2306  
+
+		#   when "elasticsearch1"
+		#     box.vm.provider "virtualbox" do |v| 
+		# 	  v.memory = 3072
+		# 	end
+		#     box.vm.network "forwarded_port", guest: 22, host: 2307
+		# 	box.vm.network "forwarded_port", guest: 9200, host: 9200   # Порт для Elasticsearch
+			
+		# 	when "elasticsearch2"
+		#     box.vm.provider "virtualbox" do |v| 
+		# 	  v.memory = 3072
+		# 	end
+		#     box.vm.network "forwarded_port", guest: 22, host: 2308
+		# 	box.vm.network "forwarded_port", guest: 9200, host: 9201   # Порт для Elasticsearch
+			
+		# 	when "elasticsearch3"
+		#     box.vm.provider "virtualbox" do |v| 
+		# 	  v.memory = 3072
+		# 	end
+		#     box.vm.network "forwarded_port", guest: 22, host: 2309
+		# 	box.vm.network "forwarded_port", guest: 9200, host: 9202   # Порт для Elasticsearch
+			
+		# 	when "kibana"
+		#     box.vm.provider "virtualbox" do |v| 
+		# 	  v.memory = 1024
+		# 	end
+		#     box.vm.network "forwarded_port", guest: 22, host: 2310
+		# 	box.vm.network "forwarded_port", guest: 5601, host: 5601   # Порт для Kibana
+			
+		# 	when "logstash1"
+		#     box.vm.provider "virtualbox" do |v| 
+		# 	  v.memory = 2048
+		# 	end
+		#     box.vm.network "forwarded_port", guest: 22, host: 2311
+			
+		# 	when "logstash2"
+		#     box.vm.provider "virtualbox" do |v| 
+		# 	  v.memory = 2048
+		# 	end
+		#     box.vm.network "forwarded_port", guest: 22, host: 2312
+			
+        end
+      end
+  end
+end

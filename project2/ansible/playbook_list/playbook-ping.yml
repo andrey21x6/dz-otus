@@ -1,0 +1,13 @@
+---
+
+- name: Run all ping
+  hosts: all
+  become: yes
+  gather_facts: no   # Не собирать данные с удалённых серверов
+
+  tasks:
+    
+  - name: Ping
+    ping:
+ 
+...

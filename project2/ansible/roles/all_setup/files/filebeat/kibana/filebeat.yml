@@ -1,0 +1,17 @@
+filebeat.inputs:
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/kibana/kibana.log
+  exclude_files: [".gz$"]
+  
+  fields:
+    type: kibana
+  fields_under_root: true
+  scan_frequency: 5s
+
+#-----------------------------------
+
+output.logstash:
+  hosts: ["192.168.90.21:5050", "192.168.90.22:5050"]

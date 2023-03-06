@@ -1,0 +1,35 @@
+
+node.name: ${HOSTNAME}
+
+path.data: /var/lib/elasticsearch
+path.logs: /var/log/elasticsearch
+
+network.host: 192.168.90.19
+http.port: 9200
+http.host: 0.0.0.0
+
+xpack.security.enabled: false
+xpack.security.enrollment.enabled: false
+
+xpack.security.http.ssl:
+  enabled: false
+  keystore.path: certs/http.p12
+
+xpack.security.transport.ssl:
+  enabled: false
+  verification_mode: certificate
+  keystore.path: certs/transport.p12
+  truststore.path: certs/transport.p12
+  
+# Перечисление нод мастеров
+cluster.initial_master_nodes: ["192.168.90.17", "192.168.90.18", "192.168.90.19"]
+
+#==================== Для кластера ====================
+
+# Имя кластера
+cluster.name: elk-cluster
+
+node.roles: [ master, data, remote_cluster_client ]
+
+# IP узлов для сборки кластера
+discovery.seed_hosts: ["192.168.90.17", "192.168.90.18", "192.168.90.19"]

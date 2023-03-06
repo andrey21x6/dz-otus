@@ -1,0 +1,175 @@
+---
+
+- name: Install nginx
+  dnf:
+    name: nginx
+    state: latest
+
+- name: Install openssl and iptables-services for nginx
+  dnf:
+    name:
+    - openssl
+    - iptables-services
+    state: latest
+  when: ansible_hostname == "nginx"
+
+- name: Install packages for php
+  dnf:
+    name:
+    - php
+    - php-cli
+    - php-mysqlnd
+    - php-json
+    - php-gd
+    - php-odbc
+    - php-pdo
+    - php-opcache
+    - php-pear
+    - php-xml
+    - php-xmlrpc
+    - php-mbstring
+    - php-snmp
+    - php-soap
+    - php-zip
+    state: latest
+  when: ansible_hostname == "backend1" or ansible_hostname == "backend2"
+
+- name: Remove package nftables
+  dnf:
+    name: nftables
+    state: absent
+  when: ansible_hostname == "nginx"
+
+- name: Set setsebool (Долго устанавливает значение ......)
+  command: setsebool -P httpd_can_network_connect 1
+
+- name: Checking if a file exists nginx.conf
+  stat:
+    path: /etc/nginx/nginx.conf
+  register: info
+
+- name: Copy nginx.conf_bak
+  copy:
+    remote_src: true
+    src: /etc/nginx/nginx.conf
+    dest: /etc/nginx/nginx.conf_bak
+  when: info.stat.exists and ansible_hostname == "nginx"
+
+- name: Copy nginx.conf
+  copy:
+    src: nginx/nginx.conf
+    dest: /etc/nginx/nginx.conf
+  when: ansible_hostname == "nginx"
+
+- name: Copy html
+  copy:
+    src: "html/{{ item }}"
+    dest: "/usr/share/nginx/html/{{ item }}"
+  with_items:
+  - connect.php
+  - html.php
+  - index.php
+  - php.php
+  - style.css
+  when: ansible_hostname == "backend1" or ansible_hostname == "backend2"
+
+- name: Copy openssl_req.sh
+  copy:
+    src: nginx/openssl_req.sh
+    dest: /root/openssl_req.sh
+    mode: 0600
+  when: ansible_hostname == "nginx"
+
+- name: Checking if a file exists nginx.key
+  stat:
+    path: /root/nginx.key
+  register: info
+
+- name: Openssl genrsa
+  command: openssl genrsa -out /root/nginx.key 2048
+  when: not info.stat.exists and ansible_hostname == "nginx"
+
+- name: Checking if a file exists nginx.csr
+  stat:
+    path: /root/nginx.csr
+  register: info
+
+- name: Create CSR nginx.csr
+  command: sh /root/openssl_req.sh
+  when: not info.stat.exists and ansible_hostname == "nginx"
+
+- name: Checking if a file exists nginx.crt
+  stat:
+    path: /root/nginx.crt
+  register: info
+
+- name: Create x509 nginx.crt
+  command: openssl x509 -req -days 365 -in /root/nginx.csr -signkey /root/nginx.key -out /root/nginx.crt
+  when: not info.stat.exists and ansible_hostname == "nginx"
+
+- name: Change permissions files nginx.crt nginx.key nginx.csr
+  file:
+    path: "/root/{{ item }}"
+    mode: 0600
+    with_items:
+    - nginx.crt
+    - nginx.key
+    - nginx.csr
+
+- name: Copy nginx.crt
+  copy:
+    remote_src: true
+    src: /root/nginx.crt
+    dest: /etc/pki/tls/certs/nginx.crt
+    mode: 0600
+  when: ansible_hostname == "nginx"
+
+- name: Copy nginx.key
+  copy:
+    remote_src: true
+    src: /root/nginx.key
+    dest: /etc/pki/tls/private/nginx.key
+    mode: 0600
+  when: ansible_hostname == "nginx"
+
+- name: Copy nginx.csr
+  copy:
+    remote_src: true
+    src: /root/nginx.csr
+    dest: /etc/pki/tls/private/nginx.csr
+    mode: 0600
+  when: ansible_hostname == "nginx"
+
+- name: Restart nginx and iptables
+  systemd:
+    name: 
+    - nginx
+    - iptables
+    state: restarted
+    daemon_reload: true
+    enabled: yes
+  when: ansible_hostname == "nginx"
+
+- name: Setting iptables rules
+  command: "{{ item }}"
+  with_items:
+  - iptables -P INPUT ACCEPT
+  - iptables -P FORWARD ACCEPT
+  - iptables -P OUTPUT ACCEPT
+  - iptables -F
+  - iptables -A INPUT -i lo -j ACCEPT
+  - iptables -A INPUT -p icmp -j ACCEPT
+  - iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+  - iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+  - iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+  - iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+  - iptables -P INPUT DROP
+  - iptables -P FORWARD DROP
+  - 'echo "@reboot root iptables-restore < /etc/sysconfig/iptables" > /etc/crontab'
+  when: ansible_hostname == "nginx"
+
+- name: Iptables-save
+  shell: iptables-save > /etc/sysconfig/iptables
+  when: ansible_hostname == "nginx"
+
+...

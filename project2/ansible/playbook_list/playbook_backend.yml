@@ -1,0 +1,11 @@
+---
+
+- name: Setting backend servers
+  hosts: backend
+  become: true
+
+  roles:
+  - all_setup
+  - nginx_backend
+
+...
