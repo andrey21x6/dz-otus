@@ -1,8 +1,9 @@
 
 backupserver
 kibana
+nginx
 
-[nginx_web]
+[nginx_all]
 nginx
 backend1
 backend2

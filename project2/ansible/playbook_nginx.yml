@@ -1,0 +1,143 @@
+---
+
+- name: Setting nginx server
+  hosts: nginx
+  become: true
+  # gather_facts: no   # Не собирать данные с удалённых серверов
+
+# - debug:
+#   msg: "{{ user_connect }}"
+
+  roles:
+  - all_setup
+  - nginx_setup
+  
+  tasks: 
+
+  - name: Install openssl and iptables-services for nginx
+    dnf:
+      name:
+      - openssl
+      - iptables-services
+      state: latest
+
+  - name: Copy openssl_req.sh
+    copy:
+      src: files/nginx/openssl_req.sh
+      dest: /root/openssl_req.sh
+      mode: 0700
+
+  - name: Checking if a file exists nginx.conf
+    stat:
+      path: /etc/nginx/nginx.conf
+    register: info
+
+  - name: Copy nginx.conf_bak
+    copy:
+      remote_src: true
+      src: /etc/nginx/nginx.conf
+      dest: /etc/nginx/nginx.conf_bak
+    when: info.stat.exists
+
+  - name: Copy nginx.conf
+    copy:
+      src: files/nginx/nginx.conf
+      dest: /etc/nginx/nginx.conf
+
+  - name: Checking if a file exists nginx.key
+    stat:
+      path: /root/nginx.key
+    register: info
+
+  - name: Openssl genrsa
+    command: openssl genrsa -out /root/nginx.key 2048
+    when: not info.stat.exists
+
+  - name: Checking if a file exists nginx.csr
+    stat:
+      path: /root/nginx.csr
+    register: info
+
+  - name: Create CSR nginx.csr
+    shell: /root/openssl_req.sh
+    when: not info.stat.exists
+
+  - name: Checking if a file exists nginx.crt
+    stat:
+      path: /root/nginx.crt
+    register: info
+
+  - name: Create x509 nginx.crt
+    command: openssl x509 -req -days 365 -in /root/nginx.csr -signkey /root/nginx.key -out /root/nginx.crt
+    when: not info.stat.exists
+
+  - name: Change permissions files nginx.crt nginx.key nginx.csr
+    file:
+      path: "/root/{{ item }}"
+      mode: 0600
+    loop:
+    - nginx.crt
+    - nginx.key
+    - nginx.csr
+
+  - name: Copy and change permissions files nginx.crt nginx.key nginx.csr
+    copy:
+      remote_src: true
+      src: "/root/{{ item.src }}"
+      dest: "/etc/pki/tls/{{ item.dest }}"
+      mode: 0600
+    loop:
+    - { src: 'nginx.crt', dest: 'certs/nginx.crt'}
+    - { src: 'nginx.key', dest: 'private/nginx.key'}
+    - { src: 'nginx.csr', dest: 'private/nginx.csr'}
+
+  - name: Copy nginx.crt
+    copy:
+      remote_src: true
+      src: /root/nginx.crt
+      dest: /etc/pki/tls/certs/nginx.crt
+      mode: 0600
+
+  - name: Copy nginx.key
+    copy:
+      remote_src: true
+      src: /root/nginx.key
+      dest: /etc/pki/tls/private/nginx.key
+      mode: 0600
+
+  - name: Copy nginx.csr
+    copy:
+      remote_src: true
+      src: /root/nginx.csr
+      dest: /etc/pki/tls/private/nginx.csr
+      mode: 0600
+
+  - name: Restart nginx and iptables
+    systemd:
+      name: "{{ item }}"
+      state: restarted
+      daemon_reload: true
+      enabled: yes
+    loop:
+    - nginx
+    - iptables
+
+  - name: Copy iptables
+    copy:
+      src: files/nginx/iptables
+      dest: /etc/sysconfig/iptables
+
+  - name: Add cron iptables rules
+    command: 'echo "@reboot root iptables-restore < /etc/sysconfig/iptables" > /etc/crontab'
+
+  # - name: Iptables-restore
+  #   shell: iptables-restore < /etc/sysconfig/iptables
+
+  - name: Restore firewall state from a file
+    community.general.iptables_state:
+      state: restored
+      path: /etc/sysconfig/iptables
+    async: "{{ ansible_timeout }}"
+    poll: 0
+
+...

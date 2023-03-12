@@ -1,5 +1,41 @@
 ---
 
+- name: Install packages
+  dnf:
+    name:
+    - mariadb
+    - mariadb-server
+    - mariadb-backup
+    - net-tools
+    - htop
+    - filebeat
+    state: latest
 
+- name: Install sshpass-1.09-4
+  command: dnf install http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/Packages/sshpass-1.09-4.el8.x86_64.rpm -y
+
+# Изменение логики использования файла подкачки
+# 0: подкачка отключена
+# 1: минимальный объем подкачки без полного отключения
+# 10: рекомендуемое значение для повышения производительности при наличии достаточного объема памяти в системе
+# 100: агрессивная подкачка
+
+- name:  Set vm.swappiness to 1 in /etc/sysctl.conf
+  sysctl:
+    name: vm.swappiness
+    value: '1'
+    state: present
+    reload: true
+
+- name: Create folders
+  file:
+    path: "/home/vagrant/BACKUP/{{ item }}"
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: 0700
+  loop:
+  - mariabackup
+  - SQL
 
 ...

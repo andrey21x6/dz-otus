@@ -21,6 +21,7 @@
 - Kibana 8.6.1
 - Logstash 8.6.1
 - Metricbeat 8.6.2
+- Heartbeat-8.6.2
 
 ## **Содержание Проектной работы**
 

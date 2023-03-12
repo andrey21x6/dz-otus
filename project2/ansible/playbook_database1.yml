@@ -1,0 +1,15 @@
+---
+
+- name: Setting database 1 servers
+  hosts: database1
+  become: true
+
+  vars:
+    server_id        : "1"
+    replicat_user_ip : "192.168.90.16"
+
+  roles:
+  - all_setup
+  - database
+
+...

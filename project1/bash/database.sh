@@ -72,7 +72,7 @@ mkdir -p /home/vagrant/BACKUP/mariabackup
 echo ""
 echo " *** Создаётся каталог SQL ***"
 echo ""
-mkdir -p BACKUP/SQL
+mkdir -p /home/vagrant/BACKUP/SQL
 
 echo ""
 echo " *** Разрешение на выполнение backup.sh +x ***"

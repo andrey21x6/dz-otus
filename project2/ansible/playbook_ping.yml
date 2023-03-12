@@ -1,0 +1,37 @@
+---
+
+- name: Run all ping
+  hosts: nginx   #nginx_all
+  become: yes
+  # gather_facts: no   # Не собирать данные с удалённых серверов
+
+  tasks:
+
+
+
+  - name: Ping 192.168.90.13
+    shell:  |
+      ping -c1 192.168.90.14 >/dev/null
+      if [ $? -eq 0 ]
+      then
+        echo "ok"
+      else
+        echo "nok"
+      fi
+    ignore_errors: true
+    register: output_ping
+
+  - debug:
+      msg: "{{ output_ping.stdout }}"
+    when: output_ping.stdout == 'ok'
+
+  - debug:
+      msg: "{{ output_ping.stdout }}"
+    when: output_ping.stdout == 'nok'
+
+
+    
+  # - name: Ping
+  #   ping:
+      
+...

@@ -244,7 +244,7 @@ filebeat.inputs:
   enabled: true
   paths:
       #- /var/log/nginx/*-access.log
-      - /var/log/nginx/access.log
+  /var/log/nginx/access.log
   fields:
     type: nginx_access
     #service: nginx_access
@@ -255,7 +255,7 @@ filebeat.inputs:
   enabled: true
   paths:
       #- /var/log/nginx/*-error.log
-      - /var/log/nginx/error.log
+  /var/log/nginx/error.log
   fields:
     type: nginx_error
     #service: nginx_access
@@ -278,7 +278,7 @@ filebeat.inputs:
 - input_type:     log
   enable:         true
   paths:
-    - /var/log/nginx/*.log
+/var/log/nginx/*.log
   exclude_files:  ['\.gz$']
 
 output.logstash:
@@ -289,8 +289,8 @@ output.logstash:
 filebeat.prospectors:
 - input_type: log
   paths:
-    - /var/log/nginx/access.log*
-    - /var/log/nginx/error.log*
+/var/log/nginx/access.log*
+/var/log/nginx/error.log*
   exclude_files: [".gz$"]
   multiline:
     pattern: "^\\s"
@@ -304,7 +304,7 @@ output.logstash:
 filebeat.prospectors:
 - input_type: log
   paths:
-    - /tmp/elk-example.log
+/tmp/elk-example.log
   fields:
     app_name: elk-sample-app
   fields_under_root: true
@@ -314,7 +314,7 @@ filebeat.prospectors:
 
 - input_type: log
   paths:
-    - /tmp/pg.log
+/tmp/pg.log
   fields:
     app_name: postgres
   fields_under_root: true
@@ -333,7 +333,7 @@ filebeat.inputs:
       path: "/usr/share/dockerlogs/data"
       stream: "stdout"
       ids:
-        - "*"
+    "*"
       cri.parse_flags: true
       combine_partial: true
       exclude_files: ['\.gz$']
@@ -365,8 +365,8 @@ ssl.verification_mode: none
 
 filebeat:
   prospectors:
-    - paths:
-        - /var/log/httpd/access_log
+paths:
+    /var/log/httpd/access_log
       input_type: log
       document_type: apache
       fields:
@@ -388,7 +388,7 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/nginx/access.log
+/var/log/nginx/access.log
   exclude_files: [".gz$"]
   
   fields:
@@ -400,7 +400,7 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - /var/log/nginx/error.log
+/var/log/nginx/error.log
   exclude_files: [".gz$"]
       
   fields:
@@ -569,6 +569,42 @@ systemctl status mariadb
 -------------------------------------------------------------------------------------------------
 
 mysqladmin --connect-timeout=1 ping --host=199.0.0.1
+
+-------------------------------------------------------------------------------------------------
+
+FLUSH TABLES WITH READ LOCK; SET GLOBAL read_only = ON;
+SET GLOBAL read_only = OFF;
+
+FLUSH TABLES WITH READ LOCK;
+UNLOCK TABLES;
+
+SET GLOBAL SQL_SLAVE_SKIP_COUNTER = 1; SLAVE START;
+
+
+mysql -e 'SET GLOBAL read_only = ON'
+mysql -e 'SET GLOBAL read_only = OFF'
+
+
+mysql -e 'FLUSH TABLES WITH READ LOCK'
+mysql -e 'UNLOCK TABLES'
+
+
+
+CREATE USER 'user_sait'@'192.168.90.%' IDENTIFIED BY '123456';
+GRANT ALL PRIVILEGES ON *.* TO 'user_sait'@'192.168.90.%';
+
+GRANT ALL PRIVILEGES ON *.* TO 'user_sait'@'192.168.90.%' IDENTIFIED BY '123456';
+GRANT SELECT ON *.* TO 'user_sait'@'192.168.90.%' IDENTIFIED BY '123456';
+
+
+
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'user_sait'@'192.168.90.%';
+DROP USER 'user_sait'@'%';
+
+
+
+SELECT user, host FROM mysql.user;
+SHOW GRANTS FOR 'root'@'localhost';
 
 -------------------------------------------------------------------------------------------------
 

@@ -61,3 +61,121 @@
       path: /tmp/directory_1
       state: absent
 	  
+	  
+	  
+# CREATE DATABASE lemp CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+- name: Create a new database
+  mysql_db:
+    name: "{{ mysql_database }}"
+    encoding: "{{ mysql_encoding }}"
+    collation: "{{ mysql_collation }}"
+    state: present
+  tags:
+    - mysql
+ 
+# Remove all anonymous user accounts
+- name: Remove all anonymous user accounts
+  mysql_user:
+    name: ''
+    host_all: yes
+    state: absent
+  tags:
+    - mysql
+ 
+# Create "root" with all privileges
+- name: Create "root" user with all privileges
+  mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    priv: '*.*:ALL'
+    state: present
+  tags:
+    - mysql
+	  
+	  
+	  
+ - name: Place line
+  lineinfile:
+	line: Hello World
+	path: hello.txt
+	create: true
+	backup: true
+	
+- name: Remove line
+  lineinfile:
+	line: Hello World
+	path: hello.txt
+	state: absent
+	backup: true
+	  
+- name: Ensure the default Apache port is 8080
+  ansible.builtin.lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: '^Listen '
+    insertafter: '^#Listen '
+    line: Listen 8080
+	backup: true
+	
+- name: Ensure we have our own comment added to /etc/services
+  ansible.builtin.lineinfile:
+    path: /etc/services
+    regexp: '^# port for http'
+    insertbefore: '^www.*80/tcp'
+    line: '# port for http by default'
+	backup: true
+	
+- name: Add a line to a file if the file does not exist, without passing regexp
+  ansible.builtin.lineinfile:
+    path: /tmp/testfile
+    line: 192.168.1.99 foo.lab.net foo
+    create: yes
+	backup: true
+	
+- name: Change SSH daemon configuration
+  lineinfile:
+	line: "{{ item.line }}"
+	regexp: "{{ item.regexp }}"
+	path: /etc/ssh/sshd_config
+  loop:
+	- line: GatewayPorts no
+	  regexp: ^GatewayPorts
+	- line: X11Forwarding yes
+	  regexp: ^X11Forwarding
+	  backup: true
+	  
+	  
+	  
+Commenting out a line
+To comment out a line, use the Ansible lineinfile backrefs parameter. Take a look at the example playbook shown below:
+
+- name: delete a line
+  lineinfile:
+    path: /etc/apache2/apache2.conf
+    regex: '^#Listen 8080 '
+    line: '#\1'
+    backrefs: yes
+	
+	
+- name: Download
+  get_url:
+    url: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    dest: /root/epel-release-latest-8.noarch.rpm
+	
+	
+	
+  # This will load a state from a file, with a rollback in case of access loss
+- name: restore firewall state from a file
+  community.general.iptables_state:
+    state: restored
+    path: /run/iptables.apply
+  async: "{{ ansible_timeout }}"
+  poll: 0
+
+# This will load new rules by appending them to the current ones
+- name: restore firewall state from a file
+  community.general.iptables_state:
+    state: restored
+    path: /run/iptables.apply
+    noflush: true
+  async: "{{ ansible_timeout }}"
+  poll: 0

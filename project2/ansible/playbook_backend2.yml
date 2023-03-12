@@ -1,11 +1,12 @@
 ---
 
 - name: Setting backend servers
-  hosts: backend
+  hosts: backend2
   become: true
 
   roles:
   - all_setup
-  - nginx_backend
+  - nginx_setup
+  - backend
 
 ...

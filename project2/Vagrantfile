@@ -8,18 +8,18 @@ MACHINES = {
 			   {ip: '192.168.90.11', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
             ]
   },
-#   :backend1 => {
-#     :box_name => "centos/8",
-#     :net => [
-# 			   {ip: '192.168.90.12', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
-#             ]
-#   },
-#   :backend2 => {
-#     :box_name => "centos/8",
-#     :net => [
-# 			   {ip: '192.168.90.13', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
-#             ]
-#   },
+  :backend1 => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.90.12', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+            ]
+  },
+  :backend2 => {
+    :box_name => "centos/8",
+    :net => [
+			   {ip: '192.168.90.13', adapter: 2, netmask: "255.255.255.0", virtualbox__intnet: "local-network"}
+            ]
+  },
 #   :backupserver => {
 #     :box_name => "centos/8",
 #     :net => [
@@ -101,22 +101,31 @@ Vagrant.configure("2") do |config|
 			box.vm.network "forwarded_port", guest: 443, host: 4343
 			box.vm.network "forwarded_port", guest: 22, host: 2301
 			box.vm.provision "ansible" do |ansible|
-			  ansible.playbook = "ansible/playbook_list/playbook_nginx.yml"
+			  ansible.playbook = "ansible/playbook_nginx.yml"
+			  ansible.vault_password_file = "ansible/.vault"
 			end
 			
-		#   when "backend1"
-		#     box.vm.provider "virtualbox" do |v| 
-		# 	  v.memory = 256
-		# 	end
-		#     box.vm.network "forwarded_port", guest: 80, host: 8282
-		# 	box.vm.network "forwarded_port", guest: 22, host: 2302
+		  when "backend1"
+		    box.vm.provider "virtualbox" do |v| 
+			  v.memory = 384
+			end
+		    box.vm.network "forwarded_port", guest: 80, host: 8282
+			box.vm.network "forwarded_port", guest: 22, host: 2302
+			box.vm.provision "ansible" do |ansible|
+			  ansible.playbook = "ansible/playbook_backend1.yml"
+			  ansible.vault_password_file = "ansible/.vault"
+			end
 			
-        #   when "backend2"
-		#     box.vm.provider "virtualbox" do |v|
-		# 	  v.memory = 256
-		# 	end
-		#     box.vm.network "forwarded_port", guest: 80, host: 8383
-		#     box.vm.network "forwarded_port", guest: 22, host: 2303
+          when "backend2"
+		    box.vm.provider "virtualbox" do |v|
+			  v.memory = 384
+			end
+		    box.vm.network "forwarded_port", guest: 80, host: 8383
+		    box.vm.network "forwarded_port", guest: 22, host: 2303
+			box.vm.provision "ansible" do |ansible|
+			  ansible.playbook = "ansible/playbook_backend2.yml"
+			  ansible.vault_password_file = "ansible/.vault"
+			end
 			
 		#   when "backupserver"
 		#     box.vm.provider "virtualbox" do |v|

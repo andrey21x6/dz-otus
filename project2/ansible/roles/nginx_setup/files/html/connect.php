@@ -3,7 +3,7 @@
 	
 	$ipServer = $_SERVER['SERVER_ADDR'];
 
-	if ($ipServer == "192.168.90.12")
+	if ($ipServer == "192.168.90.15")
 	{
 		$ipDb1 = "192.168.90.15";
 		$ipDb2 = "192.168.90.16";

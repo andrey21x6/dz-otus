@@ -1,25 +1,32 @@
 ---
 
-- name: Set timezone
-  command: timedatectl set-timezone Asia/Yekaterinburg
+- debug:
+    msg: "{{ user_connect }} = {{ password_connect }}"
+
+- name: Set timezone to Asia/Yekaterinburg
+  timezone:
+    name: Asia/Yekaterinburg
+
+# Не работает
+# - name: Set LANG
+#   community.general.locale_gen:
+#     name: LANG=en_US.UTF-8
+#     state: present
+
+- name: Set locale
+  command: localectl set-locale LANG=en_US.UTF-8
   
 - name: Restart crond
   systemd:
     name: crond
     state: restarted
     daemon_reload: true
-    
+
 - name: Sed mirrorlist repos
   shell: sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
   
 - name: Sed baseurl repos
-  shell: 'sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*'
-
-- name: Install epel-release
-  shell: dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
-
-- name: Set-locale
-  command: localectl set-locale LANG=en_US.UTF-8
+  shell: sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
 
 - name: Copy elasticsearch.repo
   copy:
@@ -29,14 +36,18 @@
     group: root
     mode: 0644
 
+- name: Install epel-release-latest-8
+  command: dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+
 - name: Install packages
   dnf:
     name:
-      - mc
-      - nano
-      - net-tools
-      - htop
-      - filebeat
+    - mc
+    - nano
+    - net-tools
+    - htop
+    - filebeat
+    - wget
     state: latest
 
 - name: Checking if a file exists filebeat.yml
@@ -61,6 +72,12 @@
 - name: Enable SSH password
   shell: sed -i -e "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 
+- name: Replace sshd_config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    search_string: 'PasswordAuthentication no'
+    line: 'PasswordAuthentication yes'
+
 - name: Restart sshd
   systemd:
     name: sshd
@@ -68,8 +85,8 @@
 
 - name: Change root password
   user:
-    name: "{{ ansible_user }}"
+    name: "{{ user_connect }}"
     state: present
-    password: "{{ ansible_password | password_hash('sha512') }}"
+    password: "{{ password_connect | password_hash('sha512') }}"
 
 ...

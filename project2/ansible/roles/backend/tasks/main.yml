@@ -1,0 +1,35 @@
+---
+
+- name: Install packages for php
+  dnf:
+    name:
+    - php
+    - php-cli
+    - php-mysqlnd
+    - php-json
+    - php-gd
+    - php-odbc
+    - php-pdo
+    - php-opcache
+    - php-pear
+    - php-xml
+    - php-xmlrpc
+    - php-mbstring
+    - php-snmp
+    - php-soap
+    - php-zip
+    state: latest
+  notify: Restart nginx
+
+- name: Copy html
+  copy:
+    src: "html/{{ item }}"
+    dest: "/usr/share/nginx/html/{{ item }}"
+  loop:
+  - connect.php
+  - html.php
+  - index.php
+  - php.php
+  - style.css
+
+...

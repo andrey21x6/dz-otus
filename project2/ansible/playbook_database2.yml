@@ -4,6 +4,10 @@
   hosts: database
   become: true
 
+  vars:
+    server_id        : "2"
+    replicat_user_ip : "192.168.90.15"
+
   roles:
   - all_setup
   - database
