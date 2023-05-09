@@ -1,0 +1,104 @@
+---
+# tasks file for install_repo_local_astra
+
+- name: Set timezone
+  timezone:
+    name: "{{ time_zone }}"
+
+- name: Checking if a file exists sources.list_bak
+  stat:
+    path: /etc/apt/sources.list_bak
+  register: info
+
+- name: Save a backup sources.list
+  copy:
+    remote_src: true
+    src: /etc/apt/sources.list
+    dest: /etc/apt/sources.list_bak
+  when: not info.stat.exists
+
+# ------ Start block ------
+
+- block:
+
+  - name: Check if directory is empty or not
+    find:
+      paths: /srv/repo/alse/main
+      patterns: '*'
+      file_type: directory
+    register: result
+
+  - name: Create catalogs
+    file:
+      path: /srv/repo/alse/{{ item }}
+      state: directory
+    loop:
+    - main          # репозиторий основного диска
+    - base          # репозиторий диска со средствами разработки
+    - update-main   # репозиторий диска с обновлением основного диска
+    - update-base   # репозиторий диска с обновлением диска со средствами разработки
+    when: result.matched == 0
+
+  - name: Mount ISO and Automount ISO (fstab)
+    mount:
+      path: /srv/repo/alse/main
+      src: /root/{{ astra_iso_name }}
+      fstype: iso9660
+      opts: defaults,loop
+      state: mounted
+
+  - name: Check if directory is empty or not
+    find:
+      paths: /srv/repo/alse/base
+      patterns: '*'
+      file_type: directory
+    register: result
+
+  - name: Extracting a tar archive base. Wait a few minutes......
+    unarchive:
+      src: /root/{{ astra_base_archive }}
+      dest: /srv/repo/alse/base
+      remote_src: yes
+      extra_opts:
+        - "-z"
+    when: result.matched == 0
+
+  - name: Clear file sources.list
+    copy:
+      dest: /etc/apt/sources.list
+      content: ""
+
+  - name: Set links to local repository
+    lineinfile:
+      path: /etc/apt/sources.list
+      line: "{{ item }}"
+    with_items:
+      - deb file:/srv/repo/alse/main stable main contrib non-free
+      - deb file:/srv/repo/alse/base stable main contrib non-free
+
+  - name: Install packages
+    apt:
+      name:
+      - net-tools
+      - htop
+      - sshpass
+      state: latest
+      update_cache: yes
+
+  when: (ftp_enable == 1 or http_enable == 1) and mirror_enable == 0
+
+# ------ End block ------
+
+- name: Install ftp repo
+  include_tasks: ftp.yml
+  when: ftp_enable == 1 or mirror_enable == 1
+
+- name: Install http repo
+  include_tasks: http.yml
+  when: http_enable == 1 or mirror_enable == 1
+
+- name: Install apt-mirror repo
+  include_tasks: mirror.yml
+  when: mirror_enable == 1
+
+...

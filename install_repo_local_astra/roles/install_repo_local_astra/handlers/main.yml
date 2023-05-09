@@ -1,0 +1,16 @@
+---
+# handlers file for install_repo_ftp_local_astra
+
+- name: restart vsftpd
+  systemd:
+    name: vsftpd
+    state: restarted
+    enabled: yes
+
+- name: restart apache2
+  systemd:
+    name: apache2
+    state: restarted
+    enabled: yes
+
+...

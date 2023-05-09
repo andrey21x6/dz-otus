@@ -1,0 +1,65 @@
+---
+
+- name: Check if directory is empty or not
+  find:
+    paths: /srv/repo/alse/apt-mirror
+    patterns: '*'
+    file_type: directory
+  register: result
+
+- name: Create catalogs
+  file:
+    path: /srv/repo/alse/{{ item }}
+    state: directory
+  loop:
+  - apt-mirror    # локальная копия репозитория apt-mirror
+  when: result.matched == 0
+
+- name: Copy sources.list
+  template:
+    src: sources.j2
+    dest: /etc/apt/sources.list
+
+- name: Install apt-mirror
+  apt:
+    name:
+    - net-tools
+    - htop
+    - sshpass
+    - apt-mirror
+    state: latest
+    update_cache: yes
+
+- name: Change the owner and group of a directory /srv/repo/alse/apt-mirror
+  file:
+    path: /srv/repo/alse/apt-mirror
+    owner: apt-mirror
+    group: apt-mirror
+
+- name: Checking if a file exists mirror.list_bak
+  stat:
+    path: /etc/apt/mirror.list_bak
+  register: info
+
+- name: Save a backup mirror.list
+  copy:
+    remote_src: true
+    src: /etc/apt/mirror.list
+    dest: /etc/apt/mirror.list_bak
+  when: not info.stat.exists
+
+- name: Copy mirror.list
+  template:
+    src: mirror.j2
+    dest: /etc/apt/mirror.list
+
+- name: Making copies of repositories. Wait a few minutes......
+  shell: sudo -u apt-mirror apt-mirror
+
+# - name: To enable automatic updates
+#   replace:
+#     path: /etc/cron.d/apt-mirror
+#     regexp: '#0 4    * * *   apt-mirror      /usr/bin/apt-mirror > /var/spool/apt-mirror/var/cron.log'
+#     replace: '0 4    * * *   apt-mirror      /usr/bin/apt-mirror > /var/spool/apt-mirror/var/cron.log'
+
+...

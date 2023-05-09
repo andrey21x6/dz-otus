@@ -1,0 +1,10 @@
+---
+
+- name: Install Repo Local Astra
+  hosts: repo02
+  become: true
+
+  roles:
+  - install_repo_local_astra
+
+...

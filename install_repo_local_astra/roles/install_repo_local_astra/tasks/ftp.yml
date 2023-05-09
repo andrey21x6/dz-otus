@@ -1,0 +1,32 @@
+---
+
+- name: Install vsftpd
+  apt:
+    name:
+    - vsftpd
+    state: latest
+    update_cache: yes
+  
+- name: Checking if a file exists vsftpd.conf_bak
+  stat:
+    path: /etc/vsftpd.conf_bak
+  register: info
+
+- name: Save a backup vsftpd.conf
+  copy:
+    remote_src: true
+    src: /etc/vsftpd.conf
+    dest: /etc/vsftpd.conf_bak
+  when: not info.stat.exists
+
+- name: Copy vsftpd.conf
+  template:
+    src: vsftpd.j2
+    dest: /etc/vsftpd.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+  - restart vsftpd
+
+...

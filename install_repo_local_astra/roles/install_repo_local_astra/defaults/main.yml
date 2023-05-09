@@ -1,0 +1,19 @@
+---
+# defaults file for install_repo_ftp_local_astra
+
+mirror_enable                 : 0   # Имеет приоритет перед ftp_enable и http_enable, если 1 !!!
+ftp_enable                    : 1
+http_enable                   : 1
+astra_iso_name                : "1.7.2-11.08.2022_15.28.iso"
+astra_base_archive            : "base-1.7.2-11.08.2022_15.28.tgz"
+repo_link_main                : "https://download.astralinux.ru/astra/stable/1.7_x86-64/repository-main/ 1.7_x86-64"
+repo_link_update              : "https://download.astralinux.ru/astra/stable/1.7_x86-64/repository-update/ 1.7_x86-64"
+repo_link_base                : "https://download.astralinux.ru/astra/stable/1.7_x86-64/repository-base/ 1.7_x86-64"
+repo_link_extended            : "https://download.astralinux.ru/astra/stable/1.7_x86-64/repository-extended/ 1.7_x86-64"
+mirror_link_standart          : "https://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-main/ 1.7_x86-64"
+mirror_link_delete            : "https://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-main/"
+mirror_link_skip              : "https://dl.astralinux.ru/astra/stable/1.7_x86-64/repository-main/installer-amd64/"
+time_zone                     : "Europe/Moscow"
+ansible_ssh_host_key_checking : false
+
+...

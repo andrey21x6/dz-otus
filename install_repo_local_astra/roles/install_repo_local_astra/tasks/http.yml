@@ -1,0 +1,43 @@
+---
+
+- name: Install apache2
+  apt:
+    name:
+    - apache2
+    state: latest
+    update_cache: yes
+
+- name: Setup = AstraMode off
+  replace:
+    path: /etc/apache2/apache2.conf
+    regexp: '# AstraMode on'
+    replace: 'AstraMode off'
+
+- name: Checking if a file exists 000-default.conf_bak
+  stat:
+    path: /etc/apache2/sites-available/000-default.conf_bak
+  register: info
+
+- name: Save a backup 000-default.conf
+  copy:
+    remote_src: true
+    src: /etc/apache2/sites-available/000-default.conf
+    dest: /etc/apache2/sites-available/000-default.conf_bak
+  when: not info.stat.exists
+
+- name: Copy 000-default.conf
+  template:
+    src: 000-default.j2
+    dest: /etc/apache2/sites-available/000-default.conf
+  notify:
+  - restart apache2
+
+- name: Create a soft link to a directory /srv/repo
+  file:
+    src: /srv/repo
+    dest: /var/www/html/repo
+    state: link
+    force: yes
+    follow: false
+
+...

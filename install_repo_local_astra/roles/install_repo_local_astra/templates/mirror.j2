@@ -1,0 +1,13 @@
+
+set base_path    /srv/repo/alse/apt-mirror
+set nthreads     20
+set _tilde       0
+ 
+# Стандартный интернет-репозиторий Astra Linux Special Edition
+deb {{ mirror_link_standart }} main contrib non-free
+ 
+# Удаление неиспользуемых файлов из репозитория (например, устаревших версий пакетов, отсутствующих в индексах)
+clean {{ mirror_link_delete }}
+ 
+# Пропуск указанных каталогов при очистке
+skip-clean {{ mirror_link_skip }}

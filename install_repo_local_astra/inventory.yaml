@@ -1,0 +1,8 @@
+
+repo_servers:
+  hosts:
+    repo02:
+      ansible_host     : "192.168.0.7"
+      ansible_port     : "22"
+      ansible_user     : "root"
+      ansible_password : "12345678"
